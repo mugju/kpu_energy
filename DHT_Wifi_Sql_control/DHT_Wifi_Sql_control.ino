@@ -9,13 +9,7 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 //전류센서
-float getVPP();
-const int sensorIn = A0;
-int mVperAmp = 66; // use 185 for 5A Module and 100 for 20A Module
- 
-double Voltage = 0;
-double VRMS = 0;
-double AmpsRMS = 0;
+#define CURRENT 30
 
 
 //wifi
@@ -80,43 +74,13 @@ void loop(){
       cursor->execute(INSERT_SQL);
     }
     
+    float volt = analogRead(A0) * (5.0 / 1024);
+    float current = (volt - 2.5) * (CURRENT / 2);
+    Serial.print("volt: \t");
+    Serial.print(volt);
+    Serial.print("  current: \t");
+    Serial.print(current);
+    Serial.println();
     
-    Voltage = getVPP();
-    VRMS = (Voltage/2.0) *0.707;             // RMS값 70.7%
-    AmpsRMS = (VRMS * 1000)/mVperAmp;        // mA 단위 맞춰줌
-    Serial.print(AmpsRMS);
-    Serial.println(" Amps RMS");
-    
-    delay(60000);
+    delay(6000);
 }
-
-float getVPP()
-{
-  float result;
-  
-  int readValue;             //value read from the sensor
-  int maxValue = 0;          // store max value here
-  int minValue = 1024;          // store min value here
-  
-   uint32_t start_time = millis();
-   while((millis()-start_time) < 1000) // 1초동안 값을 모아서 AC 전류의 최고점, 최저점을 찾아 평균치를 구함
-   {
-       readValue = analogRead(sensorIn);
-       // see if you have a new maxValue
-       if (readValue > maxValue) 
-       {
-           /*record the maximum sensor value*/
-           maxValue = readValue;
-       }
-       if (readValue < minValue) 
-       {
-           /*record the maximum sensor value*/
-           minValue = readValue;
-       }
-   }
-   
-   // Subtract min from max
-   result = ((maxValue - minValue) * 5.0)/1024.0;        // 5V 분해능, 아날로그핀의 분해능 1024
-      
-   return result;
- }
