@@ -1,0 +1,21 @@
+--------------------------------- create table
+CREATE TABLE product(
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(10) NOT NULL,
+	location VARCHAR(20),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE env(
+	datetime datetime primary key,
+	temp INT DEFAULT NULL,
+	humid INT DEFAULT NULL
+);
+
+
+CREATE TABLE elec_stat(
+	datetime datetime,
+	electric varchar(6),
+	prod_id INT NOT NULL,
+	FOREIGN KEY(prod_id) REFERENCES product(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
