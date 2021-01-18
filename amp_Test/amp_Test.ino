@@ -16,7 +16,13 @@ int mVperAmp = 66; // 아날로그 입력 mV당 전류 값
 
 int RawValue = 0;  // 아날로그 값 저장 변수  0~1024겟지
 
-int ACSoffset = 2500; // 기준 값 0A일때 아날로그 값은 2500mV 이다.  데이터 시트 참고하면나옴 해당사진은 깃에 업로드 예정
+int ACSoffset = 2728; // 기준 값 0A일때 아날로그 값은 2500mV 이다.  데이터 시트 참고하면나옴 해당사진은 깃에 업로드 예정
+//1510으로 일단 바꿔바
+//다음 190더해서 2690 (2.8 -> 2.73)
+//다음 400더함 3090 (이건 아니야) 2800으로 수정 --> 2750 하니까 0.33뜸 --> 2720하니까 0.13뜸 2701하니까 0.43??
+//2710 은 0.29 2718은 0.16 2722은 0.11 2725는 0.06 
+//마지막수정이되길 2727 0.03... 2728 가자 0.01... 아 끝 끝 끝 아 값 수정이제없다리 
+
 double Voltage = 0;   // 계산된 아날로그 값
 double Amps = 0;      // 실제 측정된 전류 값
 
@@ -75,10 +81,10 @@ void loop() {
   int h = dht.readHumidity();
   int t = dht.readTemperature();
 
-  Serial.print("humidity:");          // ‘시리얼 플로터’ 사용위해 이 부분 주석 필요
-  Serial.println(h);                  // 습도 값 출력
-  Serial.print("temperature:");       // ‘시리얼 플로터’ 사용위해 이 부분 주석 필요
-  Serial.println(t);                  // 온도 값 출력
+  //Serial.print("humidity:");          // ‘시리얼 플로터’ 사용위해 이 부분 주석 필요
+  //Serial.println(h);                  // 습도 값 출력
+  //Serial.print("temperature:");       // ‘시리얼 플로터’ 사용위해 이 부분 주석 필요
+  //Serial.println(t);                  // 온도 값 출력
 
   //strcpy(INSERT_SQL,"INSERT INTO test.new_table VALUES (23,33)");
   sprintf(INSERT_SQL, "INSERT INTO test.new_table VALUES (%d,%d)", t, h);
@@ -91,8 +97,9 @@ void loop() {
     Amps = ((Voltage - ACSoffset) / mVperAmp);
     smoothAmps = Amps * 0.01 + smoothAmps * 0.99;
     if ( cnt++ > 100 ) {
-      Serial.print(Voltage / 1000);
-      Serial.print("\t");
+      //Serial.print("Volt : ");
+      //Serial.println(Voltage / 1000);
+      Serial.print("smoothAmps : ");
       Serial.println(smoothAmps);
       break;
     }
