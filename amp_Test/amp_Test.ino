@@ -8,6 +8,8 @@
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
+
+
 //전류센서
 #define CURRENT 30
 const int analogIn = A0; //아날로그 입력 PIN    //여기는 1/18일 추가코드
@@ -23,10 +25,12 @@ int ACSoffset = 2728; // 기준 값 0A일때 아날로그 값은 2500mV 이다. 
 //2710 은 0.29 2718은 0.16 2722은 0.11 2725는 0.06 
 //마지막수정이되길 2727 0.03... 2728 가자 0.01... 아 끝 끝 끝 아 값 수정이제없다리 
 
+//최종값 2728 여기에서 값 흔들리는 건 오차범위 이내
+
 double Voltage = 0;   // 계산된 아날로그 값
 double Amps = 0;      // 실제 측정된 전류 값
 
-//평균구하기 위함
+//이동 평균구하기 위함
 int cnt = 0;
 double smoothAmps = 0;
 
@@ -35,10 +39,10 @@ const char* ssid = "SK_WiFiGIGA04C6_2.4G";
 const char* password = "1803003041";
 
 //sql 연결셋팅부
-IPAddress server_addr(3, 35, 198, 120); // IP of the MySQL *server* here
+IPAddress server_addr(13, 209, 100, 19); // IP of the MySQL *server* here
 //char hostname[] = "joljag.cshxrgoa1y2b.ap-northeast-2.rds.amazonaws.com"; // change to your server's hostname/URL
 char user[] = "root";
-char password_[] = "Iotwhfwkr16";        // MySQL user login password
+char password_[] = "whfwkr16";        // MySQL user login password
 
 WiFiClient client;
 MySQL_Connection conn(&client);
@@ -47,7 +51,7 @@ MySQL_Cursor* cursor;
 char INSERT_SQL[] = "INSERT INTO test_arduino.hello_arduino (message) VALUES ('Hello, Arduino!')";
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(115200); //전송속도
 
   Serial.println();
   Serial.println(ssid);
@@ -74,20 +78,19 @@ void setup() {
   }
   // create MySQL cursor object
   cursor = new MySQL_Cursor(&conn);
-
 }
 
 void loop() {
   int h = dht.readHumidity();
   int t = dht.readTemperature();
 
-  //Serial.print("humidity:");          // ‘시리얼 플로터’ 사용위해 이 부분 주석 필요
-  //Serial.println(h);                  // 습도 값 출력
-  //Serial.print("temperature:");       // ‘시리얼 플로터’ 사용위해 이 부분 주석 필요
-  //Serial.println(t);                  // 온도 값 출력
+  Serial.print("humidity:");          
+  Serial.println(h);                  // 습도 값 출력
+  Serial.print("temperature:");       
+  Serial.println(t);                  // 온도 값 출력
 
-  //strcpy(INSERT_SQL,"INSERT INTO test.new_table VALUES (23,33)");
-  sprintf(INSERT_SQL, "INSERT INTO test.new_table VALUES (%d,%d)", t, h);
+  
+  sprintf(INSERT_SQL, "INSERT INTO test.env VALUES (NOW(),%d,%d)", t, h); //쿼리문 온습도
   if (conn.connected()) {
     cursor->execute(INSERT_SQL);
   }
@@ -106,5 +109,11 @@ void loop() {
     delay(1);
   }
   cnt = 0;
-  //delay(6000);
+  
+  sprintf(INSERT_SQL, "INSERT INTO test.elec_stat VALUES (NOW(),%d,777)", smoothAmps); //쿼리문 온습도
+  if (conn.connected()) {
+    cursor->execute(INSERT_SQL);
+  }
+  
+  delay(600000); //60초마다 반복해 10분마다
 }
