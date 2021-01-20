@@ -1,5 +1,5 @@
 const int analogIn = A0; //아날로그 입력 PIN
-int mVperAmp = 66; // 아날로그 입력 mV당 전류 값
+int mVperAmp = 100; // 아날로그 입력 mV당 전류 값
 // 5A 짜리는 185
 // 20A 짜리는 100
 // 30A 짜리는 66
