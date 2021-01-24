@@ -38,7 +38,7 @@ void setup() {
 
   Serial.println();
   Serial.println(ssid);
-  WiFi.begin(ssid, password); // 와이파이 이름과 비밀번호를 통해 WIFI연결을 시작하겠다 // WL_CONNECTED라는 값을 돌려준다
+  WiFi.begin(ssid, password); // 와이파이 이름과 비밀번호를 통해 WIFI연결을 시작 // WL_CONNECTED라는 값을 돌려준다
   while (WiFi.status() != WL_CONNECTED) {
     // 네트워크의 연결 상태, 8개의 리턴값
     // STATUS와 WL_CONNECTED 값이 같은지를 통해 제대로 연결이 되있는지를 확인할 수 있다
@@ -83,12 +83,12 @@ void loop() {
   Serial.print(AmpsRMS);
   Serial.println(" Amps RMS");
 
-  sprintf(INSERT_SQL, "INSERT INTO test.elec_stat VALUES (NOW(),%f,777)", AmpsRMS); //쿼리문 온습도
+  sprintf(INSERT_SQL, "INSERT INTO test.elec_stat VALUES (NOW(),%f,111)", AmpsRMS); //쿼리문 온습도 //111은 모니터 값
   if (conn.connected()) {
     cursor->execute(INSERT_SQL);
   }
 
-  delay(6000); //60초마다 반복해 10분마다
+  delay(599000); // 반복해 10분마다
 }
 
 float getVPP()
