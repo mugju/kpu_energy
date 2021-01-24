@@ -18,6 +18,7 @@ DHT dht(DHTPIN, DHTTYPE);
 #include <TimeElapsed.h>
 
 
+
 unsigned long lastMs = 0;
 unsigned long ms = millis();
 
@@ -69,11 +70,13 @@ void loop() {
     Serial.println("try reconnect");
     Wifi_connect();
   }
+  
 
   DateTimeParts p = DateTime.getParts();
   if (p.getMinutes() % 5 == 0 && p.getSeconds() == 0) { //여기가 5분단위 시점 5분마다 0초에
 
     Serial.println(DateTime.toString()); //5분단위 시간 확인
+    
 
 
     //온습도 저장 (이것도 5분단위로 수집하자)
@@ -86,16 +89,18 @@ void loop() {
     Serial.println(t);                  // 온도 값 출력
 
 
-    sprintf(INSERT_SQL, "INSERT INTO test.env VALUES (NOW(),%d,%d)", t, h); //쿼리문 온습도
-    if (conn.connected()) {
-      cursor->execute(INSERT_SQL);
-    }
+    
     Voltage = getVPP();
     VRMS = (Voltage / 2.0) * 0.707;          // RMS값 70.7%
     AmpsRMS = (VRMS * 1000) / mVperAmp;      // mA 단위 맞춰줌
     Serial.print(AmpsRMS);
     Serial.println(" Amps RMS");
 
+    sprintf(INSERT_SQL, "INSERT INTO test.env VALUES (NOW(),%d,%d)", t, h); //쿼리문 온습도
+    if (conn.connected()) {
+      cursor->execute(INSERT_SQL);
+    }
+    
     sprintf(INSERT_SQL, "INSERT INTO test.elec_stat VALUES (NOW(),%f,111)", AmpsRMS); //쿼리문 온습도 //111은 모니터 값
     if (conn.connected()) {
       cursor->execute(INSERT_SQL);
