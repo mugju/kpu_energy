@@ -73,7 +73,7 @@ void loop() {
   
 
   DateTimeParts p = DateTime.getParts();
-  if (p.getMinutes() % 5 == 0 && p.getSeconds() == 0) { //여기가 5분단위 시점 5분마다 0초에
+  if (p.getMinutes() % 5 == 0) { //여기가 5분단위 시점 5분마다 0초에
 
     Serial.println(DateTime.toString()); //5분단위 시간 확인
     
@@ -106,6 +106,8 @@ void loop() {
       cursor->execute(INSERT_SQL);
     }
 
+    delay(299000); //1초마다 반복하되 시간이 자꾸밀려서 이 값은 조정 필요.
+
 
   }//여기가 5분마다 실행되는 부분.
 
@@ -114,7 +116,7 @@ void loop() {
 
 
 
-  delay(1000); //1초마다 반복하되 시간이 자꾸밀려서 이 값은 조정 필요.
+  
 }
 
 
