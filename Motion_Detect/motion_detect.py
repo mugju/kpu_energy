@@ -7,20 +7,19 @@ import numpy as np
 # Store Id is necessary!!!!! 
 store_id = 22
 
-def sendSql(cursor,sql):
+def sendSql(cursor,sql): #send SQL QUERY
     cursor.execute(sql)
     conn.commit()
     return cursor.fetchall()
 
-def getTime():
+def getTime(): # get time from NTP
     timeServer = 'time.windows.com'
     c = ntplib.NTPClient()
     response = c.request(timeServer, version=3)
     a=response.tx_time
     return time.localtime(a)
-    # str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)
-
-def motion(cursor):
+    
+def motion(cursor): #detect motion and send appropriate SQL query to MYSQL DB Server
     thresh = 25
     max_diff = 5
     motion_check = 1
@@ -81,17 +80,14 @@ def motion(cursor):
                 tm = getTime()
                 if tm.tm_min%1==0 and tm.tm_sec==0:
                     if motion_check ==1: #no motion in 5 minutes
-                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\',22,1)'
+                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\',store_id,1)'
                         sendSql(cursor,sql)
                     else: # motion in 5 minutes
-                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\',22,0)'
+                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\',store_id,0)'
                         sendSql(cursor,sql)
             except:
                 continue
 
-                
-                
-                
             stacked = np.hstack((draw, cv2.cvtColor(diff, cv2.COLOR_GRAY2BGR)))
             cv2.imshow('motion', stacked)
 
