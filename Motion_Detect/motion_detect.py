@@ -22,9 +22,9 @@ def getTime(): # get time from NTP
 def motion(cursor): #detect motion and send appropriate SQL query to MYSQL DB Server
     thresh = 25
     max_diff = 5
-    motion_check = 1
-    had_motion=1
-    start=0
+    motion_check = 0
+    had_motion=0
+    start=time.time()
     a, b, c = None, None, None
 
     cap = cv2.VideoCapture(0)
@@ -71,19 +71,18 @@ def motion(cursor): #detect motion and send appropriate SQL query to MYSQL DB Se
                     start = time.time()
                     had_motion=0
                 else: #not first time,no motion
-                    if (time.time()-start)>30: #more than 30 seconds with no motion
-                        motion_check = 0 #variable which mean more than 30 seconds with no motion
-                    else:
-                        motion_check=1
+                    if (time.time()-start)>300: #more than 30 seconds with no motion
+                        motion_check = 0 #variable which mean more than 300 seconds with no motion
+    
             # send SQL
             try:
                 tm = getTime()
-                if tm.tm_min%1==0 and tm.tm_sec==0:
-                    if motion_check ==1: #no motion in 5 minutes
-                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\',store_id,1)'
+                if tm.tm_min%5==0 and tm.tm_sec==0:
+                    if motion_check ==1: #motion in 5 minutes
+                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\','+str(store_id)+',1)'
                         sendSql(cursor,sql)
-                    else: # motion in 5 minutes
-                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\',store_id,0)'
+                    else: # no motion in 5 minutes
+                        sql = 'insert into Env (datetime, store_id,people) values(\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':'+str(tm.tm_sec)+'\','+str(store_id)+',0)'
                         sendSql(cursor,sql)
             except:
                 continue
