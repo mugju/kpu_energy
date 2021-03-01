@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+                                        <!-- datasource.xml: MySQL 접속해주는 설정을 저장-->
+
+
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"  
+            value="com.mysql.cj.jdbc.Driver" /> <!--어떤 db 드라이버 쓸 것인지 물어보았는데 여기서  driverClassName을 선언 해주고, value="com.mysql.cj.jdbc.Driver"로 mysql을 설정해줌   -->
+        <property name="url"
+            value="jdbc:mysql://13.209.100.19:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false" />
+        <property name="username" value="kym" /> <!-- url은 이쪽 db를 사용하겠다. 미리 선언 한 것   --><!--[DB 서버 주소], [니네 DB 이름],[DB 접속 아이디], [DB 접속 비밀번호] 이 부분에 우리 것으로 추후 다 바꿔줘야함   -->
+        <property name="password" value="kim" />
+    </bean> 
+
+
+    <!-- MyBatis -->  <!--MyBatis db 쉽게 이용하게 해주는 프레임 워크 -> 아래는 이걸 사용하기 위한 설정들  -->
+    <bean id="sqlSessionFactory"
+        class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation"
+            value="classpath:/config/mybatis-config.xml"></property> <!--classpath:/config/mybatis-config.xml -> 이 경로 값에 mybatis-config.xml를 만들어 줘야 한다.   -->
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations"
+            value="classpath:/mappers/*.xml"></property> <!-- classpath:/mappers/.xml 이 경로 안에 *.xml를 넣어 줘야 한다  -->
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+        <constructor-arg index="1" value="SIMPLE"/>
+<!--         <constructor-arg index="1" value="SIMPLE"/> -->
+    </bean>
+
+    <bean id="transactionManager"
+class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>

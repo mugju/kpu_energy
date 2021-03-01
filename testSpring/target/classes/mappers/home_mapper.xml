@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+ "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- home_mapper: spl문을 실행시키는 역할  아래의(select * from product)같은 것 -->
+<mapper namespace="com.testSpring">
+	
+	<resultMap type="com.testSpring.model.HomeVo" id="homeResultMap"> <!--resultMap -> 결과를 담을 객체, type -> 반환형을 표시해주는 느낌, HomeDaoImpl 에서 리턴 해줄때 HomeVo 타입으로 리턴해주려고 / id -> 아래 homeTest에서 사용하려고  -->
+		<id column="id" property="id" /> <!--column: 데이터베이스에 있는 컬럼 명이 들어감, property: Vo에 만들었던 변수 명이 들어감  --><!-- id는 프라이머리 키라서 id column= 에 넣는다. -->
+		<result column="datetime" property="datetime"/> <!--추가할 때 따옴표 안에 절때 공백 없어야 함  -->
+		<result column="electric" property="electric"/>
+		<result column="humid" property="humid"/>
+		<result column="location" property="location"/>
+		<result column="name" property="name"/>
+		<result column="temp" property="temp"/>
+
+		
+		
+		
+	</resultMap>
+	
+	<!-- select 문에는  id는 무조건 있어야 하고,  resultMap은 선택,  resultMap은 select에만 들어가고 homeVO에 예쁘게 담고 싶을때 resultMap을 사용-->
+	<select id="homeTest" resultMap="homeResultMap"> <!--<select 쿼리문 안의 select를 사용하겠다. id = mapper에서 이 id를 호출하면 이 안의 쿼리문이 select되서 실행된다. -->
+	<!-- 아래에서 수행한 결과들을 위의  resultMap에 담아 넣는다.-->
+		SELECT * FROM product <!--SELECT = 조회      UPDATE = 수정 INSERT = 삽입      --> <!-- 소문자를 대문자로 바꾸는 단축키 ctrl + y  -->
+	
+		<!--SELECT를 하고 싶으면 <select>  (내용)  </select> 를 해야 한다.  -->
+		<!--UPDATE를 하고 싶으면 <update>  (내용)  </update> 를 해야 한다.  -->
+		
+	
+	</select><!-- <select></select> 안에는 하나의 sql 쿼리문 만 들어갈 수 있다.-->
+	
+	
+	<select id="getElecStat" resultMap="homeResultMap">
+	
+		SELECT prod.id, prod.name, prod.location, DATE_FORMAT(TRUNCATE(elec.datetime, -2), '%Y-%m-%d %H:%i:%s') datetime, elec.electric, env.temp, env.humid
+		FROM elec_stat elec INNER JOIN env env
+		ON DATE_FORMAT(TRUNCATE(elec.datetime, -2), '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(TRUNCATE(env.datetime, -2), '%Y-%m-%d %H:%i:%s')
+		INNER JOIN product prod ON elec.prod_id = prod.id
+	
+	
+	
+	
+<!-- 		SELECT prod.id, prod.name, prod.location, elec.datetime, elec.electric, env.temp, env.humid
+		FROM elec_stat elec INNER JOIN product prod ON elec.prod_id = prod.id
+		INNER JOIN env env ON elec.datetime = env.datetime -->   <!--  <- DB 에서는 끝에 ;이 끝맺음으로 있지만 여기서는 ;지워줘야 한다.  -->
+		
+	
+	
+	
+		
+		<!-- SELECT datetime, electric, prod_id id FROM elec_stat --> <!-- prod_id id : alias (별칭) prod_id를 id로 별칭을 지어줌 -> id는 현재 db의 id이므로 (둘이 같은 값이라 이렇게 해줌) -->
+		
+	</select>
+   	
+</mapper>

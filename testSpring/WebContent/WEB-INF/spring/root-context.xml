@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 보통은 서블릿 컨텍스트에 있는 설정들을 이 파일에 작성하는데 예외로 서블릿 컨텍스트를 생성해서 여기에 넣어놓음  (원래는 서블릿 컨텍스트 작성x)-->
+</beans>
+
