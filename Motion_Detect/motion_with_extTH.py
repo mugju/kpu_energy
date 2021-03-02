@@ -23,7 +23,7 @@ def getIP(): # 공인 ip 찾아주는 api
 
 def getLoc(ip): #ip기반으로 주소, 경도, 위도 찾는 api
     print("Getting lan, lng....")
-    request = "https://geo.ipify.org/api/v1?apiKey=at_UeB7YHQ9B3y7yxUgsSBbTqjw2Rc3Z&ipAddress="+ip
+    request = "https://geo.ipify.org/api/v1?apiKey=?="+ip #key 입력
     url = urlopen(request).read().decode('utf8')
     json_data = json.loads(url)
     return json_data
@@ -34,7 +34,7 @@ def getAddr(lat,lng): # 위도랑 경도 기반으로 배열로 주소 알려줌
     sublocal1=''
     sublocal2=''
     arr=[]
-    gmaps = googlemaps.Client(key='AIzaSyDOHJ5O17vrctc-lei_67TGf5lfiQ5SeRg')
+    gmaps = googlemaps.Client(key='?') #key입력
     addr = gmaps.reverse_geocode((lat, lng),language='ko')
     for i in range(len(addr[0]['address_components'])):
         for j in addr[0]['address_components'][i]['types']:
@@ -129,7 +129,7 @@ def getDHT(nx,ny): #기상청 api에서 데이터 가져옴 REH가 습도, T1H�
     
     CallBackURL = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst'
     params = '?' + urlencode({ 
-        quote_plus("serviceKey"): "A1p0vUiD%2FeSU99PG7kAIIwmJXcA9VJJuPChc5gRjevr4XDnF852eQpbgiD5mUcfArWRi9g4vt8S%2Bheg2sFsWaA%3D%3D",                        
+        quote_plus("serviceKey"): "?", #key입력                        
         quote_plus("numOfRows"): "10", 
         quote_plus("pageNo"): "1", 
         quote_plus("dataType"): "JSON", 
