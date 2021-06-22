@@ -5,7 +5,7 @@
 #define WIFI_SSID "Elijah"
 #define WIFI_PASS "elijah0816"
 #define IO_USERNAME "whfwkr16"
-#define IO_KEY "aio_SAdm97C9x6lR1txMGkd27vy0scsG"
+#define IO_KEY "..."
 
 AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, WIFI_SSID, WIFI_PASS);
 AdafruitIO_Feed *feed = io.feed("people", IO_USERNAME);
