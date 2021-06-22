@@ -8,11 +8,13 @@ import urllib
 import requests
 import json
 import math
-import googlemaps
 from requests import get
 from urllib.parse import urlencode, unquote, quote_plus
 from urllib.request import urlopen
 from datetime import datetime,timedelta
+from Adafruit_IO import Client
+
+
 
 #store_id is necessary!!!!
 store_id=11
@@ -23,38 +25,11 @@ def getIP(): # 공인 ip 찾아주는 api
 
 def getLoc(ip): #ip기반으로 주소, 경도, 위도 찾는 api
     print("Getting lan, lng....")
-    request = "https://geo.ipify.org/api/v1?apiKey=?="+ip #key 입력
+    request = "https://geo.ipify.org/api/v1?apiKey=at_UeB7YHQ9B3y7yxUgsSBbTqjw2Rc3Z&ipAddress="+ip
     url = urlopen(request).read().decode('utf8')
     json_data = json.loads(url)
     return json_data
 
-def getAddr(lat,lng): # 위도랑 경도 기반으로 배열로 주소 알려줌 *일단 안씀, 나중에
-    admin_level=''
-    locality=''
-    sublocal1=''
-    sublocal2=''
-    arr=[]
-    gmaps = googlemaps.Client(key='?') #key입력
-    addr = gmaps.reverse_geocode((lat, lng),language='ko')
-    for i in range(len(addr[0]['address_components'])):
-        for j in addr[0]['address_components'][i]['types']:
-            if j == 'administrative_area_level_1':
-                admin_level= addr[0]['address_components'][i]['short_name']
-            elif j == 'locality':
-                locality = addr[0]['address_components'][i]['short_name']
-            elif j == 'sublocality_level_1':
-                sublocal1 = addr[0]['address_components'][i]['short_name']
-            elif j == 'sublocality_level_2':
-                sublocal2 = addr[0]['address_components'][i]['short_name']
-                
-    arr.append(admin_level)
-    if locality != '':
-        arr.append(locality)
-    if sublocal1 != '':
-        arr.append(sublocal1)
-    if sublocal2 != '':
-        arr.append(sublocal2)    
-    return arr
 
 def mapToGrid(lat, lon, code = 0 ): # 기상청 api로 사용가능하도록 경도 위도를 격자로 변경
     print("Changing lat, lng to Grid....")
@@ -73,7 +48,6 @@ def mapToGrid(lat, lon, code = 0 ): # 기상청 api로 사용가능하도록 경
     DEGRAD = PI/ 180.0
     RADDEG = 180.0 / PI
 
-
     re = Re / grid
     slat1 = slat1 * DEGRAD
     slat2 = slat2 * DEGRAD
@@ -86,9 +60,7 @@ def mapToGrid(lat, lon, code = 0 ): # 기상청 api로 사용가능하도록 경
     sf = math.pow(sf, sn) * math.cos(slat1) / sn
     ro = math.tan(PI * 0.25 + olat * 0.5)
     ro = re * sf / math.pow(ro, sn)
-    
-    
-    
+
     ra = math.tan(PI * 0.25 + lat * DEGRAD * 0.5)
     ra = re * sf / pow(ra, sn)
     theta = lon * DEGRAD - olon
@@ -129,7 +101,7 @@ def getDHT(nx,ny): #기상청 api에서 데이터 가져옴 REH가 습도, T1H�
     
     CallBackURL = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst'
     params = '?' + urlencode({ 
-        quote_plus("serviceKey"): "?", #key입력                        
+        quote_plus("serviceKey"): "A1p0vUiD%2FeSU99PG7kAIIwmJXcA9VJJuPChc5gRjevr4XDnF852eQpbgiD5mUcfArWRi9g4vt8S%2Bheg2sFsWaA%3D%3D",                        
         quote_plus("numOfRows"): "10", 
         quote_plus("pageNo"): "1", 
         quote_plus("dataType"): "JSON", 
@@ -149,21 +121,82 @@ def getDHT(nx,ny): #기상청 api에서 데이터 가져옴 REH가 습도, T1H�
             
     return int(tmp),int(humid)
 
+def setAio():
+    ADAFRUIT_IO_KEY = 'aio_PIwM82aZLsPOcOVCtO7j4k4xCK6c'
+    ADAFRUIT_IO_USERNAME = 'whfwkr16'
+    return Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
+
+def sendToAio(aio,tm,motion_check):
+    if tm.tm_sec%5==0:
+        if motion_check ==1:
+            aio.send("people",1)
+        else:
+            aio.send("people",0)
+
+
 def sendSql(cursor,sql): #send SQL QUERY
     cursor.execute(sql)
     conn.commit()
     return cursor.fetchall()
 
-def motion_with_extDHT(cursor,nx,ny): #모션 인식하고, 온도 습도 가져와서 데베에 보내줌
-    tmp=9999
-    humid=9999
+
+def sendToDB(cursor, nx, ny, tm, motion_check):
+    sqlTime = '\'' + str(tm.tm_year) + '-' + str(tm.tm_mon) + '-' + str(tm.tm_mday) + ' ' + str(tm.tm_hour) + ':' + str(
+        tm.tm_min) + ':00\''
+    tmp = 9999
+    humid = 9999
+
+    try:
+        if tm.tm_min % 5 == 0 and (tm.tm_sec >= 0 or tm.tm_sec <= 2):  # 확인 주기를 늘리기위해 2초 추가
+            tmp, humid = getDHT(nx, ny)
+            if motion_check == 1:  # motion in 5 minutes
+                sql = 'insert into Env (datetime, store_id,ext_temp,ext_humid,people) values(' + sqlTime + ',' + str(
+                    store_id) + ',' + str(tmp) + ',' + str(humid) + ',1)'
+                sendSql(cursor, sql)
+            else:  # no motion in 5 minutes
+                sql = 'insert into Env (datetime, store_id,ext_temp,ext_humid,people) values(' + sqlTime + ',' + str(
+                    store_id) + ',' + str(tmp) + ',' + str(humid) + ',0)'
+                sendSql(cursor, sql)
+    except:
+        if motion_check == 1:  # motion in 5 minutes
+            sql = 'update Env set ext_temp=' + str(tmp) + ',ext_humid=' + str(
+                humid) + ', people=1 where store_id =' + str(store_id) + ' and datetime=' + sqlTime
+            sendSql(cursor, sql)
+        else:  # no motion in 5 minutes
+            sql = 'update Env set ext_temp=' + str(tmp) + ',ext_humid=' + str(
+                humid) + ', people=0 where store_id =' + str(store_id) + ' and datetime=' + sqlTime
+            sendSql(cursor, sql)
+
+
+def motionCheck(diff_cnt, max_diff,diff,draw, cv2, had_motion, motion_check, start):
+    if diff_cnt > max_diff:  # detect motion
+        nzero = np.nonzero(diff)
+        cv2.rectangle(draw, (min(nzero[1]), min(nzero[0])), (max(nzero[1]), max(nzero[0])), (0, 255, 0), 2)
+        cv2.putText(draw, "Motion detected!!", (10, 30), cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 0, 255))
+        had_motion = 1
+        motion_check = 1
+
+    else:  # motion detect X
+        if had_motion == 1:  # 모션 감지 후, 첫번째로 감지 안됐을 경우 타이머 시작
+            start = time.time()
+            had_motion = 0
+        else:  # 모션 감지 후, 첫번째로 이후로 감지가 안됐을 경우
+            if (time.time() - start) > 30:  # more than 30 seconds with no motion
+                motion_check = 0  # variable which mean more than 300 seconds with no motion
+
+    return had_motion, motion_check, start
+
+
+def motion(cursor, nx, ny):
+    aio = setAio()
+
     thresh = 25
     max_diff = 5
     motion_check = 0
-    had_motion=0
-    start=time.time()
-    a, b, c = None, None, None
+    had_motion = 0
+    start = time.time()
 
+    a, b, c = None, None, None
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 320)
@@ -193,46 +226,9 @@ def motion_with_extDHT(cursor,nx,ny): #모션 인식하고, 온도 습도 가져
             diff = cv2.morphologyEx(diff, cv2.MORPH_OPEN, k)
 
             diff_cnt = cv2.countNonZero(diff)
-            if diff_cnt > max_diff: #detect motion
-                nzero = np.nonzero(diff)
-                cv2.rectangle(draw, (min(nzero[1]), min(nzero[0])),
-                              (max(nzero[1]), max(nzero[0])), (0, 255, 0), 2)
-                cv2.putText(draw, "Motion detected!!", (10, 30),
-                            cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 0, 255))
-                had_motion = 1
-                motion_check = 1
 
-
-            else: #motion detect X
-                if had_motion == 1: #first time, no motion
-                    start = time.time()
-                    had_motion=0
-                else: #not first time,no motion
-                    if (time.time()-start)>300: #more than 30 seconds with no motion
-                        motion_check = 0 #variable which mean more than 300 seconds with no motion
-    
-            # send SQL
-            try:
-                tm = getCurTime()
-            except:
-                continue
-            sqlTime = '\''+str(tm.tm_year)+'-'+str(tm.tm_mon)+'-'+str(tm.tm_mday)+' '+str(tm.tm_hour)+':'+str(tm.tm_min)+':00\''
-            try:
-                if tm.tm_min%5==0 and (tm.tm_sec==0 or tm.tm_sec==1): #확인 주기를 늘리기위해 1초 추가
-                    tmp,humid = getDHT(nx,ny)
-                    if motion_check ==1: #motion in 5 minutes
-                        sql = 'insert into Env (datetime, store_id,ext_temp,ext_humid,people) values('+sqlTime+','+str(store_id)+','+str(tmp)+','+str(humid)+',1)'
-                        sendSql(cursor,sql)
-                    else: # no motion in 5 minutes
-                        sql = 'insert into Env (datetime, store_id,ext_temp,ext_humid,people) values('+sqlTime+','+str(store_id)+','+str(tmp)+','+str(humid)+',0)'
-                        sendSql(cursor,sql)
-            except:
-                if motion_check ==1: #motion in 5 minutes
-                    sql = 'update Env set ext_temp='+str(tmp)+',ext_humid='+str(humid)+', people=1 where store_id ='+str(store_id)+' and datetime='+sqlTime
-                    sendSql(cursor,sql)
-                else: # no motion in 5 minutes
-                    sql = 'update Env set ext_temp='+str(tmp)+',ext_humid='+str(humid)+', people=0 where store_id ='+str(store_id)+' and datetime='+sqlTime
-                    sendSql(cursor,sql)
+            # 모션이 있었는지 확인
+            had_motion, motion_check, start = motionCheck(diff_cnt, max_diff,diff,draw, cv2, had_motion, motion_check, start)
 
             stacked = np.hstack((draw, cv2.cvtColor(diff, cv2.COLOR_GRAY2BGR)))
             cv2.imshow('motion', stacked)
@@ -240,8 +236,20 @@ def motion_with_extDHT(cursor,nx,ny): #모션 인식하고, 온도 습도 가져
             a = b
             b = c
 
+            # 현재 인터넷 시간 불러오기
+            try:
+                tm = getCurTime()
+            except:
+                continue
+
+            # DB로 보내기
+            sendToDB(cursor, nx, ny, tm, motion_check)
+            # Adafruit IO로 보내기
+            sendToAio(aio, tm,motion_check)
+
+            # ESC눌리면 종료
             if cv2.waitKey(1) & 0xFF == 27:
-                break    
+                break
 
 #main------------------------------------------------------------------
 conn = pymysql.connect(
@@ -258,6 +266,5 @@ loc = getLoc(ip)
 lat = loc['location']['lat']
 lng=loc['location']['lng']
 nx,ny = mapToGrid(lat,lng)
-addr=getAddr(lat,lng)  
 
-motion_with_extDHT(cursor,nx,ny)
+motion(cursor,nx,ny)
