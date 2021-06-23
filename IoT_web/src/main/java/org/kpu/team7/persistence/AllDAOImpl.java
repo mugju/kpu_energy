@@ -98,7 +98,7 @@ public class AllDAOImpl implements AllDAO {
 	public List<SmartPlugVO> readTotalMonthAmpData(InquireDateVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("hello2");
-		return sqlSession.selectList(smartplugnamespace + ".a", vo);
+		return sqlSession.selectList(smartplugnamespace + ".totalMonthAmpData", vo);
 	}
 
 	@Override

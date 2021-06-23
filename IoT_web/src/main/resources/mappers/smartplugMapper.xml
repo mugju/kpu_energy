@@ -104,7 +104,7 @@
 	]]>	
 	</select>
 	
-	<select id="totalMonthReductionAmpData" resultType="SmartPlugVO">
+	<select id="totalMonthAmpData" resultType="SmartPlugVO">
 	<![CDATA[
 	select date_format(datetime,'%Y-%m-%d') as datetime,
 	sum(amp) as amp
