@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kpu.team7.mappers.clientMapper">
+	<select id="clientData" resultType="ClientVO">
+		select * from Account
+		where
+		store_id=#{store_id} and id=#{id} and passwd=#{passwd}
+	</select>
+
+	<select id="storeId" resultType="int">
+		select store_id from Store where
+		name=#{name}
+	</select>
+
+	<select id="All" resultType="SmartPlugVO">
+	<![CDATA[
+		select * from Smart_plug where
+		id=#{id} and store_id=#{store_id} and datetime<=#{eDate} and
+		datetime>=#{sDate}
+		]]>
+	</select>
+
+	<select id="env" resultType="EnvVO">
+	<![CDATA[
+		select datetime,people from Env where store_id=#{store_id} and datetime<=#{eDate} and
+		datetime>=#{sDate}
+		]]>
+	</select>
+</mapper>
