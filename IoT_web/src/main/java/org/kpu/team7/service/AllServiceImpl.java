@@ -81,7 +81,6 @@ public class AllServiceImpl implements AllService {
 	@Override
 	public List<SmartPlugVO> readTotalMonthAmpData(InquireDateVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("hello1");
 		return dao.readTotalMonthAmpData(vo);
 	}
 	@Override
