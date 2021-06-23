@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kpu.team7.mappers.clientMapper">
+	<select id="clientData" resultType="ClientVO">
+		select * from Account
+		where
+		store_id=#{store_id} and id=#{id} and passwd=#{passwd}
+	</select>
+	
+	<select id="storeId" resultType="int">
+		select store_id from Store where
+		name=#{name}
+	</select>
+	
+	<select id="selectName" resultType="ProductVO">
+		select id,name from Product where
+		store_id=#{storeId}
+	</select>
+	
+	<select id="productName" resultType="int">
+		select id from Product where
+		name=#{pName}
+	</select>
+
+</mapper>
