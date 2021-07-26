@@ -44,8 +44,18 @@ double VRMS = 0;
 double AmpsRMS = 0;
 
 //wifi
-const char* ssid = "SK_WiFiGIGA04C6_2.4G";
-const char* password = "1803003041";
+
+//내꺼
+//#define WIFI_SSID "DongD"
+//#define WIFI_PASS "qazwsxedc" //이거 바꿔
+//const char* ssid = "SK_WiFiGIGA04C6_2.4G";
+//const char* password = "1803003041";
+const char* ssid = "DongD";
+const char* password = "qazwsxedc";
+
+
+//const char* ssid = "AndroidHotspot1283";
+//const char* password = "j1234567"; //이거 바꿔
 
 //sql 연결셋팅부
 IPAddress server_addr(13, 209, 100, 19); // IP of the MySQL *server* here
@@ -68,7 +78,7 @@ int now_min = 99;
 ///adafruit관련 추가내용
 //adafrut관련 값들
 #define IO_USERNAME "whfwkr16"
-#define IO_KEY "aio_*********************"
+#define IO_KEY "aio_tdQa196PRqRNuFaN4o4g3KHmwagr"
 
 #include "AdafruitIO_WiFi.h"
 ////////////////////////////////////////////////
@@ -94,6 +104,8 @@ AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, ssid, password);
 //피드이름
 
 AdafruitIO_Feed *SM_plug = io.feed("SM_plug");
+
+AdafruitIO_Feed *SM_elec = io.feed("SM_elec");
 
 void setup() {
   Serial.begin(115200); //전송속도
@@ -143,6 +155,7 @@ void loop() {
   //Serial.println(io.statusText()); //피드 상태메시지 확인
 
   SM_plug->onMessage(handleMessage); //메시지 수신했음
+//  light->onMessage(handleMessage); //메시지 수신했음
 
 
 
@@ -180,6 +193,9 @@ void loop() {
       AmpsRMS = (VRMS * 1000) / mVperAmp;      // mA 단위 맞춰줌
       Serial.print(AmpsRMS);
       Serial.println(" Amps RMS");
+      SM_elec->save(int(AmpsRMS*220));
+
+      
 
 //      //sprintf(INSERT_SQL, "INSERT INTO test.env VALUES (NOW(),%d,%d)", t, h); //쿼리문 온습도
 //      sprintf(UPDATE_SQL, "UPDATE db.Env SET `int_temp` = %d , `int_humid` = %d WHERE (`datetime` = '%s')", t, h, Time_now); //데이터 넣어줄 쿼리 온도와 습도를 넣어줌
@@ -254,7 +270,7 @@ void Wifi_connect() {
 void setupDateTime() {
   // 와이파이 연결이후에 수정하세요
   // you can use custom timeZone,server and timeout
-  DateTime.setTimeZone("UTC+9");
+  DateTime.setTimeZone("UTC-9");
   //DateTime.setServer("asia.pool.ntp.org");
   DateTime.begin(15 * 1000);
   //DateTime.setTimeZone(9);
