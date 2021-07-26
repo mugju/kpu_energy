@@ -64,6 +64,10 @@ def sendData(people):
 
     #MQTT로 보냄
     mqtt.publish("People",people)
+    if (people > 0):
+        mqtt.publish("Smplug1", 1)
+    else:
+        mqtt.publish("Smplug1", 0)
 
 def motionCheck(diff_cnt):
     #모션인식 민감도
