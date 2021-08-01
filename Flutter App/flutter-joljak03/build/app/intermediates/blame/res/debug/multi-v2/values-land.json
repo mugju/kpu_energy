@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\KYM\\Documents\\GitHub\\kpu_energy\\Flutter App\\flutter-joljak03\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-land\\values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\KYM\\Documents\\GitHub\\kpu_energy\\Flutter App\\flutter-joljak03\\android\\app\\src\\main\\res\\values-land\\styles.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "0",
+                        "startOffsets": "51",
+                        "endLines": "6",
+                        "endColumns": "8",
+                        "endOffsets": "328"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "8",
+                        "endOffsets": "332"
+                    }
+                }
+            ]
+        }
+    ]
+}
