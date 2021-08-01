@@ -7,6 +7,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 /// Local imports
 import '../../../../model/sample_view.dart';
 
+// dbb_connect
+import 'package:mysql1/mysql1.dart' as mysql;
+
 /// Renders the doughnut chart with legend
 class LegendDefault extends SampleView {
   /// Creates the doughnut chart with legend
@@ -17,7 +20,11 @@ class LegendDefault extends SampleView {
 }
 
 class _LegendDefaultState extends SampleViewState {
+
+
   _LegendDefaultState();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +40,25 @@ class _LegendDefaultState extends SampleViewState {
       series: _getLegendDefaultSeries(),
       tooltipBehavior: TooltipBehavior(enable: true),
     );
+
   }
+
+
+
+  // set managedInfo(List<mysql.ResultRow> managedInfo) {
+  //
+  // }
+
+
+
 
   ///Get the default circular series
   List<DoughnutSeries<ChartSampleData, String>> _getLegendDefaultSeries() {
+
     final List<ChartSampleData> chartData = <ChartSampleData>[
+
+
+
       ChartSampleData(x: 'Coal', y: 30.2),
       ChartSampleData(x: 'Large Hydro', y: 12.7),
       ChartSampleData(x: 'Small Hydro', y: 1.3),
@@ -58,5 +79,25 @@ class _LegendDefaultState extends SampleViewState {
           dataLabelSettings: const DataLabelSettings(
               isVisible: true, labelPosition: ChartDataLabelPosition.outside)),
     ];
+
   }
+  // Future Database() async {
+  //   var settings = mysql.ConnectionSettings(
+  //       host: '13.209.100.19', user: 'kym', password: 'kim', db: 'db');
+  //   var conn = await mysql.MySqlConnection.connect(settings);
+  //   var result = await conn.query('select * from Product');
+  //   await conn.close();
+  //   setState(() {
+  //     managedInfo = result.toList();
+  //     //https://www.youtube.com/watch?v=ig6WRq73iEg 로 시도해보기
+  //   });
+  // }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Database();
+  // }
+
+
 }
