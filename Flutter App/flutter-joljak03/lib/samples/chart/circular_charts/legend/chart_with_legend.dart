@@ -7,7 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 /// Local imports
 import '../../../../model/sample_view.dart';
 
-// dbb_connect
+// db_connect
 import 'package:mysql1/mysql1.dart' as mysql;
 
 /// Renders the doughnut chart with legend
@@ -23,6 +23,7 @@ class _LegendDefaultState extends SampleViewState {
 
 
   _LegendDefaultState();
+
 
 
 
@@ -43,11 +44,22 @@ class _LegendDefaultState extends SampleViewState {
 
   }
 
+  List<ChartSampleData> managedInfo = [
 
+  ];
 
-  // set managedInfo(List<mysql.ResultRow> managedInfo) {
-  //
+  // Widget build2(BuildContext context){
+  //   return Scaffold(
+  //     body: ListView.builder(
+  //       itemCount: managedInfo.length,
+  //       itemBuilder: (context, index) => managedInfo(x),
+  //     ),
+  //   );
   // }
+
+
+
+
 
 
 
@@ -81,23 +93,22 @@ class _LegendDefaultState extends SampleViewState {
     ];
 
   }
-  // Future Database() async {
-  //   var settings = mysql.ConnectionSettings(
-  //       host: '13.209.100.19', user: 'kym', password: 'kim', db: 'db');
-  //   var conn = await mysql.MySqlConnection.connect(settings);
-  //   var result = await conn.query('select * from Product');
-  //   await conn.close();
-  //   setState(() {
-  //     managedInfo = result.toList();
-  //     //https://www.youtube.com/watch?v=ig6WRq73iEg 로 시도해보기
-  //   });
-  // }
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Database();
-  // }
+  Future Database() async {
+    var settings = mysql.ConnectionSettings(
+        host: '13.209.100.19', user: 'kym', password: 'kim', db: 'db');
+    var conn = await mysql.MySqlConnection.connect(settings);
+    var result = await conn.query('select id from Product');
+    await conn.close();
+    setState(() {
+      managedInfo = result.toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Database();
+  }
 
 
 }
