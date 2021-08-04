@@ -48,14 +48,7 @@ class _LegendDefaultState extends SampleViewState {
 
   ];
 
-  // Widget build2(BuildContext context){
-  //   return Scaffold(
-  //     body: ListView.builder(
-  //       itemCount: managedInfo.length,
-  //       itemBuilder: (context, index) => managedInfo(x),
-  //     ),
-  //   );
-  // }
+
 
 
 
@@ -93,22 +86,7 @@ class _LegendDefaultState extends SampleViewState {
     ];
 
   }
-  Future Database() async {
-    var settings = mysql.ConnectionSettings(
-        host: '13.209.100.19', user: 'kym', password: 'kim', db: 'db');
-    var conn = await mysql.MySqlConnection.connect(settings);
-    var result = await conn.query('select id from Product');
-    await conn.close();
-    setState(() {
-      managedInfo = result.toList();
-    });
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    Database();
-  }
 
 
 }
