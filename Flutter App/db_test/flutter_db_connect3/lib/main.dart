@@ -32,7 +32,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var db = Mysql();
   List<Product> productList = [];
+  List<ProductAmp> productAmpList = [];
 
+  //_getCustomer();
   void _getCustomer() {
     db.getConnection().then((conn) {
       String sql = 'select id, name, location from Product';
@@ -47,6 +49,27 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _getAmp() {
+    db.getConnection().then((conn) {
+      String sql =
+          'SELECT name, amp FROM Product Inner Join (SELECT id, sum(amp) amp FROM Smart_plug group by id) sum_amp on Product.id = sum_amp.id';
+      conn.query(sql).then((results) {
+        for (var column in results) {
+          setState(() {
+            ProductAmp productAmp = new ProductAmp(column[0], column[1]);
+            productAmpList.add(productAmp);
+          });
+        }
+      });
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _getAmp();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          // horizontal).
+          // horizontal
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
@@ -68,6 +91,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   for (var product in productList)
                     Text(
                       '${product.id} ${product.name} ${product.location}',
+                    ),
+                ],
+              ),
+            Text(
+              'Amp: ',
+            ),
+            if (productAmpList.length != 0)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  for (var productAmp in productAmpList)
+                    Text(
+                      '${productAmp.name} ${productAmp.amp}',
                     ),
                 ],
               ),
