@@ -33,8 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
   var db = Mysql();
   List<Product> productList = [];
   List<ProductAmp> productAmpList = [];
+  List<ProductStore> productStoreList = [];
 
-  //_getCustomer();
   void _getCustomer() {
     db.getConnection().then((conn) {
       String sql = 'select id, name, location from Product';
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _getAmp() {
     db.getConnection().then((conn) {
       String sql =
-          'SELECT name, amp FROM Product Inner Join (SELECT id, sum(amp) amp FROM Smart_plug group by id) sum_amp on Product.id = sum_amp.id';
+          'SELECT name, round(amp, 2) FROM Product Inner Join (SELECT id, sum(amp) amp FROM Smart_plug group by id) sum_amp on Product.id = sum_amp.id';
       conn.query(sql).then((results) {
         for (var column in results) {
           setState(() {
@@ -64,11 +64,29 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _getStore() {
+    db.getConnection().then((conn) {
+      String sql =
+          'SELECT * from Store';
+      conn.query(sql).then((results) {
+        for (var column in results) {
+          setState(() {
+            ProductStore productStore = new ProductStore(column[0], column[1], column[2], column[3]);
+            productStoreList.add(productStore);
+          });
+        }
+      });
+    });
+  }
+
+
   @override
   initState() {
     super.initState();
     _getAmp();
+    _getStore();
   }
+
 
   @override
   Widget build(BuildContext context) {

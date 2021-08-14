@@ -187,28 +187,29 @@ class _LayoutPageState extends State<LayoutPage> {
                                   'card') ||
                           isInitState)
                       ? <Widget>[
-                          StatefulBuilder(builder: (BuildContext buildContext,
-                              StateSetter setState) {
-                            codeIconChangeSetState = setState;
-                            return Visibility(
-                                visible: _showIcon && currentSample != null,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  child: Container(
-                                    height: 37,
-                                    width: 37,
-                                    child: IconButton(
-                                      icon: Image.asset(
-                                          'images/git_hub_mobile.png',
-                                          color: Colors.white),
-                                      onPressed: () {
-                                        launch(currentSample!.codeLink!);
-                                      },
-                                    ),
-                                  ),
-                                ));
-                          }),
+                          // StatefulBuilder(builder: (BuildContext buildContext,
+                          //     StateSetter setState) {
+                          //   codeIconChangeSetState = setState;
+                          //   return Visibility(
+                          //       visible: _showIcon && currentSample != null,
+                          //       child: Padding(
+                          //         padding:
+                          //             const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                          //         child: Container(
+                          //           height: 37,
+                          //           width: 37,
+                          //           child: IconButton(
+                          //             icon: Image.asset(
+                          //                 'images/git_hub_mobile.png',
+                          //                 color: Colors.white),
+                          //             onPressed: () {
+                          //               launch(currentSample!.codeLink!);
+                          //             },
+                          //           ),
+                          //         ),
+                          //       )
+                          //   );
+                          // }),
                           StatefulBuilder(builder: (BuildContext buildContext,
                               StateSetter setState) {
                             infoIconChangeSetState = setState;

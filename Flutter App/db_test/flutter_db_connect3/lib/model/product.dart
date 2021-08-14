@@ -19,3 +19,19 @@ class ProductAmp {
     this.amp = amp;
   }
 }
+
+class ProductStore {
+  int? storeId;
+  String? name;
+  String? phone;
+  String? location;
+
+  ProductStore(int storeId, String name, String phone, String location) {
+    this.storeId = storeId;
+    this.name = name;
+    this.phone = phone;
+    this.location = location;
+  }
+}
+
+

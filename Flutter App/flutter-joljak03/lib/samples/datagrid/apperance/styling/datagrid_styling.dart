@@ -16,6 +16,8 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 /// Local import
 import '../../../../model/model.dart';
 import '../../../../model/sample_view.dart';
+import '../../../../model/mysql.dart';
+import '../../../../model/product.dart';
 
 /// render data grid widget
 class StylingDataGrid extends SampleView {
@@ -76,151 +78,59 @@ class _StylingDataGridState extends SampleViewState {
   List<GridColumn> getColumns() {
     const TextStyle textStyle =
         TextStyle(color: Color.fromRGBO(255, 255, 255, 1));
-    return isWebOrDesktop
-        ? <GridColumn>[
-            GridColumn(
-              columnName: 'orderId',
-              width: (isWebOrDesktop && model.isMobileResolution)
-                  ? 110.0
-                  : double.nan,
-              label: Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'Order ID',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'customerId',
-              width: 120.0,
-              label: Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'Customer ID',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'name',
-              width: (isWebOrDesktop && model.isMobileResolution)
-                  ? 110.0
-                  : double.nan,
-              label: Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'Name',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'freight',
-              width: (isWebOrDesktop && model.isMobileResolution)
-                  ? 100.0
-                  : double.nan,
-              label: Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'Freight',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'city',
-              width: (isWebOrDesktop && model.isMobileResolution)
-                  ? 100.0
-                  : double.nan,
-              label: Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'City',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'price',
-              width: (isWebOrDesktop && model.isMobileResolution)
-                  ? 115.0
-                  : double.nan,
-              label: Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'Price',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            )
-          ]
-        : <GridColumn>[
-            GridColumn(
-              columnName: 'orderId',
-              label: Container(
-                padding: const EdgeInsets.all(8),
-                alignment: Alignment.centerRight,
-                child: const Text(
-                  'Order ID',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              width: 100,
-              columnName: 'customerId',
-              columnWidthMode: isLandscapeInMobileView
-                  ? ColumnWidthMode.fill
-                  : ColumnWidthMode.none,
-              label: Container(
-                padding: const EdgeInsets.all(8),
-                alignment: Alignment.centerRight,
-                child: const Text(
-                  'Customer ID',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'name',
-              label: Container(
-                padding: const EdgeInsets.all(8),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Name',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            GridColumn(
-              columnName: 'city',
-              label: Container(
-                padding: const EdgeInsets.all(8),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'City',
-                  style: textStyle,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            )
-          ];
+
+    // web 화면 출력 관련 코드 지우고 앱 화면 출력 코드만 남김
+    // chart 상단의 파란 컬럼 내용
+    return <GridColumn>[
+      GridColumn(
+        columnName: 'storeId',
+        label: Container(
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.centerRight,
+          child: const Text(
+            'Store ID',
+            style: textStyle,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ),
+      GridColumn(
+        columnName: 'name',
+        label: Container(
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          child: const Text(
+            'Name',
+            style: textStyle,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ),
+      GridColumn(
+        columnName: 'phone',
+        label: Container(
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          child: const Text(
+            'Phone',
+            style: textStyle,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ),
+      GridColumn(
+        columnName: 'location',
+        label: Container(
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          child: const Text(
+            'Location',
+            style: textStyle,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ),
+    ];
   }
 
   SfDataGridTheme _buildDataGrid(GridLinesVisibility gridLineVisibility) {
@@ -291,6 +201,7 @@ class _StylingDataGridState extends SampleViewState {
     });
   }
 
+  //차트 외각 디자인
   BoxDecoration drawBorder() {
     final BorderSide borderSide = BorderSide(
         width: 1.0,
@@ -313,6 +224,7 @@ class _StylingDataGridState extends SampleViewState {
     }
   }
 
+  // 여기까지 디자인이라 이 위에 db 선언해도 의미 없음
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -334,202 +246,186 @@ class _StylingDataGridState extends SampleViewState {
   }
 }
 
-class _Employee {
-  _Employee(this.orderId, this.customerId, this.name, this.city, this.freight,
-      this.price);
-  final int orderId;
-  final int customerId;
-  final String name;
-  final String city;
-  final double freight;
-  final double price;
-}
+// class _Employee {
+//   _Employee(this.orderId, this.customerId, this.name, this.city, this.freight,
+//       this.price);
+//   final int orderId;
+//   final int customerId;
+//   final String name;
+//   final String city;
+//   final double freight;
+//   final double price;
+// }
 
+//얘가 stateful 위젯이 아니라서 setState 사용 불가능
+// 얘를 stateful로 바꿔줄지 아니면 setState를 대체할 코드 찾기
 class _StylingDataGridSource extends DataGridSource {
+  Mysql db = Mysql();
+
+  final List<ProductStore> productStoreList = <ProductStore>[];
+
+  void _getStore() {
+    db.getConnection().then((conn) {
+      String sql = 'SELECT * from Store';
+      conn.query(sql).then((results) {
+        for (var column in results) {
+          ProductStore productStore = new ProductStore(column[0], column[1], column[2], column[3]);
+          productStoreList.add(productStore);
+          print(column[0]);
+          print(column[1]);
+          print(column[2]);
+          print(column[3]);
+          print("queryResult 0 : " + productStoreList.length.toString());
+        }
+        print("queryResult 1 : " + productStoreList.length.toString());
+        buildDataGridRows();
+        print("queryResult 2 : " + productStoreList.length.toString());
+      });
+      
+    });
+    
+  }
+
+  List<ProductStore> returnProductStoreList = <ProductStore>[];
+
   _StylingDataGridSource({required this.model, required this.isWebOrDesktop}) {
-    employees = getEmployees(100);
-    buildDataGridRows();
+    //employees = getEmployees(100);
+
+    _getStore();
+
   }
 
   final math.Random random = math.Random();
   final SampleModel model;
-  List<_Employee> employees = <_Employee>[];
+
+  // 얘는 수정해야 함
+  //List<_Employee> employees = <_Employee>[];
+
+  // 건들면 안될 것 같음
   List<DataGridRow> dataGridRows = <DataGridRow>[];
+
+  // _Employee 대체인데 동시에 두번 선언이 맞나? -> 아니다 값이 안들어 간다. 위에서 못끌고 온다
+
   final bool isWebOrDesktop;
 
   /// Build DataGridRow collection
 
+  // 이부분 수정해서 값 추가히면 될듯 하다.
   void buildDataGridRows() {
-    dataGridRows = isWebOrDesktop
-        ? employees.map<DataGridRow>((_Employee dataGridRow) {
-            return DataGridRow(cells: <DataGridCell>[
-              DataGridCell<int>(
-                  columnName: 'orderId', value: dataGridRow.orderId),
-              DataGridCell<int>(
-                  columnName: 'customerId', value: dataGridRow.customerId),
-              DataGridCell<String>(columnName: 'name', value: dataGridRow.name),
-              DataGridCell<double>(
-                  columnName: 'freight', value: dataGridRow.freight),
-              DataGridCell<String>(columnName: 'city', value: dataGridRow.city),
-              DataGridCell<double>(
-                  columnName: 'price', value: dataGridRow.price),
-            ]);
-          }).toList(growable: false)
-        : employees.map<DataGridRow>((_Employee dataGridRow) {
-            return DataGridRow(cells: <DataGridCell>[
-              DataGridCell<int>(
-                  columnName: 'orderId', value: dataGridRow.orderId),
-              DataGridCell<int>(
-                  columnName: 'customerId', value: dataGridRow.customerId),
-              DataGridCell<String>(columnName: 'name', value: dataGridRow.name),
-              DataGridCell<String>(columnName: 'city', value: dataGridRow.city),
-            ]);
-          }).toList(growable: false);
+    // 아예 여기를 지우고 for문으로 대체할지 고민해보기기
+    print("queryResult 3 : " + productStoreList.length.toString());
+    dataGridRows = returnProductStoreList.map<DataGridRow>((ProductStore productRow) {
+      return DataGridRow(cells: <DataGridCell>[
+        DataGridCell<int>(columnName: 'storeId', value: productRow.storeId!),
+        DataGridCell<String>(columnName: 'name', value: productRow.name!),
+        DataGridCell<String>(columnName: 'city', value: productRow.phone!),
+        DataGridCell<String>(columnName: 'location', value: productRow.location!),
+        
+      ]);
+    }).toList(growable: false);
+    print("queryResult 4 : " + productStoreList.length.toString());
+    //print("queryResult 4 : " + productStoreList[0].storeId.toString());
   }
 
-  // Overrides
+  
 
+
+    // Overrides
   @override
   List<DataGridRow> get rows => dataGridRows;
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
+    
+    //_getStore;
+   
+    print("queryResult 5 : " + productStoreList.length.toString());
+    
     final int rowIndex = dataGridRows.indexOf(row);
+    
     Color backgroundColor = Colors.transparent;
     if ((rowIndex % 2) == 0) {
       backgroundColor = model.backgroundColor.withOpacity(0.07);
     }
 
-    if (isWebOrDesktop) {
-      return DataGridRowAdapter(color: backgroundColor, cells: <Widget>[
-        Container(
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            row.getCells()[0].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
+    return DataGridRowAdapter(color: backgroundColor, cells: <Widget>[
+      Container(
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.centerRight,
+        child: Text(
+          row.getCells()[0].value.toString(),
+          overflow: TextOverflow.ellipsis,
         ),
-        Container(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              row.getCells()[1].value.toString(),
-              overflow: TextOverflow.ellipsis,
-            )),
-        Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              row.getCells()[2].value.toString(),
-              overflow: TextOverflow.ellipsis,
-            )),
-        Container(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              NumberFormat.currency(locale: 'en_US', symbol: r'$')
-                  .format(row.getCells()[3].value)
-                  .toString(),
-              overflow: TextOverflow.ellipsis,
-            )),
-        Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              row.getCells()[4].value.toString(),
-              overflow: TextOverflow.ellipsis,
-            )),
-        Container(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              NumberFormat.currency(locale: 'en_US', symbol: r'$')
-                  .format(row.getCells()[5].value)
-                  .toString(),
-              overflow: TextOverflow.ellipsis,
-            )),
-      ]);
-    } else {
-      return DataGridRowAdapter(color: backgroundColor, cells: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerRight,
-          child: Text(
-            row.getCells()[0].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
+      ),
+      Container(
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.centerRight,
+        child: Text(
+          row.getCells()[1].value.toString(),
+          overflow: TextOverflow.ellipsis,
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerRight,
-          child: Text(
-            row.getCells()[1].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
+      ),
+      Container(
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          row.getCells()[2].value.toString(),
+          overflow: TextOverflow.ellipsis,
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            row.getCells()[2].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
+      ),
+      Container(
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          row.getCells()[3].value.toString(),
+          overflow: TextOverflow.ellipsis,
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            row.getCells()[3].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ]);
-    }
+      ),
+    ]);
   }
 
   // _Employee data sets
-
-  final List<String> names = <String>[
-    'Folko',
-    'Warth',
-    'Alfki',
-    'Frans',
-    'Welli',
-    'Folig',
-    'Seves',
-    'Furib',
-    'Picco',
-    'Linod',
-    'Simob',
-    'Vaffe',
-    'Rascu',
-    'Blonp',
-    'Merep'
-  ];
-  final List<String> cities = <String>[
-    'Graz',
-    'Bruxelles',
-    'Rosario',
-    'Recife',
-    'Campinas',
-    'Montreal',
-    'Tsawassen',
-    'Resende',
-  ];
-
-  List<_Employee> getEmployees(int count) {
-    final List<_Employee> employeeData = <_Employee>[];
-    for (int i = 0; i < count; i++) {
-      employeeData.add(_Employee(
-        1000 + i,
-        1700 + i,
-        names[i < names.length ? i : random.nextInt(names.length - 1)],
-        cities[random.nextInt(cities.length - 1)],
-        random.nextInt(1000) + random.nextDouble(),
-        1500.0 + random.nextInt(100),
-      ));
-    }
-    return employeeData;
-  }
+  //
+  // final List<String> names = <String>[
+  //   'Folko',
+  //   'Warth',
+  //   'Alfki',
+  //   'Frans',
+  //   'Welli',
+  //   'Folig',
+  //   'Seves',
+  //   'Furib',
+  //   'Picco',
+  //   'Linod',
+  //   'Simob',
+  //   'Vaffe',
+  //   'Rascu',
+  //   'Blonp',
+  //   'Merep'
+  // ];
+  // final List<String> cities = <String>[
+  //   'Graz',
+  //   'Bruxelles',
+  //   'Rosario',
+  //   'Recife',
+  //   'Campinas',
+  //   'Montreal',
+  //   'Tsawassen',
+  //   'Resende',
+  // ];
+//
+//   List<_Employee> getEmployees(int count) {
+//     final List<_Employee> employeeData = <_Employee>[];
+//     for (int i = 0; i < count; i++) {
+//       employeeData.add(_Employee(
+//         1000 + i,
+//         1700 + i,
+//         names[i < names.length ? i : random.nextInt(names.length - 1)],
+//         cities[random.nextInt(cities.length - 1)],
+//         random.nextInt(1000) + random.nextDouble(),
+//         1500.0 + random.nextInt(100),
+//       ));
+//     }
+//     return employeeData;
+//   }
 }

@@ -55,7 +55,7 @@ class _LineDefaultState extends SampleViewState {
         interval: 3,
       ),
       primaryYAxis: NumericAxis(
-          labelFormat: '{value}%',
+          labelFormat: '{value}',
           minimum: 1,
           maximum: 3.5,
           interval: 0.5,
