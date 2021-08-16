@@ -16,8 +16,7 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 /// Local imports
 import '../../../model/sample_view.dart';
-import '../../pdf/helper/save_file_mobile.dart'
-    if (dart.library.html) '../../pdf/helper/save_file_web.dart';
+
 
 ///Renders default circular chart sample
 class ExportCircular extends SampleView {
@@ -210,7 +209,7 @@ class _ExportState extends SampleViewState {
 
     final List<int> bytes = document.save();
     document.dispose();
-    await FileSaveHelper.saveAndLaunchFile(bytes, 'circular_chart.pdf');
+
   }
 
   Future<List<int>> _readImageData() async {
