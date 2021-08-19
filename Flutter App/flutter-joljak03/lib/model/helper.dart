@@ -103,15 +103,15 @@ class _FullViewSampleLayout extends StatelessWidget {
                                           height: 37,
                                           width: 37,
                                           
-                                          //아이콘 버튼
-                                          child: IconButton(
-                                            icon: Image.asset(
-                                                'images/git_hub_mobile.png',
-                                                color: Colors.white),
-                                            onPressed: () {
-                                              launch(sample!.codeLink!);
-                                            },
-                                          ),
+                                          // //아이콘 버튼
+                                          // child: IconButton(
+                                          //   icon: Image.asset(
+                                          //       'images/git_hub_mobile.png',
+                                          //       color: Colors.white),
+                                          //   onPressed: () {
+                                          //     launch(sample!.codeLink!);
+                                          //   },
+                                          // ),
                                         ),
                                       )
                                     else
@@ -143,15 +143,15 @@ class _FullViewSampleLayout extends StatelessWidget {
                                             height: 37,
                                             width: 37,
 
-                                            //깃헙 아이콘 버튼?
-                                            child: IconButton(
-                                              icon: Image.asset(
-                                                  'images/git_hub_mobile.png',
-                                                  color: Colors.white),
-                                              onPressed: () {
-                                                launch(sample!.codeLink!);
-                                              },
-                                            ),
+                                            // //깃헙 아이콘 버튼?
+                                            // child: IconButton(
+                                            //   icon: Image.asset(
+                                            //       'images/git_hub_mobile.png',
+                                            //       color: Colors.white),
+                                            //   onPressed: () {
+                                            //     launch(sample!.codeLink!);
+                                            //   },
+                                            // ),
                                           ),
                                         ),
                                       ])
@@ -597,7 +597,7 @@ Widget getLeftSideDrawer(SampleModel _model) {
                   children: <Widget>[
                     Align(
                         alignment: Alignment.bottomCenter,
-                        child: Text('Version 1.6',
+                        child: Text('Version 1.2',
                             style: TextStyle(
                                 color: _model.drawerTextIconColor,
                                 fontSize: 12,
