@@ -213,7 +213,8 @@ class _HomePageState extends State<HomePage> {
                   transform: Matrix4.translationValues(0, -1, 0),
                   child: _getScrollableWidget(model)))
               : Scaffold(
-            // 이부분은 뭐가 바뀌는지 아직 모름
+
+
               bottomNavigationBar: getFooter(context, model),
               key: scaffoldKey,
               backgroundColor: model.webBackgroundColor,
@@ -232,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                           children: <Widget>[
                             const Padding(
                               padding: EdgeInsets.fromLTRB(24, 10, 0, 0),
-                              child: Text('Smart Eneger Manager',
+                              child: Text('스마트 에너지 메니저',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 28,
@@ -241,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const Padding(
                                 padding: EdgeInsets.fromLTRB(24, 0, 0, 0),
-                                child: Text('test1 . test22 . test333',
+                                child: Text('Check Energy',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
@@ -270,130 +271,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         )),
                     actions: <Widget>[
-                      if (MediaQuery.of(context).size.width < 500)
-                        Container(height: 0, width: 9)
-                      else
-                        Container(
-                            child: Container(
-                              padding:
-                              const EdgeInsets.only(top: 10, right: 10),
-                              width: MediaQuery.of(context).size.width >= 920
-                                  ? 300
-                                  : MediaQuery.of(context).size.width /
-                                  (MediaQuery.of(context).size.width < 820
-                                      ? 5
-                                      : 4),
-                              height:
-                              MediaQuery.of(context).size.height * 0.0445,
-                              child: SearchBar(
-                                sampleListModel: model,
-                              ),
-                            )),
-
-                      ///download option
-                      if (model.isMobileResolution)
-                        Container()
-                      else
-                        Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(
-                                top: 10, left: isMaxxSize ? 20 : 0),
-                            child: Container(
-                                width: 115,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                    border:
-                                    Border.all(color: Colors.white)),
-                                child: StatefulBuilder(builder:
-                                    (BuildContext context,
-                                    StateSetter setState) {
-                                  return MouseRegion(
-                                    onHover: (PointerHoverEvent event) {
-                                      isHoveringDownloadButton = true;
-                                      setState(() {});
-                                    },
-                                    onExit: (PointerExitEvent event) {
-                                      isHoveringDownloadButton = false;
-                                      setState(() {});
-                                    },
-                                    child: InkWell(
-                                      hoverColor: Colors.white,
-                                      onTap: () {
-                                        launch(
-                                            'https://www.syncfusion.com/downloads/flutter/confirm');
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            8, 9, 8, 9),
-                                        child: Text('DOWNLOAD NOW',
-                                            style: TextStyle(
-                                                color:
-                                                isHoveringDownloadButton
-                                                    ? model.paletteColor
-                                                    : Colors.white,
-                                                fontSize: 12,
-                                                fontFamily:
-                                                'Roboto-Medium')),
-                                      ),
-                                    ),
-                                  );
-                                }))),
-
-                      ///Get package from pub.dev option
-                      if (model.isMobileResolution)
-                        Container()
-                      else
-                        Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(
-                                top: 10, left: isMaxxSize ? 25 : 12),
-                            child: Container(
-                                width: 118,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                    border:
-                                    Border.all(color: Colors.white)),
-                                child: StatefulBuilder(builder:
-                                    (BuildContext context,
-                                    StateSetter setState) {
-                                  return MouseRegion(
-                                    onHover: (PointerHoverEvent event) {
-                                      isHoveringPubDevButton = true;
-                                      setState(() {});
-                                    },
-                                    onExit: (PointerExitEvent event) {
-                                      isHoveringPubDevButton = false;
-                                      setState(() {});
-                                    },
-                                    child: InkWell(
-                                      hoverColor: Colors.white,
-                                      onTap: () {
-                                        launch(
-                                            'https://pub.dev/publishers/syncfusion.com/packages');
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 7, 8, 7),
-                                        child: Row(children: <Widget>[
-                                          Image.asset('images/pub_logo.png',
-                                              fit: BoxFit.contain,
-                                              height: 33,
-                                              width: 33),
-                                          Text('Get Packages',
-                                              style: TextStyle(
-                                                  color:
-                                                  isHoveringPubDevButton
-                                                      ? model
-                                                      .paletteColor
-                                                      : Colors.white,
-                                                  fontSize: 12,
-                                                  fontFamily:
-                                                  'Roboto-Medium'))
-                                        ]),
-                                      ),
-                                    ),
-                                  );
-                                }))),
+ 
                       Padding(
                           padding:
                           EdgeInsets.only(left: isMaxxSize ? 15 : 0),

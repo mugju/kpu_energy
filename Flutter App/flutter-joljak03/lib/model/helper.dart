@@ -14,6 +14,7 @@ import 'mobile_view.dart';
 import 'model.dart';
 import 'sample_view.dart';
 import 'package:flutter_examples/developer_info.dart';
+import 'package:flutter_examples/machine_control.dart';
 
 /// On tap the button, select the samples.
 void onTapControlInMobile(BuildContext context, SampleModel model,
@@ -296,6 +297,7 @@ Widget getLeftSideDrawer(SampleModel _model) {
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Column(
                         children: <Widget>[
+                          
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                             child: Material(
@@ -336,7 +338,7 @@ Widget getLeftSideDrawer(SampleModel _model) {
                                                         );
                                                       },
                                                       child: Text(
-                                                        '개발자 정보 표시할 예정',
+                                                        '개발자 정보',
                                                         style: TextStyle(
                                                             color: _model
                                                                 .drawerTextIconColor,
@@ -351,13 +353,74 @@ Widget getLeftSideDrawer(SampleModel _model) {
                                               ]),
                                               const Padding(
                                                   padding:
-                                                  EdgeInsets.only(top: 10)),
+                                                  EdgeInsets.only(top: 30)),
                                             ],
                                           )
                                       )
                                     )
                                 ),
                           ),
+                           Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                    splashColor: Colors.grey.withOpacity(0.4),
+                                    onTap: () {
+                                      Feedback.forLongPress(context);
+                                      //   launch(
+                                      //       'https://www.syncfusion.com/flutter-widgets');
+                                    },
+                                    child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            25, 0, 0, 0),
+                                        child: Column(
+                                          children: <Widget>[
+                                            const Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 0)),
+                                            Row(children: <Widget>[
+                                              Image.asset('images/documentation.png',
+                                                  fit: BoxFit.contain,
+                                                  height: 22,
+                                                  width: 22,
+                                                  color: _model.webIconColor),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        5, 0, 0, 0),
+                                                child: TextButton(
+                                                    onPressed: () {
+                                                      Navigator.push<MaterialPageRoute>(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => MachineControl(
+                                                                    title:
+                                                                        '기기 원격 제어')),
+                                                      );
+                                                    },
+                                                    child: Text(
+                                                      '기기 원격 제어',
+                                                      style: TextStyle(
+                                                          color: _model
+                                                              .drawerTextIconColor,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.4,
+                                                          fontFamily:
+                                                              'Roboto-Regular',
+                                                          fontWeight: FontWeight
+                                                              .normal),
+                                                    )),
+                                              )
+                                            ]),
+                                            const Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 30)),
+                                          ],
+                                        )))),
+                          ),
+                          
+                          
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                             child: Material(
@@ -379,7 +442,7 @@ Widget getLeftSideDrawer(SampleModel _model) {
                                                     EdgeInsets.only(top: 10)),
                                             Row(children: <Widget>[
                                               Image.asset(
-                                                  'images/documentation.png',
+                                                  'images/git_hub_mobile.png',
                                                   fit: BoxFit.contain,
                                                   height: 22,
                                                   width: 22,
@@ -388,7 +451,7 @@ Widget getLeftSideDrawer(SampleModel _model) {
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
                                                         15, 0, 0, 0),
-                                                child: Text('GitHub 경로 넣을 예정',
+                                                child: Text('GitHub',
                                                     style: TextStyle(
                                                         color: _model
                                                             .drawerTextIconColor,
@@ -402,10 +465,15 @@ Widget getLeftSideDrawer(SampleModel _model) {
                                             ]),
                                             const Padding(
                                                 padding:
-                                                    EdgeInsets.only(top: 10)),
+                                                    EdgeInsets.only(top: 30)),
+                                                    
                                           ],
-                                        )))),
+                                    )
+                                  )
+                                )
+                              ),
                           ),
+                          
                         ],
                       ),
                     ),
@@ -414,177 +482,177 @@ Widget getLeftSideDrawer(SampleModel _model) {
                       child: Container(
                           height: 2, width: 5, color: _model.backgroundColor),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 3, 0),
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                            child: Row(children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: Text('Other products',
-                                    style: TextStyle(
-                                        color: _model.drawerTextIconColor,
-                                        fontSize: 16,
-                                        letterSpacing: 0.4,
-                                        fontFamily: 'Roboto-Regular',
-                                        fontWeight: FontWeight.bold)),
-                              )
-                            ]),
-                          ),
-                          const Padding(
-                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
-                          Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                  splashColor: Colors.grey.withOpacity(0.4),
-                                  onTap: () {
-                                    Feedback.forLongPress(context);
-                                    launch(
-                                        'https://play.google.com/store/apps/details?id=com.syncfusion.samplebrowser&hl=en');
-                                  },
-                                  child: Column(
-                                    children: <Widget>[
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 10)),
-                                      Row(
-                                        children: <Widget>[
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      15, 0, 0, 0),
-                                              child: Image.asset(
-                                                  'images/img_xamarin.png',
-                                                  fit: BoxFit.contain,
-                                                  height: 28,
-                                                  width: 28)),
-                                          Container(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      10, 0, 0, 0),
-                                              child: Text('아직 미정',
-                                                  style: TextStyle(
-                                                      color: _model
-                                                          .drawerTextIconColor,
-                                                      fontSize: 16,
-                                                      letterSpacing: 0.4,
-                                                      fontFamily:
-                                                          'Roboto-Regular',
-                                                      fontWeight:
-                                                          FontWeight.normal))),
-                                          const Spacer(),
-                                          Container(
-                                            child: Icon(Icons.arrow_forward,
-                                                color: _model.backgroundColor),
-                                          ),
-                                        ],
-                                      ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 10)),
-                                    ],
-                                  ))),
-                          Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                  splashColor: Colors.grey.withOpacity(0.4),
-                                  onTap: () {
-                                    Feedback.forLongPress(context);
-                                    launch(
-                                        'https://play.google.com/store/apps/details?id=com.syncfusion.xamarin.uikit&hl=en');
-                                  },
-                                  child: Column(
-                                    children: <Widget>[
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 10)),
-                                      Row(
-                                        children: <Widget>[
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      15, 0, 0, 0),
-                                              child: Image.asset(
-                                                  'images/img_xamarin_ui.png',
-                                                  fit: BoxFit.contain,
-                                                  height: 28,
-                                                  width: 28)),
-                                          Container(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                10, 0, 0, 0),
-                                            child: Text('아직 미정',
-                                                style: TextStyle(
-                                                    color: _model
-                                                        .drawerTextIconColor,
-                                                    fontSize: 16,
-                                                    letterSpacing: 0.4,
-                                                    fontFamily:
-                                                        'Roboto-Regular',
-                                                    fontWeight:
-                                                        FontWeight.normal)),
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            child: Icon(Icons.arrow_forward,
-                                                color: _model.backgroundColor),
-                                          ),
-                                        ],
-                                      ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 10)),
-                                    ],
-                                  ))),
-                          Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                  splashColor: Colors.grey.withOpacity(0.4),
-                                  onTap: () {
-                                    Feedback.forLongPress(context);
-                                    launch(
-                                        'https://play.google.com/store/apps/details?id=com.Syncfusion.ej2&hl=en');
-                                  },
-                                  child: Column(
-                                    children: <Widget>[
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 10)),
-                                      Row(
-                                        children: <Widget>[
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      15, 0, 0, 0),
-                                              child: Image.asset(
-                                                  'images/img_JS.png',
-                                                  fit: BoxFit.contain,
-                                                  height: 28,
-                                                  width: 28)),
-                                          Container(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                10, 0, 0, 0),
-                                            child: Text('삭제 예정',
-                                                style: TextStyle(
-                                                    color: _model
-                                                        .drawerTextIconColor,
-                                                    fontSize: 16,
-                                                    letterSpacing: 0.4,
-                                                    fontFamily:
-                                                        'Roboto-Regular',
-                                                    fontWeight:
-                                                        FontWeight.normal)),
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            child: Icon(Icons.arrow_forward,
-                                                color: _model.backgroundColor),
-                                          ),
-                                        ],
-                                      ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 10)),
-                                    ],
-                                  ))),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(0, 20, 3, 0),
+                    //   child: Column(
+                    //     children: <Widget>[
+                    //       Padding(
+                    //         padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+                    //         child: Row(children: <Widget>[
+                    //           Padding(
+                    //             padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    //             child: Text('Other products',
+                    //                 style: TextStyle(
+                    //                     color: _model.drawerTextIconColor,
+                    //                     fontSize: 16,
+                    //                     letterSpacing: 0.4,
+                    //                     fontFamily: 'Roboto-Regular',
+                    //                     fontWeight: FontWeight.bold)),
+                    //           )
+                    //         ]),
+                    //       ),
+                    //       const Padding(
+                    //           padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
+                    //       Material(
+                    //           color: Colors.transparent,
+                    //           child: InkWell(
+                    //               splashColor: Colors.grey.withOpacity(0.4),
+                    //               onTap: () {
+                    //                 Feedback.forLongPress(context);
+                    //                 launch(
+                    //                     'https://play.google.com/store/apps/details?id=com.syncfusion.samplebrowser&hl=en');
+                    //               },
+                    //               child: Column(
+                    //                 children: <Widget>[
+                    //                   const Padding(
+                    //                       padding: EdgeInsets.only(top: 10)),
+                    //                   Row(
+                    //                     children: <Widget>[
+                    //                       Padding(
+                    //                           padding:
+                    //                               const EdgeInsets.fromLTRB(
+                    //                                   15, 0, 0, 0),
+                    //                           child: Image.asset(
+                    //                               'images/img_xamarin.png',
+                    //                               fit: BoxFit.contain,
+                    //                               height: 28,
+                    //                               width: 28)),
+                    //                       Container(
+                    //                           padding:
+                    //                               const EdgeInsets.fromLTRB(
+                    //                                   10, 0, 0, 0),
+                    //                           child: Text('아직 미정',
+                    //                               style: TextStyle(
+                    //                                   color: _model
+                    //                                       .drawerTextIconColor,
+                    //                                   fontSize: 16,
+                    //                                   letterSpacing: 0.4,
+                    //                                   fontFamily:
+                    //                                       'Roboto-Regular',
+                    //                                   fontWeight:
+                    //                                       FontWeight.normal))),
+                    //                       const Spacer(),
+                    //                       Container(
+                    //                         child: Icon(Icons.arrow_forward,
+                    //                             color: _model.backgroundColor),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                   const Padding(
+                    //                       padding: EdgeInsets.only(top: 10)),
+                    //                 ],
+                    //               ))),
+                    //       Material(
+                    //           color: Colors.transparent,
+                    //           child: InkWell(
+                    //               splashColor: Colors.grey.withOpacity(0.4),
+                    //               onTap: () {
+                    //                 Feedback.forLongPress(context);
+                    //                 launch(
+                    //                     'https://play.google.com/store/apps/details?id=com.syncfusion.xamarin.uikit&hl=en');
+                    //               },
+                    //               child: Column(
+                    //                 children: <Widget>[
+                    //                   const Padding(
+                    //                       padding: EdgeInsets.only(top: 10)),
+                    //                   Row(
+                    //                     children: <Widget>[
+                    //                       Padding(
+                    //                           padding:
+                    //                               const EdgeInsets.fromLTRB(
+                    //                                   15, 0, 0, 0),
+                    //                           child: Image.asset(
+                    //                               'images/img_xamarin_ui.png',
+                    //                               fit: BoxFit.contain,
+                    //                               height: 28,
+                    //                               width: 28)),
+                    //                       Container(
+                    //                         padding: const EdgeInsets.fromLTRB(
+                    //                             10, 0, 0, 0),
+                    //                         child: Text('아직 미정',
+                    //                             style: TextStyle(
+                    //                                 color: _model
+                    //                                     .drawerTextIconColor,
+                    //                                 fontSize: 16,
+                    //                                 letterSpacing: 0.4,
+                    //                                 fontFamily:
+                    //                                     'Roboto-Regular',
+                    //                                 fontWeight:
+                    //                                     FontWeight.normal)),
+                    //                       ),
+                    //                       const Spacer(),
+                    //                       Container(
+                    //                         child: Icon(Icons.arrow_forward,
+                    //                             color: _model.backgroundColor),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                   const Padding(
+                    //                       padding: EdgeInsets.only(top: 10)),
+                    //                 ],
+                    //               ))),
+                    //       Material(
+                    //           color: Colors.transparent,
+                    //           child: InkWell(
+                    //               splashColor: Colors.grey.withOpacity(0.4),
+                    //               onTap: () {
+                    //                 Feedback.forLongPress(context);
+                    //                 launch(
+                    //                     'https://play.google.com/store/apps/details?id=com.Syncfusion.ej2&hl=en');
+                    //               },
+                    //               child: Column(
+                    //                 children: <Widget>[
+                    //                   const Padding(
+                    //                       padding: EdgeInsets.only(top: 10)),
+                    //                   Row(
+                    //                     children: <Widget>[
+                    //                       Padding(
+                    //                           padding:
+                    //                               const EdgeInsets.fromLTRB(
+                    //                                   15, 0, 0, 0),
+                    //                           child: Image.asset(
+                    //                               'images/img_JS.png',
+                    //                               fit: BoxFit.contain,
+                    //                               height: 28,
+                    //                               width: 28)),
+                    //                       Container(
+                    //                         padding: const EdgeInsets.fromLTRB(
+                    //                             10, 0, 0, 0),
+                    //                         child: Text('삭제 예정',
+                    //                             style: TextStyle(
+                    //                                 color: _model
+                    //                                     .drawerTextIconColor,
+                    //                                 fontSize: 16,
+                    //                                 letterSpacing: 0.4,
+                    //                                 fontFamily:
+                    //                                     'Roboto-Regular',
+                    //                                 fontWeight:
+                    //                                     FontWeight.normal)),
+                    //                       ),
+                    //                       const Spacer(),
+                    //                       Container(
+                    //                         child: Icon(Icons.arrow_forward,
+                    //                             color: _model.backgroundColor),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                   const Padding(
+                    //                       padding: EdgeInsets.only(top: 10)),
+                    //                 ],
+                    //               ))),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -617,7 +685,7 @@ Widget getLeftSideDrawer(SampleModel _model) {
 /// at the bottom of the home page.
 Widget getFooter(BuildContext context, SampleModel model) {
   return Container(
-    height: 60,
+    height: 0,
     decoration: BoxDecoration(
       border: Border(
         top: BorderSide(width: 0.8, color: model.dividerColor),
@@ -638,62 +706,9 @@ Widget getFooter(BuildContext context, SampleModel model) {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                InkWell(
-                  onTap: () => launch(
-                      'https://help.syncfusion.com/flutter/introduction/overview'),
-                  child: const Text('Documentation',
-                      style: TextStyle(color: Colors.blue, fontSize: 12)),
-                ),
-                Text(' | ',
-                    style: TextStyle(
-                        fontSize: 12, color: model.textColor.withOpacity(0.7))),
-                InkWell(
-                  onTap: () =>
-                      launch('https://www.syncfusion.com/forums/flutter'),
-                  child: const Text('Forum',
-                      style: TextStyle(color: Colors.blue, fontSize: 12)),
-                ),
-                Text(' | ',
-                    style: TextStyle(
-                        fontSize: 12, color: model.textColor.withOpacity(0.7))),
-                InkWell(
-                  onTap: () =>
-                      launch('https://www.syncfusion.com/blogs/?s=flutter'),
-                  child: const Text('Blog',
-                      style: TextStyle(color: Colors.blue, fontSize: 12)),
-                ),
-                Text(' | ',
-                    style: TextStyle(
-                        fontSize: 12, color: model.textColor.withOpacity(0.7))),
-                InkWell(
-                  onTap: () => launch('https://www.syncfusion.com/kb/flutter'),
-                  child: const Text('Knowledge base',
-                      style: TextStyle(color: Colors.blue, fontSize: 12)),
-                )
-              ],
-            ),
-            Container(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text('Copyright © 2001 - 2021 Syncfusion Inc.',
-                    style: TextStyle(
-                        color: model.textColor.withOpacity(0.7),
-                        fontSize: 12,
-                        letterSpacing: 0.23)))
-          ],
+
         )),
-        InkWell(
-          onTap: () => launch('https://www.syncfusion.com'),
-          child: Image.asset(
-              model.themeData.brightness == Brightness.dark
-                  ? 'images/syncfusion_dark.png'
-                  : 'images/syncfusion.png',
-              fit: BoxFit.contain,
-              height: 25,
-              width: model.isMobileResolution ? 80 : 120),
-        ),
+
       ],
     ),
   );
@@ -720,7 +735,7 @@ Widget showWebThemeSettings(SampleModel model) {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('   Settings',
+                    Text('   환경 설정',
                         style: TextStyle(
                             color: model.textColor,
                             fontSize: 16,
@@ -746,7 +761,7 @@ Widget showWebThemeSettings(SampleModel model) {
                                   0: Container(
                                       width: _width,
                                       alignment: Alignment.center,
-                                      child: Text('Light theme',
+                                      child: Text('라이트 테마',
                                           style: TextStyle(
                                               color: _selectedValue == 0
                                                   ? Colors.white
@@ -755,7 +770,7 @@ Widget showWebThemeSettings(SampleModel model) {
                                   1: Container(
                                       width: _width,
                                       alignment: Alignment.center,
-                                      child: Text('Dark theme',
+                                      child: Text('다크 테마',
                                           style: TextStyle(
                                               color: _selectedValue == 1
                                                   ? Colors.white
@@ -785,7 +800,7 @@ Widget showWebThemeSettings(SampleModel model) {
                       Container(
                           padding: const EdgeInsets.only(top: 25, left: 15),
                           child: const Text(
-                            'Theme colors',
+                            '테마 색상',
                             style: TextStyle(
                                 color: Color.fromRGBO(128, 128, 128, 1),
                                 fontSize: 14,
@@ -820,7 +835,7 @@ Widget showWebThemeSettings(SampleModel model) {
                             ),
                             onPressed: () => _applyThemeAndPaletteColor(
                                 model, context, _selectedValue),
-                            child: const Text('APPLY',
+                            child: const Text('적용하기',
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Roboto-Bold',

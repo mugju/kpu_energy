@@ -387,6 +387,7 @@ class SampleModel extends Listenable {
 
   /// Holds current pallete color
   Color currentPaletteColor = const Color.fromRGBO(0, 116, 227, 1);
+  
 
   /// holds the index to finding the current theme
   /// In mobile sb - system 0, light 1, dark 2
