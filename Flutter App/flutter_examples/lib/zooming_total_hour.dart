@@ -33,7 +33,7 @@ class _ButtonZooming2State extends SampleViewState {
     // _getSmartPlug  돌리고 -> 돌리자 마자
     db.getConnection().then((conn) {
       String sql =
-          "select date_format(datetime, '%Y-%m') DateTime, round(sum(amp), 2) amp from db.Smart_plug where id NOT IN (111) and date_format(datetime, '%Y-%m') is not null and datetime NOT IN ('2020-11-01 00:00:00') group by date_format(db.Smart_plug.datetime, '%Y-%m')";
+          "select date_format(datetime, '%Y-%m-%d %H:00') DateTime, round(sum(amp), 2) amp from db.Smart_plug where id NOT IN (111) and date_format(datetime, '%Y-%m-%d %H:00') is not null and datetime NOT IN ('2020-11-01 00:00:00') group by date_format(db.Smart_plug.datetime, '%Y-%m-%d %H:00')";
 
       conn.query(sql).then((results) {
         for (var column in results) {
@@ -219,8 +219,8 @@ class _ButtonZooming2State extends SampleViewState {
   SfCartesianChart _buildButtonZoomingChart() {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
-      primaryXAxis: DateTimeAxis(
-          majorGridLines: const MajorGridLines(width: 0)),
+      primaryXAxis:
+          DateTimeAxis(majorGridLines: const MajorGridLines(width: 0)),
       primaryYAxis: NumericAxis(
           axisLine: const AxisLine(width: 0),
           majorTickLines: const MajorTickLines(size: 0)),
@@ -229,10 +229,7 @@ class _ButtonZooming2State extends SampleViewState {
     );
   }
 
-  
-
   List<ChartSampleData> getDateTimeData() {
-
     // splineSeriesData얘가 무조건 초기화 한번 되어야지 아래있는 build가 돈다.
     // 이 [] 대 괄호 안에 이렇게 여러개 요소를 넣을 수 있는 거 보면 for문도 가능하다는 것을 인지 하자.
     List<ChartSampleData> splineSeriesData = <ChartSampleData>[
@@ -245,7 +242,6 @@ class _ButtonZooming2State extends SampleViewState {
     print("queryResult2 " + productSmartPlugList.length.toString());
 
     return splineSeriesData;
-
   }
 
   /// List holding the collection of chart series data points.
@@ -299,7 +295,8 @@ class _ButtonZooming2State extends SampleViewState {
 
   /// Returns the list of chart series which need to render
   /// on the chart with custom zooming buttons.
-  List<LineSeries<ChartSampleData, DateTime>> getButtonZoomingSeries(bool isTileView) {
+  List<LineSeries<ChartSampleData, DateTime>> getButtonZoomingSeries(
+      bool isTileView) {
     return <LineSeries<ChartSampleData, DateTime>>[
       LineSeries<ChartSampleData, DateTime>(
           dataSource: getDateTimeData(),
