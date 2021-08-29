@@ -410,7 +410,8 @@ Widget getLeftSideDrawer(SampleModel _model) {
                                                               'Roboto-Regular',
                                                           fontWeight: FontWeight
                                                               .normal),
-                                                    )),
+                                                    )
+                                                    ),
                                               )
                                             ]),
                                             const Padding(
