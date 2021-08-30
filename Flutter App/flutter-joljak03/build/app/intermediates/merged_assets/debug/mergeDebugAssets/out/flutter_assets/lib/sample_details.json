@@ -55,10 +55,18 @@
 
                   {
                     "title": "시간별 에너지 총 사용량 추이",
+                    "key": "zooming_total_hour",
+                    "description": "This sample demonstrates zooming and panning with custom buttons.",
+                    "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_total_hour.dart"
+                  },
+
+                  {
+                    "title": "시간별 에너지 총 사용량 추이",
                     "key": "zooming_with_custom_buttons",
                     "description": "This sample demonstrates zooming and panning with custom buttons.",
                     "codeLink": "https://github.com/syncfusion/flutter-examples/blob/master/lib/samples/chart/cartesian_charts/user_interactions/zooming_and_panning/zooming_with_custom_buttons.dart"
                   },
+
                   {
                     "title": "기기별 전력 사용량",
                     "key": "chart_with_legend",
@@ -68,7 +76,7 @@
                   
                 ]
               }
-              
+    
 
              
 

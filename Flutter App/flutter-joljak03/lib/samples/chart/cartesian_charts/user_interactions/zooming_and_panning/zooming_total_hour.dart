@@ -33,7 +33,7 @@ class _ButtonZooming2State extends SampleViewState {
     // _getSmartPlug  돌리고 -> 돌리자 마자
     db.getConnection().then((conn) {
       String sql =
-          "select date_format(datetime, '%Y-%m') DateTime, round(sum(amp), 2) amp from db.Smart_plug where id NOT IN (111) and date_format(datetime, '%Y-%m') is not null and datetime NOT IN ('2020-11-01 00:00:00') group by date_format(db.Smart_plug.datetime, '%Y-%m')";
+          "select date_format(datetime, '%Y-%m-%d %H:00') DateTime, round(sum(amp), 2) amp from db.Smart_plug where id NOT IN (111) and DateTime > ('2020-9-30 23:55:00') and date_format(datetime, '%Y-%m-%d %H:00') is not null and datetime NOT IN ('2020-11-01 00:00:00') group by date_format(db.Smart_plug.datetime, '%Y-%m-%d %H:00')";
 
       conn.query(sql).then((results) {
         for (var column in results) {

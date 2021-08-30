@@ -27,8 +27,7 @@ import 'samples/chart/circular_charts/legend/legend_with_various_options.dart';
 
 import 'samples/datagrid/apperance/styling/datagrid_styling.dart';
 
-import 'samples/datagrid/data_source/datagrid_json_data_source.dart';
-import 'samples/datagrid/data_source/datagrid_list_data_source.dart';
+
 
 
 
@@ -113,9 +112,6 @@ Map<String, Function> getSampleWidget() {
 
 
 
-    'json_data_source_datagrid': (Key key) => JsonDataSourceDataGrid(key: key),
-
-    'list_data_source_datagrid': (Key key) => ListDataSourceDataGrid(key: key),
 
 
 
