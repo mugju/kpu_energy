@@ -5,16 +5,16 @@
 // WiFI & adafruit_IO
 #define WIFI_SSID ""
 #define WIFI_PASS ""
-#define MQTT_SERVER ""
+#define MQTT_SERVER "" //elijah.iptime.org
 
 
 
 // LED Pixel
-#define PERM_LED_PIN D2
-#define LED_PIN D4
+#define PERM_LED_PIN D7
+#define LED_PIN D8
 #define LED_COUNT  10
 #define BRIGHTNESS_LOW 10
-#define BRIGHTNESS_HIGH 60
+#define BRIGHTNESS_HIGH 120
 Adafruit_NeoPixel permStrip(LED_COUNT, PERM_LED_PIN, NEO_GRBW + NEO_KHZ800);
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 
@@ -58,7 +58,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println();
 
-  // Switch on the LED if an 1 was received as first character
+  // Switch on the LED if 1 was received as first character
   if ((char)payload[0] == '1') {
     stripOn(1);
   } else {
