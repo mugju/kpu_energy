@@ -713,7 +713,7 @@ class _CategorizedCardsState extends State<_CategorizedCards> {
                 child: Container(
                   child: ListTile(
                     contentPadding: EdgeInsets.fromLTRB(
-                        12, 2, 0, category.controlList!.length > 3 ? 6 : 0),
+                        12, 10, 0, category.controlList!.length > 3 ? 6 : 0),
 
                     // 왼쪽의 이미지 출력하는 코드
                     leading: Image.asset(control.image!, fit: BoxFit.cover),

@@ -201,6 +201,7 @@ class _MachineControlState extends State<MachineControl> {
       _disconnect();
     }
 
+    
     _subscribeToTopic(smp_topic);
 
     client.updates.listen((List<mqtt.MqttReceivedMessage> event) {
@@ -220,28 +221,33 @@ class _MachineControlState extends State<MachineControl> {
         _temp = double.parse(message);
       });
     });
+    
 
 
 
-    // _subscribeToTopic(smp_elec_topic);
 
-    // client.updates.listen((List<mqtt.MqttReceivedMessage> event) {
-    //   print(event.length);
-    //   final mqtt.MqttPublishMessage recMess =
-    //       event[0].payload as mqtt.MqttPublishMessage;
-    //   final String message = mqtt.MqttPublishPayload.bytesToStringAsString(
-    //       recMess.payload.message);
+    _subscribeToTopic(smp_elec_topic);
 
-    //   print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
-    //       'payload is <-- ${message} -->');
-    //   print(client.connectionState);
-    //   print("[MQTT client] message with topic: ${event[0].topic}");
-    //   print("[MQTT client] message with message: ${message}");
+    client.updates.listen((List<mqtt.MqttReceivedMessage> event) {
+      print(event.length);
+      final mqtt.MqttPublishMessage recMess =
+          event[0].payload as mqtt.MqttPublishMessage;
+      final String message = mqtt.MqttPublishPayload.bytesToStringAsString(
+          recMess.payload.message);
 
-    //   setState(() {
-    //     _smplug_amp = double.parse(message);
-    //   });
-    // });
+      print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
+          'payload is <-- ${message} -->');
+      print(client.connectionState);
+      print("[MQTT client] message with topic: ${event[0].topic}");
+      print("[MQTT client] message with message: ${message}");
+
+      setState(() {
+        _smplug_amp = double.parse(message);
+      });
+    });
+
+    
+    
 
 
 

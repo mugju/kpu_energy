@@ -9,7 +9,6 @@ class ProductAmp {
   }
 }
 
-
 //Store info model
 class ProductStore {
   int? storeId;
@@ -25,23 +24,22 @@ class ProductStore {
   }
 }
 
-
-class ProductSmartPlug1{
+class ProductSmartPlug1 {
   String? datetime;
   double? amp;
 
-  ProductSmartPlug1(String datetime, double amp){
+  ProductSmartPlug1(String datetime, double amp) {
     this.datetime = datetime;
     this.amp = amp;
   }
 }
 
-class ProductSmartPlug{
+class ProductSmartPlug {
   int year = 2020;
   int month = 7;
   int day = 1;
   double amp = 0.0;
-  ProductSmartPlug(int year, int month, int day, double amp){
+  ProductSmartPlug(int year, int month, int day, double amp) {
     this.year = year;
     this.month = month;
     this.day = day;

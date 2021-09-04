@@ -38,7 +38,7 @@ class _ButtonZoomingState extends SampleViewState {
       conn.query(sql).then((results) {
         for (var column in results) {
           setState(() {
-            print(column);
+            //print(column);
             ProductSmartPlug1 productSmartPlug1 =
                 ProductSmartPlug1(column[0], column[1]);
 
