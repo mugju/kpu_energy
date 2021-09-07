@@ -1,0 +1,817 @@
+define(['dart_sdk', 'packages/mysql1/src/handlers/quit_handler.dart', 'packages/mysql1/src/buffered_socket.dart', 'packages/mysql1/src/auth/auth_handler.dart', 'packages/mysql1/src/query/query_stream_handler.dart', 'packages/mysql1/src/prepared_statements/prepare_handler.dart', 'packages/mysql1/src/mysql_client_error.dart', 'packages/mysql1/src/prepared_statements/execute_query_handler.dart', 'packages/mysql1/src/prepared_statements/close_statement_handler.dart', 'packages/mysql1/src/results/row.dart', 'packages/mysql1/src/results/field.dart', 'packages/mysql1/src/buffer.dart', 'packages/pool/pool.dart', 'packages/mysql1/src/auth/ssl_handler.dart', 'packages/mysql1/src/mysql_exception.dart', 'packages/mysql1/src/results/results_impl.dart', 'packages/mysql1/src/handlers/handler.dart', 'packages/logging/src/logger.dart'], (function load__packages__mysql1__src__single_connection_dart(dart_sdk, packages__mysql1__src__handlers__quit_handler$46dart, packages__mysql1__src__buffered_socket$46dart, packages__mysql1__src__auth__auth_handler$46dart, packages__mysql1__src__query__query_stream_handler$46dart, packages__mysql1__src__prepared_statements__prepare_handler$46dart, packages__mysql1__src__mysql_client_error$46dart, packages__mysql1__src__prepared_statements__execute_query_handler$46dart, packages__mysql1__src__prepared_statements__close_statement_handler$46dart, packages__mysql1__src__results__row$46dart, packages__mysql1__src__results__field$46dart, packages__mysql1__src__buffer$46dart, packages__pool__pool$46dart, packages__mysql1__src__auth__ssl_handler$46dart, packages__mysql1__src__mysql_exception$46dart, packages__mysql1__src__results__results_impl$46dart, packages__mysql1__src__handlers__handler$46dart, packages__logging__src__logger$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const async = dart_sdk.async;
+  const _internal = dart_sdk._internal;
+  const io = dart_sdk.io;
+  const _interceptors = dart_sdk._interceptors;
+  const collection = dart_sdk.collection;
+  const math = dart_sdk.math;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const quit_handler = packages__mysql1__src__handlers__quit_handler$46dart.src__handlers__quit_handler;
+  const buffered_socket = packages__mysql1__src__buffered_socket$46dart.src__buffered_socket;
+  const handshake_handler = packages__mysql1__src__auth__auth_handler$46dart.src__auth__handshake_handler;
+  const query_stream_handler = packages__mysql1__src__query__query_stream_handler$46dart.src__query__query_stream_handler;
+  const prepared_query = packages__mysql1__src__prepared_statements__prepare_handler$46dart.src__prepared_statements__prepared_query;
+  const prepare_handler = packages__mysql1__src__prepared_statements__prepare_handler$46dart.src__prepared_statements__prepare_handler;
+  const mysql_client_error = packages__mysql1__src__mysql_client_error$46dart.src__mysql_client_error;
+  const execute_query_handler = packages__mysql1__src__prepared_statements__execute_query_handler$46dart.src__prepared_statements__execute_query_handler;
+  const close_statement_handler = packages__mysql1__src__prepared_statements__close_statement_handler$46dart.src__prepared_statements__close_statement_handler;
+  const row = packages__mysql1__src__results__row$46dart.src__results__row;
+  const field = packages__mysql1__src__results__field$46dart.src__results__field;
+  const buffer$ = packages__mysql1__src__buffer$46dart.src__buffer;
+  const pool = packages__pool__pool$46dart.pool;
+  const ssl_handler = packages__mysql1__src__auth__ssl_handler$46dart.src__auth__ssl_handler;
+  const mysql_exception = packages__mysql1__src__mysql_exception$46dart.src__mysql_exception;
+  const results_impl = packages__mysql1__src__results__results_impl$46dart.src__results__results_impl;
+  const handler = packages__mysql1__src__handlers__handler$46dart.src__handlers__handler;
+  const logger = packages__logging__src__logger$46dart.src__logger;
+  var single_connection = Object.create(dart.library);
+  var $isEmpty = dartx.isEmpty;
+  var $first = dartx.first;
+  var $length = dartx.length;
+  var $add = dartx.add;
+  var $iterator = dartx.iterator;
+  var $isNotEmpty = dartx.isNotEmpty;
+  var $fold = dartx.fold;
+  var $setRange = dartx.setRange;
+  var $forEach = dartx.forEach;
+  var $clear = dartx.clear;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    VoidToCompleter: () => (T.VoidToCompleter = dart.constFn(dart.fnType(async.Completer, [])))(),
+    CompleterTodynamic: () => (T.CompleterTodynamic = dart.constFn(dart.fnType(dart.dynamic, [async.Completer])))(),
+    VoidToNull: () => (T.VoidToNull = dart.constFn(dart.fnType(core.Null, [])))(),
+    ObjectToNull: () => (T.ObjectToNull = dart.constFn(dart.fnType(core.Null, [core.Object])))(),
+    CompleterOfvoid: () => (T.CompleterOfvoid = dart.constFn(async.Completer$(dart.void)))(),
+    ObjectN: () => (T.ObjectN = dart.constFn(dart.nullable(core.Object)))(),
+    ListOfObjectN: () => (T.ListOfObjectN = dart.constFn(core.List$(T.ObjectN())))(),
+    JSArrayOfListOfObjectN: () => (T.JSArrayOfListOfObjectN = dart.constFn(_interceptors.JSArray$(T.ListOfObjectN())))(),
+    JSArrayOfResults: () => (T.JSArrayOfResults = dart.constFn(_interceptors.JSArray$(single_connection.Results)))(),
+    ListOfResults: () => (T.ListOfResults = dart.constFn(core.List$(single_connection.Results)))(),
+    JSArrayOfBuffer: () => (T.JSArrayOfBuffer = dart.constFn(_interceptors.JSArray$(buffer$.Buffer)))(),
+    intAndBufferToint: () => (T.intAndBufferToint = dart.constFn(dart.fnType(core.int, [core.int, buffer$.Buffer])))(),
+    BufferTovoid: () => (T.BufferTovoid = dart.constFn(dart.fnType(dart.void, [buffer$.Buffer])))(),
+    FutureOfResults: () => (T.FutureOfResults = dart.constFn(async.Future$(single_connection.Results)))(),
+    VoidToFutureOfResults: () => (T.VoidToFutureOfResults = dart.constFn(dart.fnType(T.FutureOfResults(), [])))(),
+    VoidToFuture: () => (T.VoidToFuture = dart.constFn(dart.fnType(async.Future, [])))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: core.Duration.prototype,
+        [Duration__duration]: 30000000
+      });
+    }
+  }, false);
+  var C = [void 0];
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/single_connection.dart",
+    "package:mysql1/src/single_connection.dart"
+  ];
+  var host$ = dart.privateName(single_connection, "ConnectionSettings.host");
+  var port$ = dart.privateName(single_connection, "ConnectionSettings.port");
+  var user$ = dart.privateName(single_connection, "ConnectionSettings.user");
+  var password$ = dart.privateName(single_connection, "ConnectionSettings.password");
+  var db$ = dart.privateName(single_connection, "ConnectionSettings.db");
+  var useCompression$ = dart.privateName(single_connection, "ConnectionSettings.useCompression");
+  var useSSL$ = dart.privateName(single_connection, "ConnectionSettings.useSSL");
+  var maxPacketSize$ = dart.privateName(single_connection, "ConnectionSettings.maxPacketSize");
+  var characterSet$ = dart.privateName(single_connection, "ConnectionSettings.characterSet");
+  var timeout$ = dart.privateName(single_connection, "ConnectionSettings.timeout");
+  var Duration__duration = dart.privateName(core, "Duration._duration");
+  single_connection.ConnectionSettings = class ConnectionSettings extends core.Object {
+    get host() {
+      return this[host$];
+    }
+    set host(value) {
+      this[host$] = value;
+    }
+    get port() {
+      return this[port$];
+    }
+    set port(value) {
+      this[port$] = value;
+    }
+    get user() {
+      return this[user$];
+    }
+    set user(value) {
+      this[user$] = value;
+    }
+    get password() {
+      return this[password$];
+    }
+    set password(value) {
+      this[password$] = value;
+    }
+    get db() {
+      return this[db$];
+    }
+    set db(value) {
+      this[db$] = value;
+    }
+    get useCompression() {
+      return this[useCompression$];
+    }
+    set useCompression(value) {
+      this[useCompression$] = value;
+    }
+    get useSSL() {
+      return this[useSSL$];
+    }
+    set useSSL(value) {
+      this[useSSL$] = value;
+    }
+    get maxPacketSize() {
+      return this[maxPacketSize$];
+    }
+    set maxPacketSize(value) {
+      this[maxPacketSize$] = value;
+    }
+    get characterSet() {
+      return this[characterSet$];
+    }
+    set characterSet(value) {
+      this[characterSet$] = value;
+    }
+    get timeout() {
+      return this[timeout$];
+    }
+    set timeout(value) {
+      this[timeout$] = value;
+    }
+    static socket(opts) {
+      let path = opts && 'path' in opts ? opts.path : null;
+      if (path == null) dart.nullFailed(I[0], 58, 28, "path");
+      let user = opts && 'user' in opts ? opts.user : null;
+      let password = opts && 'password' in opts ? opts.password : null;
+      let db = opts && 'db' in opts ? opts.db : null;
+      let useCompression = opts && 'useCompression' in opts ? opts.useCompression : false;
+      if (useCompression == null) dart.nullFailed(I[0], 62, 16, "useCompression");
+      let useSSL = opts && 'useSSL' in opts ? opts.useSSL : false;
+      if (useSSL == null) dart.nullFailed(I[0], 63, 16, "useSSL");
+      let maxPacketSize = opts && 'maxPacketSize' in opts ? opts.maxPacketSize : 16777216;
+      if (maxPacketSize == null) dart.nullFailed(I[0], 64, 15, "maxPacketSize");
+      let timeout = opts && 'timeout' in opts ? opts.timeout : C[0] || CT.C0;
+      if (timeout == null) dart.nullFailed(I[0], 65, 20, "timeout");
+      let characterSet = opts && 'characterSet' in opts ? opts.characterSet : 45;
+      if (characterSet == null) dart.nullFailed(I[0], 66, 15, "characterSet");
+      return new single_connection.ConnectionSettings.new({host: path, user: user, password: password, db: db, useCompression: useCompression, useSSL: useSSL, maxPacketSize: maxPacketSize, timeout: timeout, characterSet: characterSet});
+    }
+  };
+  (single_connection.ConnectionSettings.new = function(opts) {
+    let host = opts && 'host' in opts ? opts.host : "localhost";
+    if (host == null) dart.nullFailed(I[0], 46, 13, "host");
+    let port = opts && 'port' in opts ? opts.port : 3306;
+    if (port == null) dart.nullFailed(I[0], 47, 12, "port");
+    let user = opts && 'user' in opts ? opts.user : null;
+    let password = opts && 'password' in opts ? opts.password : null;
+    let db = opts && 'db' in opts ? opts.db : null;
+    let useCompression = opts && 'useCompression' in opts ? opts.useCompression : false;
+    if (useCompression == null) dart.nullFailed(I[0], 51, 12, "useCompression");
+    let useSSL = opts && 'useSSL' in opts ? opts.useSSL : false;
+    if (useSSL == null) dart.nullFailed(I[0], 52, 12, "useSSL");
+    let maxPacketSize = opts && 'maxPacketSize' in opts ? opts.maxPacketSize : 16777216;
+    if (maxPacketSize == null) dart.nullFailed(I[0], 53, 12, "maxPacketSize");
+    let timeout = opts && 'timeout' in opts ? opts.timeout : C[0] || CT.C0;
+    if (timeout == null) dart.nullFailed(I[0], 54, 12, "timeout");
+    let characterSet = opts && 'characterSet' in opts ? opts.characterSet : 45;
+    if (characterSet == null) dart.nullFailed(I[0], 55, 12, "characterSet");
+    this[host$] = host;
+    this[port$] = port;
+    this[user$] = user;
+    this[password$] = password;
+    this[db$] = db;
+    this[useCompression$] = useCompression;
+    this[useSSL$] = useSSL;
+    this[maxPacketSize$] = maxPacketSize;
+    this[timeout$] = timeout;
+    this[characterSet$] = characterSet;
+    ;
+  }).prototype = single_connection.ConnectionSettings.prototype;
+  (single_connection.ConnectionSettings.copy = function(o) {
+    if (o == null) dart.nullFailed(I[0], 78, 46, "o");
+    this[host$] = o.host;
+    this[port$] = o.port;
+    this[user$] = o.user;
+    this[password$] = o.password;
+    this[db$] = o.db;
+    this[useCompression$] = o.useCompression;
+    this[useSSL$] = o.useSSL;
+    this[maxPacketSize$] = o.maxPacketSize;
+    this[timeout$] = o.timeout;
+    this[characterSet$] = o.characterSet;
+    ;
+  }).prototype = single_connection.ConnectionSettings.prototype;
+  dart.addTypeTests(single_connection.ConnectionSettings);
+  dart.addTypeCaches(single_connection.ConnectionSettings);
+  dart.setLibraryUri(single_connection.ConnectionSettings, I[1]);
+  dart.setFieldSignature(single_connection.ConnectionSettings, () => ({
+    __proto__: dart.getFields(single_connection.ConnectionSettings.__proto__),
+    host: dart.fieldType(core.String),
+    port: dart.fieldType(core.int),
+    user: dart.fieldType(dart.nullable(core.String)),
+    password: dart.fieldType(dart.nullable(core.String)),
+    db: dart.fieldType(dart.nullable(core.String)),
+    useCompression: dart.fieldType(core.bool),
+    useSSL: dart.fieldType(core.bool),
+    maxPacketSize: dart.fieldType(core.int),
+    characterSet: dart.fieldType(core.int),
+    timeout: dart.fieldType(core.Duration)
+  }));
+  var _sentClose = dart.privateName(single_connection, "_sentClose");
+  var _timeout$ = dart.privateName(single_connection, "_timeout");
+  var _conn$ = dart.privateName(single_connection, "_conn");
+  var _readPacket = dart.privateName(single_connection, "_readPacket");
+  single_connection.MySqlConnection = class MySqlConnection extends core.Object {
+    close() {
+      return async.async(dart.dynamic, (function* close() {
+        if (dart.test(this[_sentClose])) {
+          return;
+        }
+        this[_sentClose] = true;
+        try {
+          yield this[_conn$].processHandlerNoResponse(new quit_handler.QuitHandler.new(), this[_timeout$]);
+        } catch (e$) {
+          let e = dart.getThrown(e$);
+          let st = dart.stackTrace(e$);
+          if (core.Object.is(e)) {
+            single_connection._log.warning("Error sending quit on connection", e, st);
+          } else
+            throw e$;
+        }
+        this[_conn$].close();
+      }).bind(this));
+    }
+    static connect(c, opts) {
+      if (c == null) dart.nullFailed(I[0], 129, 61, "c");
+      let isUnixSocket = opts && 'isUnixSocket' in opts ? opts.isUnixSocket : false;
+      if (isUnixSocket == null) dart.nullFailed(I[0], 130, 13, "isUnixSocket");
+      return async.async(single_connection.MySqlConnection, function* connect() {
+        if (!!dart.test(c.useSSL)) dart.assertFailed(null, I[0], 131, 12, "!c.useSSL");
+        if (!!dart.test(c.useCompression)) dart.assertFailed(null, I[0], 132, 12, "!c.useCompression");
+        let conn = null;
+        let handshakeCompleter = null;
+        let handshakeCompleter$35isSet = false;
+        function handshakeCompleter$35get() {
+          return handshakeCompleter$35isSet ? handshakeCompleter : dart.throw(new _internal.LateError.localNI("handshakeCompleter"));
+        }
+        dart.fn(handshakeCompleter$35get, T.VoidToCompleter());
+        function handshakeCompleter$35set(t4) {
+          if (t4 == null) dart.nullFailed(I[0], 135, 20, "null");
+          handshakeCompleter$35isSet = true;
+          return handshakeCompleter = t4;
+        }
+        dart.fn(handshakeCompleter$35set, T.CompleterTodynamic());
+        single_connection._log.fine("opening connection to " + dart.str(c.host) + ":" + dart.str(c.port) + "/" + dart.str(c.db));
+        let socket = (yield buffered_socket.BufferedSocket.connect(c.host, c.port, c.timeout, {isUnixSocket: isUnixSocket, onDataReady: dart.fn(() => {
+            let t6;
+            t6 = conn;
+            t6 == null ? null : t6[_readPacket]();
+          }, T.VoidToNull()), onDone: dart.fn(() => {
+            single_connection._log.fine("done");
+          }, T.VoidToNull()), onError: dart.fn(error => {
+            if (error == null) dart.nullFailed(I[0], 144, 25, "error");
+            single_connection._log.warning("socket error: " + dart.str(error));
+            if (conn == null) {
+              handshakeCompleter$35get().completeError(error);
+            } else {
+              conn.handleError(error);
+            }
+          }, T.ObjectToNull()), onClosed: dart.fn(() => {
+            if (conn != null) {
+              conn.handleError(new io.SocketException.closed());
+            }
+          }, T.VoidToNull())}));
+        let handler = new handshake_handler.HandshakeHandler.new(c.user, c.password, c.maxPacketSize, c.characterSet, c.db, c.useCompression, c.useSSL);
+        handshakeCompleter$35set(T.CompleterOfvoid().new());
+        conn = new single_connection.ReqRespConnection.new(socket, handler, handshakeCompleter$35get(), c.maxPacketSize);
+        yield handshakeCompleter$35get().future.timeout(c.timeout);
+        return new single_connection.MySqlConnection.new(c.timeout, conn);
+      });
+    }
+    query(sql, values = null) {
+      if (sql == null) dart.nullFailed(I[0], 172, 32, "sql");
+      return async.async(single_connection.Results, (function* query() {
+        if (values == null || dart.test(values[$isEmpty])) {
+          return this[_conn$].processHandlerWithResults(new query_stream_handler.QueryStreamHandler.new(sql), this[_timeout$]);
+        }
+        return (yield this.queryMulti(sql, T.JSArrayOfListOfObjectN().of([values])))[$first];
+      }).bind(this));
+    }
+    queryMulti(sql, values) {
+      if (sql == null) dart.nullFailed(I[0], 184, 14, "sql");
+      if (values == null) dart.nullFailed(I[0], 184, 43, "values");
+      return async.async(T.ListOfResults(), (function* queryMulti() {
+        let prepared = null;
+        let ret = T.JSArrayOfResults().of([]);
+        try {
+          prepared = (yield this[_conn$].processHandler(prepared_query.PreparedQuery, new prepare_handler.PrepareHandler.new(sql), this[_timeout$]));
+          single_connection._log.fine("Prepared queryMulti query for: " + dart.str(sql));
+          for (let v of values) {
+            if (v[$length] != prepared.parameterCount) {
+              dart.throw(new mysql_client_error.MySqlClientError.new("Length of parameters (" + dart.str(v[$length]) + ") does not match parameter count in query (" + dart.str(prepared.parameterCount) + ")"));
+            }
+            let handler = new execute_query_handler.ExecuteQueryHandler.new(prepared, false, v);
+            ret[$add](yield this[_conn$].processHandlerWithResults(handler, this[_timeout$]));
+          }
+        } finally {
+          if (prepared != null) {
+            yield this[_conn$].processHandlerNoResponse(new close_statement_handler.CloseStatementHandler.new(prepared.statementHandlerId), this[_timeout$]);
+          }
+        }
+        return ret;
+      }).bind(this));
+    }
+    transaction(queryBlock) {
+      if (queryBlock == null) dart.nullFailed(I[0], 209, 31, "queryBlock");
+      return async.async(dart.dynamic, (function* transaction() {
+        yield this.query("start transaction");
+        try {
+          yield dart.dcall(queryBlock, [new single_connection.TransactionContext.__(this)]);
+        } catch (e$) {
+          let e = dart.getThrown(e$);
+          if (core.Object.is(e)) {
+            yield this.query("rollback");
+            if (!single_connection._RollbackError.is(e)) {
+              dart.rethrow(e$);
+            }
+            return e;
+          } else
+            throw e$;
+        }
+        yield this.query("commit");
+      }).bind(this));
+    }
+  };
+  (single_connection.MySqlConnection.new = function(_timeout, _conn) {
+    if (_timeout == null) dart.nullFailed(I[0], 99, 24, "_timeout");
+    if (_conn == null) dart.nullFailed(I[0], 99, 39, "_conn");
+    this[_sentClose] = false;
+    this[_timeout$] = _timeout;
+    this[_conn$] = _conn;
+    ;
+  }).prototype = single_connection.MySqlConnection.prototype;
+  dart.addTypeTests(single_connection.MySqlConnection);
+  dart.addTypeCaches(single_connection.MySqlConnection);
+  dart.setMethodSignature(single_connection.MySqlConnection, () => ({
+    __proto__: dart.getMethods(single_connection.MySqlConnection.__proto__),
+    close: dart.fnType(async.Future, []),
+    query: dart.fnType(async.Future$(single_connection.Results), [core.String], [dart.nullable(core.List$(dart.nullable(core.Object)))]),
+    queryMulti: dart.fnType(async.Future$(core.List$(single_connection.Results)), [core.String, core.Iterable$(core.List$(dart.nullable(core.Object)))]),
+    transaction: dart.fnType(async.Future, [core.Function])
+  }));
+  dart.setLibraryUri(single_connection.MySqlConnection, I[1]);
+  dart.setFieldSignature(single_connection.MySqlConnection, () => ({
+    __proto__: dart.getFields(single_connection.MySqlConnection.__proto__),
+    [_timeout$]: dart.finalFieldType(core.Duration),
+    [_conn$]: dart.finalFieldType(single_connection.ReqRespConnection),
+    [_sentClose]: dart.fieldType(core.bool)
+  }));
+  single_connection.TransactionContext = class TransactionContext extends core.Object {
+    query(sql, values = null) {
+      if (sql == null) dart.nullFailed(I[0], 228, 32, "sql");
+      return this[_conn$].query(sql, values);
+    }
+    queryMulti(sql, values) {
+      if (sql == null) dart.nullFailed(I[0], 230, 43, "sql");
+      if (values == null) dart.nullFailed(I[0], 230, 71, "values");
+      return this[_conn$].queryMulti(sql, values);
+    }
+    rollback() {
+      return dart.throw(new single_connection._RollbackError.new());
+    }
+  };
+  (single_connection.TransactionContext.__ = function(_conn) {
+    if (_conn == null) dart.nullFailed(I[0], 226, 29, "_conn");
+    this[_conn$] = _conn;
+    ;
+  }).prototype = single_connection.TransactionContext.prototype;
+  dart.addTypeTests(single_connection.TransactionContext);
+  dart.addTypeCaches(single_connection.TransactionContext);
+  dart.setMethodSignature(single_connection.TransactionContext, () => ({
+    __proto__: dart.getMethods(single_connection.TransactionContext.__proto__),
+    query: dart.fnType(async.Future$(single_connection.Results), [core.String], [dart.nullable(core.List$(core.Object))]),
+    queryMulti: dart.fnType(async.Future$(core.List$(single_connection.Results)), [core.String, core.Iterable$(core.List$(core.Object))]),
+    rollback: dart.fnType(dart.void, [])
+  }));
+  dart.setLibraryUri(single_connection.TransactionContext, I[1]);
+  dart.setFieldSignature(single_connection.TransactionContext, () => ({
+    __proto__: dart.getFields(single_connection.TransactionContext.__proto__),
+    [_conn$]: dart.finalFieldType(single_connection.MySqlConnection)
+  }));
+  single_connection._RollbackError = class _RollbackError extends core.Object {};
+  (single_connection._RollbackError.new = function() {
+    ;
+  }).prototype = single_connection._RollbackError.prototype;
+  dart.addTypeTests(single_connection._RollbackError);
+  dart.addTypeCaches(single_connection._RollbackError);
+  dart.setLibraryUri(single_connection._RollbackError, I[1]);
+  var insertId$ = dart.privateName(single_connection, "Results.insertId");
+  var affectedRows$ = dart.privateName(single_connection, "Results.affectedRows");
+  var fields$ = dart.privateName(single_connection, "Results.fields");
+  var _rows$ = dart.privateName(single_connection, "_rows");
+  single_connection.Results = class Results extends collection.IterableBase$(row.ResultRow) {
+    get insertId() {
+      return this[insertId$];
+    }
+    set insertId(value) {
+      super.insertId = value;
+    }
+    get affectedRows() {
+      return this[affectedRows$];
+    }
+    set affectedRows(value) {
+      super.affectedRows = value;
+    }
+    get fields() {
+      return this[fields$];
+    }
+    set fields(value) {
+      super.fields = value;
+    }
+    static _read(r) {
+      if (r == null) dart.nullFailed(I[0], 246, 46, "r");
+      return async.async(single_connection.Results, function* _read() {
+        let rows = (yield r.toList());
+        return new single_connection.Results.__(rows, r.fields, r.insertId, r.affectedRows);
+      });
+    }
+    get iterator() {
+      return this[_rows$][$iterator];
+    }
+  };
+  (single_connection.Results.__ = function(_rows, fields, insertId, affectedRows) {
+    if (_rows == null) dart.nullFailed(I[0], 244, 18, "_rows");
+    if (fields == null) dart.nullFailed(I[0], 244, 30, "fields");
+    this[_rows$] = _rows;
+    this[fields$] = fields;
+    this[insertId$] = insertId;
+    this[affectedRows$] = affectedRows;
+    single_connection.Results.__proto__.new.call(this);
+    ;
+  }).prototype = single_connection.Results.prototype;
+  dart.addTypeTests(single_connection.Results);
+  dart.addTypeCaches(single_connection.Results);
+  dart.setGetterSignature(single_connection.Results, () => ({
+    __proto__: dart.getGetters(single_connection.Results.__proto__),
+    iterator: core.Iterator$(row.ResultRow),
+    [$iterator]: core.Iterator$(row.ResultRow)
+  }));
+  dart.setLibraryUri(single_connection.Results, I[1]);
+  dart.setFieldSignature(single_connection.Results, () => ({
+    __proto__: dart.getFields(single_connection.Results.__proto__),
+    insertId: dart.finalFieldType(dart.nullable(core.int)),
+    affectedRows: dart.finalFieldType(dart.nullable(core.int)),
+    fields: dart.finalFieldType(core.List$(field.Field)),
+    [_rows$]: dart.finalFieldType(core.List$(row.ResultRow))
+  }));
+  dart.defineExtensionAccessors(single_connection.Results, ['iterator']);
+  var pool$ = dart.privateName(single_connection, "ReqRespConnection.pool");
+  var _largePacketBuffers = dart.privateName(single_connection, "_largePacketBuffers");
+  var _readyForHeader = dart.privateName(single_connection, "_readyForHeader");
+  var _packetNumber = dart.privateName(single_connection, "_packetNumber");
+  var _compressedPacketNumber = dart.privateName(single_connection, "_compressedPacketNumber");
+  var _useCompression = dart.privateName(single_connection, "_useCompression");
+  var _useSSL = dart.privateName(single_connection, "_useSSL");
+  var _socket$ = dart.privateName(single_connection, "_socket");
+  var _handler$ = dart.privateName(single_connection, "_handler");
+  var _maxPacketSize$ = dart.privateName(single_connection, "_maxPacketSize");
+  var _headerBuffer = dart.privateName(single_connection, "_headerBuffer");
+  var _compressedHeaderBuffer = dart.privateName(single_connection, "_compressedHeaderBuffer");
+  var _completer = dart.privateName(single_connection, "_completer");
+  var _handleHeader = dart.privateName(single_connection, "_handleHeader");
+  var _handleMoreData = dart.privateName(single_connection, "_handleMoreData");
+  var _handleData = dart.privateName(single_connection, "_handleData");
+  var _finishAndReuse = dart.privateName(single_connection, "_finishAndReuse");
+  var _sendBufferPart = dart.privateName(single_connection, "_sendBufferPart");
+  var _processHandlerNoResponse = dart.privateName(single_connection, "_processHandlerNoResponse");
+  var _processHandler = dart.privateName(single_connection, "_processHandler");
+  single_connection.ReqRespConnection = class ReqRespConnection extends core.Object {
+    get pool() {
+      return this[pool$];
+    }
+    set pool(value) {
+      super.pool = value;
+    }
+    close() {
+      return this[_socket$].close();
+    }
+    handleError(e, opts) {
+      let t7, t7$;
+      if (e == null) dart.nullFailed(I[0], 287, 27, "e");
+      let keepOpen = opts && 'keepOpen' in opts ? opts.keepOpen : false;
+      if (keepOpen == null) dart.nullFailed(I[0], 287, 36, "keepOpen");
+      let st = opts && 'st' in opts ? opts.st : null;
+      if ((t7 = this[_completer], t7 == null ? null : t7.isCompleted) === true) {
+        single_connection._log.warning("Ignoring error because no response", e, st);
+      } else {
+        t7$ = this[_completer];
+        t7$ == null ? null : t7$.completeError(e, st);
+      }
+      if (!dart.test(keepOpen)) {
+        this.close();
+      }
+    }
+    [_readPacket]() {
+      return async.async(dart.dynamic, (function* _readPacket() {
+        single_connection._log.fine("readPacket readyForHeader=" + dart.str(this[_readyForHeader]));
+        if (dart.test(this[_readyForHeader])) {
+          this[_readyForHeader] = false;
+          let buffer = (yield this[_socket$].readBuffer(this[_headerBuffer]));
+          yield this[_handleHeader](buffer);
+        }
+      }).bind(this));
+    }
+    [_handleHeader](buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 307, 31, "buffer");
+      return async.async(dart.dynamic, (function* _handleHeader() {
+        let _dataSize = dart.notNull(buffer._get(0)) + (dart.notNull(buffer._get(1)) << 8 >>> 0) + (dart.notNull(buffer._get(2)) << 16 >>> 0);
+        this[_packetNumber] = buffer._get(3);
+        single_connection._log.fine("about to read " + dart.str(_dataSize) + " bytes for packet " + dart.str(this[_packetNumber]));
+        let dataBuffer = new buffer$.Buffer.new(_dataSize);
+        single_connection._log.fine("buffer size=" + dart.str(dataBuffer.length));
+        if (_dataSize === 16777215 || dart.test(this[_largePacketBuffers][$isNotEmpty])) {
+          let buffer = (yield this[_socket$].readBuffer(dataBuffer));
+          yield this[_handleMoreData](buffer);
+        } else {
+          let buffer = (yield this[_socket$].readBuffer(dataBuffer));
+          yield this[_handleData](buffer);
+        }
+      }).bind(this));
+    }
+    [_handleMoreData](buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 322, 33, "buffer");
+      return async.async(dart.dynamic, (function* _handleMoreData() {
+        this[_largePacketBuffers][$add](buffer);
+        if (dart.notNull(buffer.length) < 16777215) {
+          let length = this[_largePacketBuffers][$fold](core.int, 0, dart.fn((length, buf) => {
+            if (length == null) dart.nullFailed(I[0], 325, 54, "length");
+            if (buf == null) dart.nullFailed(I[0], 325, 62, "buf");
+            return dart.notNull(length) + dart.notNull(buf.length);
+          }, T.intAndBufferToint()));
+          let combinedBuffer = new buffer$.Buffer.new(length);
+          let start = 0;
+          this[_largePacketBuffers][$forEach](dart.fn(aBuffer => {
+            if (aBuffer == null) dart.nullFailed(I[0], 330, 36, "aBuffer");
+            combinedBuffer.list[$setRange](start, start + dart.notNull(aBuffer.length), aBuffer.list);
+            start = start + dart.notNull(aBuffer.length);
+          }, T.BufferTovoid()));
+          this[_largePacketBuffers][$clear]();
+          yield this[_handleData](combinedBuffer);
+        } else {
+          this[_readyForHeader] = true;
+          this[_headerBuffer].reset();
+          yield this[_readPacket]();
+        }
+      }).bind(this));
+    }
+    [_handleData](buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 344, 29, "buffer");
+      return async.async(dart.dynamic, (function* _handleData() {
+        let t7, t7$, t7$0, t7$1, t7$2, t7$3, t7$4;
+        this[_readyForHeader] = true;
+        this[_headerBuffer].reset();
+        try {
+          let response = (t7 = this[_handler$], t7 == null ? null : t7.processResponse(buffer));
+          if (handshake_handler.HandshakeHandler.is(this[_handler$])) {
+            this[_useCompression] = handshake_handler.HandshakeHandler.as(this[_handler$]).useCompression;
+            this[_useSSL] = handshake_handler.HandshakeHandler.as(this[_handler$]).useSSL;
+          }
+          if ((t7$ = response, t7$ == null ? null : t7$.nextHandler) != null) {
+            this[_handler$] = dart.nullCheck(response).nextHandler;
+            yield this.sendBuffer(dart.nullCheck(this[_handler$]).createRequest());
+            if (dart.test(this[_useSSL]) && ssl_handler.SSLHandler.is(this[_handler$])) {
+              single_connection._log.fine("Use SSL");
+              yield this[_socket$].startSSL();
+              this[_handler$] = ssl_handler.SSLHandler.as(this[_handler$]).nextHandler;
+              yield this.sendBuffer(dart.nullCheck(this[_handler$]).createRequest());
+              single_connection._log.fine("Sent buffer");
+              return;
+            }
+          }
+          if ((t7$0 = response, t7$0 == null ? null : t7$0.finished) === true) {
+            single_connection._log.fine("Finished " + dart.str(this[_handler$]));
+            this[_finishAndReuse]();
+          }
+          if ((t7$1 = response, t7$1 == null ? null : t7$1.hasResult) === true) {
+            if ((t7$2 = this[_completer], t7$2 == null ? null : t7$2.isCompleted) === true) {
+              t7$3 = this[_completer];
+              t7$3 == null ? null : t7$3.completeError(new core.StateError.new("Request has already completed"));
+            }
+            t7$4 = this[_completer];
+            t7$4 == null ? null : t7$4.complete(dart.nullCheck(response).result);
+          }
+        } catch (e$) {
+          let ex = dart.getThrown(e$);
+          let st$ = dart.stackTrace(e$);
+          if (mysql_exception.MySqlException.is(ex)) {
+            let e = ex;
+            let st = st$;
+            single_connection._log.fine("completing with MySqlException: " + dart.str(e));
+            this[_finishAndReuse]();
+            this.handleError(e, {st: st, keepOpen: true});
+          } else if (core.Object.is(ex)) {
+            let e = ex;
+            let st = st$;
+            this.handleError(e, {st: st});
+          } else
+            throw e$;
+        }
+      }).bind(this));
+    }
+    [_finishAndReuse]() {
+      this[_handler$] = null;
+    }
+    sendBuffer(buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 395, 28, "buffer");
+      if (dart.notNull(buffer.length) > dart.notNull(this[_maxPacketSize$])) {
+        dart.throw(new mysql_client_error.MySqlClientError.new("Buffer length (" + dart.str(buffer.length) + ") bigger than maxPacketSize (" + dart.str(this[_maxPacketSize$]) + ")"));
+      }
+      if (dart.test(this[_useCompression])) {
+        this[_headerBuffer]._set(0, dart.notNull(buffer.length) & 255);
+        this[_headerBuffer]._set(1, (dart.notNull(buffer.length) & 65280) >> 8);
+        this[_headerBuffer]._set(2, (dart.notNull(buffer.length) & 16711680) >> 16);
+        this[_headerBuffer]._set(3, this[_packetNumber] = dart.notNull(this[_packetNumber]) + 1);
+        let encodedHeader = io.zlib.encode(this[_headerBuffer].list);
+        let encodedBuffer = io.zlib.encode(buffer.list);
+        this[_compressedHeaderBuffer].writeUint24(dart.notNull(encodedHeader[$length]) + dart.notNull(encodedBuffer[$length]));
+        this[_compressedHeaderBuffer].writeByte(this[_compressedPacketNumber] = dart.notNull(this[_compressedPacketNumber]) + 1);
+        this[_compressedHeaderBuffer].writeUint24(4 + dart.notNull(buffer.length));
+        return this[_socket$].writeBuffer(this[_compressedHeaderBuffer]);
+      } else {
+        single_connection._log.fine("sendBuffer header");
+        return this[_sendBufferPart](buffer, 0);
+      }
+    }
+    [_sendBufferPart](buffer, start) {
+      if (buffer == null) dart.nullFailed(I[0], 418, 41, "buffer");
+      if (start == null) dart.nullFailed(I[0], 418, 53, "start");
+      return async.async(buffer$.Buffer, (function* _sendBufferPart$() {
+        let len = math.min(core.int, dart.notNull(buffer.length) - dart.notNull(start), 16777215);
+        this[_headerBuffer]._set(0, len & 255);
+        this[_headerBuffer]._set(1, (len & 65280) >> 8);
+        this[_headerBuffer]._set(2, (len & 16711680) >> 16);
+        this[_headerBuffer]._set(3, this[_packetNumber] = dart.notNull(this[_packetNumber]) + 1);
+        single_connection._log.fine("sending header, packet " + dart.str(this[_packetNumber]));
+        yield this[_socket$].writeBuffer(this[_headerBuffer]);
+        single_connection._log.fine("sendBuffer body, buffer length=" + dart.str(buffer.length) + ", start=" + dart.str(start) + ", len=" + dart.str(len));
+        yield this[_socket$].writeBufferPart(buffer, start, len);
+        if (len === 16777215) {
+          return this[_sendBufferPart](buffer, dart.notNull(start) + len);
+        } else {
+          return buffer;
+        }
+      }).bind(this));
+    }
+    [_processHandlerNoResponse](handler) {
+      if (handler == null) dart.nullFailed(I[0], 438, 44, "handler");
+      if (this[_handler$] != null) {
+        dart.throw(new mysql_client_error.MySqlClientError.new("Connection cannot process a request for " + dart.str(handler) + " while a request is already in progress for " + dart.str(this[_handler$])));
+      }
+      this[_packetNumber] = -1;
+      this[_compressedPacketNumber] = -1;
+      return this.sendBuffer(handler.createRequest());
+    }
+    [_processHandler](T, handler) {
+      if (handler == null) dart.nullFailed(I[0], 450, 40, "handler");
+      return async.async(T, (function* _processHandler() {
+        if (this[_handler$] != null) {
+          dart.throw(new mysql_client_error.MySqlClientError.new("Connection cannot process a request for " + dart.str(handler) + " while a request is already in progress for " + dart.str(this[_handler$])));
+        }
+        single_connection._log.fine("start handler " + dart.str(handler));
+        this[_packetNumber] = -1;
+        this[_compressedPacketNumber] = -1;
+        let c = async.Completer$(T).new();
+        this[_completer] = c;
+        this[_handler$] = handler;
+        yield this.sendBuffer(handler.createRequest());
+        return c.future;
+      }).bind(this));
+    }
+    processHandler(T, handler, timeout) {
+      if (handler == null) dart.nullFailed(I[0], 471, 39, "handler");
+      if (timeout == null) dart.nullFailed(I[0], 471, 57, "timeout");
+      return this.pool.withResource(T, dart.fn(() => async.async(T, (function*() {
+        try {
+          let ret = (yield this[_processHandler](T, handler).timeout(timeout));
+          return ret;
+        } finally {
+          this[_handler$] = null;
+        }
+      }).bind(this)), dart.fnType(async.Future$(T), [])));
+    }
+    processHandlerWithResults(handler, timeout) {
+      if (handler == null) dart.nullFailed(I[0], 482, 53, "handler");
+      if (timeout == null) dart.nullFailed(I[0], 482, 71, "timeout");
+      return this.pool.withResource(single_connection.Results, dart.fn(() => async.async(single_connection.Results, (function*() {
+        try {
+          let results = (yield this[_processHandler](results_impl.ResultsStream, handler).timeout(timeout));
+          let ret = (yield single_connection.Results._read(results).timeout(timeout));
+          return ret;
+        } finally {
+          this[_handler$] = null;
+        }
+      }).bind(this)), T.VoidToFutureOfResults()));
+    }
+    processHandlerNoResponse(handler, timeout) {
+      if (handler == null) dart.nullFailed(I[0], 497, 49, "handler");
+      if (timeout == null) dart.nullFailed(I[0], 497, 67, "timeout");
+      return this.pool.withResource(dart.void, dart.fn(() => {
+        try {
+          return this[_processHandlerNoResponse](handler).timeout(timeout);
+        } finally {
+          this[_handler$] = null;
+        }
+      }, T.VoidToFuture()));
+    }
+  };
+  (single_connection.ReqRespConnection.new = function(_socket, _handler, handshakeCompleter, _maxPacketSize) {
+    if (_socket == null) dart.nullFailed(I[0], 279, 26, "_socket");
+    if (_maxPacketSize == null) dart.nullFailed(I[0], 280, 12, "_maxPacketSize");
+    this[_largePacketBuffers] = T.JSArrayOfBuffer().of([]);
+    this[_readyForHeader] = true;
+    this[_packetNumber] = 0;
+    this[_compressedPacketNumber] = 0;
+    this[_useCompression] = false;
+    this[_useSSL] = false;
+    this[pool$] = new pool.Pool.new(1);
+    this[_socket$] = _socket;
+    this[_handler$] = _handler;
+    this[_maxPacketSize$] = _maxPacketSize;
+    this[_headerBuffer] = new buffer$.Buffer.new(4);
+    this[_compressedHeaderBuffer] = new buffer$.Buffer.new(7);
+    this[_completer] = handshakeCompleter;
+    ;
+  }).prototype = single_connection.ReqRespConnection.prototype;
+  dart.addTypeTests(single_connection.ReqRespConnection);
+  dart.addTypeCaches(single_connection.ReqRespConnection);
+  dart.setMethodSignature(single_connection.ReqRespConnection, () => ({
+    __proto__: dart.getMethods(single_connection.ReqRespConnection.__proto__),
+    close: dart.fnType(dart.void, []),
+    handleError: dart.fnType(dart.void, [core.Object], {keepOpen: core.bool, st: dart.nullable(core.StackTrace)}, {}),
+    [_readPacket]: dart.fnType(async.Future, []),
+    [_handleHeader]: dart.fnType(async.Future, [buffer$.Buffer]),
+    [_handleMoreData]: dart.fnType(async.Future, [buffer$.Buffer]),
+    [_handleData]: dart.fnType(async.Future, [buffer$.Buffer]),
+    [_finishAndReuse]: dart.fnType(dart.void, []),
+    sendBuffer: dart.fnType(async.Future, [buffer$.Buffer]),
+    [_sendBufferPart]: dart.fnType(async.Future$(buffer$.Buffer), [buffer$.Buffer, core.int]),
+    [_processHandlerNoResponse]: dart.fnType(async.Future, [handler.Handler]),
+    [_processHandler]: dart.gFnType(T => [async.Future$(T), [handler.Handler]], T => [dart.nullable(core.Object)]),
+    processHandler: dart.gFnType(T => [async.Future$(T), [handler.Handler, core.Duration]], T => [dart.nullable(core.Object)]),
+    processHandlerWithResults: dart.fnType(async.Future$(single_connection.Results), [handler.Handler, core.Duration]),
+    processHandlerNoResponse: dart.fnType(async.Future$(dart.void), [handler.Handler, core.Duration])
+  }));
+  dart.setLibraryUri(single_connection.ReqRespConnection, I[1]);
+  dart.setFieldSignature(single_connection.ReqRespConnection, () => ({
+    __proto__: dart.getFields(single_connection.ReqRespConnection.__proto__),
+    [_handler$]: dart.fieldType(dart.nullable(handler.Handler)),
+    [_completer]: dart.fieldType(dart.nullable(async.Completer)),
+    [_socket$]: dart.finalFieldType(buffered_socket.BufferedSocket),
+    [_largePacketBuffers]: dart.finalFieldType(core.List$(buffer$.Buffer)),
+    [_headerBuffer]: dart.finalFieldType(buffer$.Buffer),
+    [_compressedHeaderBuffer]: dart.finalFieldType(buffer$.Buffer),
+    [_readyForHeader]: dart.fieldType(core.bool),
+    [_packetNumber]: dart.fieldType(core.int),
+    [_compressedPacketNumber]: dart.fieldType(core.int),
+    [_useCompression]: dart.fieldType(core.bool),
+    [_useSSL]: dart.fieldType(core.bool),
+    [_maxPacketSize$]: dart.finalFieldType(core.int),
+    pool: dart.finalFieldType(pool.Pool)
+  }));
+  dart.defineLazy(single_connection.ReqRespConnection, {
+    /*single_connection.ReqRespConnection.HEADER_SIZE*/get HEADER_SIZE() {
+      return 4;
+    },
+    /*single_connection.ReqRespConnection.COMPRESSED_HEADER_SIZE*/get COMPRESSED_HEADER_SIZE() {
+      return 7;
+    },
+    /*single_connection.ReqRespConnection.STATE_PACKET_HEADER*/get STATE_PACKET_HEADER() {
+      return 0;
+    },
+    /*single_connection.ReqRespConnection.STATE_PACKET_DATA*/get STATE_PACKET_DATA() {
+      return 1;
+    }
+  }, false);
+  dart.defineLazy(single_connection, {
+    /*single_connection._log*/get _log() {
+      return logger.Logger.new("MySqlConnection");
+    }
+  }, false);
+  dart.trackLibraries("packages/mysql1/src/single_connection.dart", {
+    "package:mysql1/src/single_connection.dart": single_connection
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["single_connection.dart"],"names":[],"mappings":"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","file":"../../../../../../../../packages/mysql1/src/single_connection.dart.lib.js"}');
+  // Exports:
+  return {
+    src__single_connection: single_connection
+  };
+}));
+
+//# sourceMappingURL=single_connection.dart.lib.js.map

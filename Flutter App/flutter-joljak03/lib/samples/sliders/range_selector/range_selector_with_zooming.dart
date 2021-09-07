@@ -62,7 +62,7 @@ class _RangeSelectorZoomingPageState extends SampleViewState
     // _getSmartPlug  돌리고 -> 돌리자 마자
     db.getConnection().then((conn) {
       String sql =
-          "select date_format(datetime, '%Y-%m-%d') DateTime, round(sum(amp), 2) amp from db.Smart_plug where id NOT IN (111) and date_format(datetime, '%Y-%m-%d') is not null and datetime NOT IN ('2020-11-01 00:00:00') group by date_format(db.Smart_plug.datetime, '%Y-%m-%d')";
+          "select date_format(datetime, '%Y-%m-%d') DateTime, round(sum(amp), 3) amp from db.Airconditioner where date_format(datetime, '%Y-%m-%d') is not null group by date_format(db.Airconditioner.datetime, '%Y-%m-%d')";
 
       conn.query(sql).then((results) {
         for (var column in results) {
