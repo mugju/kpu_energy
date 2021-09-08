@@ -28,7 +28,7 @@
                 "title": "시간 별 음료 냉장고 전력 사용량(최근 한 달)",
                 "key": "zooming_id1_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_2.dart"
               }          
 
 
@@ -43,13 +43,13 @@
                 "title": "일 별 업소용 냉장고 전력 사용량",
                 "key": "zooming_id2_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id2_1.dart"
               },
               {
                 "title": "시간 별 업소용 냉장고 전력 사용량(최근 한 달)",
                 "key": "zooming_id2_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id2_2.dart"
               }
             ]
           },
@@ -62,13 +62,13 @@
                 "title": "일 별 커피머신 전력 사용량",
                 "key": "zooming_id3_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id3_1.dart"
               },
               {
                 "title": "시간 별 커피머신 전력 사용량(최근 한 달)",
                 "key": "zooming_id3_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id3_2.dart"
               }
 
             ]
@@ -82,13 +82,13 @@
                 "title": "일 별 커피 그라인더 전력 사용량",
                 "key": "zooming_id4_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id4_1.dart"
               },
               {
                 "title": "시간 별 커피 그라인더 전력 사용량(최근 한 달)",
                 "key": "zooming_id4_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id4_2.dart"
               }
             ]
           },
@@ -101,13 +101,13 @@
                 "title": "일 별 디스펜더 전력 사용량",
                 "key": "zooming_id5_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id5_1.dart"
               },
               {
                 "title": "시간 별 디스펜더 전력 사용량(최근 한 달)",
                 "key": "zooming_id5_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id5_2.dart"
               }
             ]
           },
@@ -120,13 +120,13 @@
                 "title": "일 별 미니 오븐 전력 사용량",
                 "key": "zooming_id6_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id6_1.dart"
               },
               {
                 "title": "시간 별 미니 오븐 전력 사용량(최근 한 달)",
                 "key": "zooming_id6_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id6_2.dart"
               }
             ]
           },
@@ -139,13 +139,13 @@
                 "title": "일 별 아이스메이커 전력 사용량",
                 "key": "zooming_id7_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id7_1.dart"
               },
               {
                 "title": "시간 별 아이스메이커 전력 사용량(최근 한 달)",
                 "key": "zooming_id7_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id7_2.dart"
               }
             ]
           }
@@ -233,15 +233,15 @@
         "subItems": [
           {
             "title": "일 별 에어컨 전력 사용량",
-            "key": "zooming_id1_1",
+            "key": "zooming_aircon1",
             "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-            "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+            "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_aircon1.dart"
           },
           {
             "title": "시간 별 에어컨 전력 사용량(최근 한 달)",
-            "key": "zooming_id1_2",
+            "key": "zooming_aircon2",
             "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-            "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+            "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_aircon2.dart"
           }
 
         ]
