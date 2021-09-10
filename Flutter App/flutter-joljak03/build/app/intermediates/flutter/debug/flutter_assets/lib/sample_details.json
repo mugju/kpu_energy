@@ -164,7 +164,7 @@
     "mobileCategoryId": 2,
     "controlList": [
       {
-        "title": "Circular 변형 이거 사용 예정",
+        "title": "Data Analysis",
         "description": "기기 별 에너지 사용량 비교",
         "image": "images/circle_series.png",
         "controlId": 1,

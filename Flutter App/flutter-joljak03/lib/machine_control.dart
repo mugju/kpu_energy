@@ -20,12 +20,22 @@ class _MachineControlState extends State<MachineControl> {
 
   String smp_elec_topic = 'Smplug1_elec';
 
+  String people = 'People';
+
+  String sct = 'SCT013';
+
+  String sct_total = 'Total_power';
+
   late mqtt.MqttClient client;
   late mqtt.MqttConnectionState connectionState;
 
   //초기 값
-  double _temp = 0;
+  String _temp = 'OFF';
   double _smplug_amp = 0;
+  String _people = '인원 없음';
+  double _SCT_amp = 0;
+  double _SCT_total = 0;
+
 
   late StreamSubscription subscription;
 
@@ -149,13 +159,81 @@ class _MachineControlState extends State<MachineControl> {
             indent: 20.0,
             endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
           ),
+          Text(
+            '[재실 인원 유무] ',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          // Text(
+          //   '[Smart Plug 제어] ',
+          //   style: Theme.of(context).textTheme.headline6,
+          // ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            '$_people',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Divider(
+            // Divider -> 공간을 나누는 선
+            height:
+                30.0, // height ->  높이 설정 -> 위와 아래 사이의 간격이 합쳐서 60.0 이라는 뜻(위 아래로 각 30px)
+            color: Colors.blue[600], // color -> 색상 설정
+            thickness: 2, // thickness -> 선의 굵기
+            indent: 20.0,
+            endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
+          ),
+          Text(
+            '[배전반 순간 전력] ',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          // Text(
+          //   '[Smart Plug 제어] ',
+          //   style: Theme.of(context).textTheme.headline6,
+          // ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            '$_SCT_amp',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Divider(
+            // Divider -> 공간을 나누는 선
+            height:
+                30.0, // height ->  높이 설정 -> 위와 아래 사이의 간격이 합쳐서 60.0 이라는 뜻(위 아래로 각 30px)
+            color: Colors.blue[600], // color -> 색상 설정
+            thickness: 2, // thickness -> 선의 굵기
+            indent: 20.0,
+            endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
+          ),
+          Text(
+            '[배전반 누적 전력] ',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          // Text(
+          //   '[Smart Plug 제어] ',
+          //   style: Theme.of(context).textTheme.headline6,
+          // ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            '$_SCT_total',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Divider(
+            // Divider -> 공간을 나누는 선
+            height:
+                30.0, // height ->  높이 설정 -> 위와 아래 사이의 간격이 합쳐서 60.0 이라는 뜻(위 아래로 각 30px)
+            color: Colors.blue[600], // color -> 색상 설정
+            thickness: 2, // thickness -> 선의 굵기
+            indent: 20.0,
+            endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
+          ),
         ],
       )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onoff,
-        tooltip: 'Ligar/Desligar',
-        child: Icon(Icons.play_arrow),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
     );
   }
 
@@ -201,10 +279,15 @@ class _MachineControlState extends State<MachineControl> {
       _disconnect();
     }
 
-    
     _subscribeToTopic(smp_topic);
 
     _subscribeToTopic(smp_elec_topic);
+
+    _subscribeToTopic(people);
+
+    _subscribeToTopic(sct);
+
+    _subscribeToTopic(sct_total);
 
     client.updates.listen((List<mqtt.MqttReceivedMessage> event) {
       print(event.length);
@@ -220,25 +303,32 @@ class _MachineControlState extends State<MachineControl> {
       print("[MQTT client] message with message: ${message}");
 
       setState(() {
-        if(event[0].topic=="Smplug1_elec"){
+        if (event[0].topic == "Smplug1_elec") {
           _smplug_amp = double.parse(message);
+        } else if (event[0].topic == "Smplug1") {
+          if (double.parse(message) == 1) {
+            _temp = 'ON';
+          } else {
+            _temp = 'OFF';
+          }
+        } else if (event[0].topic == "People") {
+          if (double.parse(message) == 1) {
+            _people = '재실중';
+          } else {
+            _people = '인원 없음';
+          }
+        }
+        else if(event[0].topic == "SCT013"){
+          _SCT_amp = double.parse(message);
         }
         else{
-          _temp = double.parse(message);
+          _SCT_total = double.parse(message);
         }
-
       });
     });
 
-    
-    
-
-
-
     //subscription = client.updates.listen(_onMessage);
   }
-
-  
 
   /*
   Desconecta do servidor MQTT
@@ -279,7 +369,11 @@ class _MachineControlState extends State<MachineControl> {
     print("[MQTT client] message with topic: ${event[0].topic}");
     print("[MQTT client] message with message: ${message}");
     setState(() {
-      _temp = double.parse(message);
+      if (double.parse(message) == 1) {
+        _temp = 'ON';
+      } else {
+        _temp = 'OFF';
+      }
     });
   }
 
