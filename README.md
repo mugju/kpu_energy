@@ -8,4 +8,10 @@
 <h2>사용한 기술/기기/센서 은(는) 무엇인가요?</h2>
 
 <h3>HW</h3>
-NodeMCU , Raspberry Pi , SCT-013 , Ir sensor
+NodeMCU , Raspberry Pi , SCT-013 , Ir sensor ..etc
+<img src = '.Hardware/home.jpeg' width = '480' height = '320 ' />
+
+<h3>SW</h3>
+<h4>App</h4>
+Flutter
+
