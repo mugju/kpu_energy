@@ -7,6 +7,8 @@ import paho.mqtt.client as mqtt
 from rpi_ws281x import *
 import argparse
 
+
+ 
 # LED strip configuration:
 LED_COUNT      = 12      # Number of LED pixels.
 LED_PIN        = 21      # GPIO pin connected to the pixels (18 uses PWM!).
@@ -40,6 +42,7 @@ client.connect("elijah.iptime.org", 1883) #MQTT 서버에 연결
 
 #store_id is necessary!!!!
 store_id=11
+prev = 0
 
 #부팅 후 5초 기다렸다가 시작
 time.sleep(5)
@@ -97,15 +100,19 @@ def sendData(people):
 
     # DB로 보내기
     sendToDB(tm, people)
-
-    #MQTT로 보냄
-    client.publish("People",people)
-    if(people>0):
-        client.publish("Smplug1",1)
-        on(strip)
-    else:
-        client.publish("Smplug1",0)
-        off(strip)
+    if people > 0: Smplug1=1
+    else : Smplug1 = 0
+    global prev
+    if Smplug1 != prev:     
+        #MQTT로 보냄
+        client.publish("People",people)
+        if(people>0):
+            client.publish("Smplug1",Smplug1)
+            on(strip)
+        else:
+            client.publish("Smplug1",Smplug1)
+            off(strip)  
+        prev = Smplug1
 
 def motionCheck(diff_cnt):
     #모션인식 민감도
