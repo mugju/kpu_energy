@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="smartPlug">
+	<select id="smartPlugHourData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+		select datetime,amp
+		from Smart_plug where
+		id=#{id} and store_id=#{store_id} and
+		datetime>=#{date} and datetime<(date(#{date})+interval 1 day)
+			]]>
+	</select>
+
+	<select id="totalHourAmpData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+		select datetime, 
+		sum(amp) as amp
+		from Smart_plug 
+		where store_id=#{store_id} and 
+		datetime>=#{date} and datetime<(date(#{date})+interval 1 day)
+		group by datetime
+		]]>
+	</select>
+
+	<select id="totalHourReductionAmpData" resultType="dto.SmartPlugDTO">
+		<![CDATA[
+		select s.datetime, 
+		sum(
+		case
+		when e.people = 0 and s.id = 3 then 40/220
+		when e.people = 0 and s.id = 4 then 20/220
+		when e.people = 0 and s.id = 5 then 25/220
+		when e.people = 0 and s.id = 6 then 50/220
+		when s.id = 111 then 0
+		else s.amp
+		end
+		) as amp
+		from Smart_plug s
+		left join Env e
+		on s.datetime=e.datetime
+		where s.store_id = #{store_id} and 
+		s.datetime>=#{date} and s.datetime<(date(#{date})+interval 1 day)
+		group by s.datetime
+		]]>
+	</select>
+	
+	<select id="smartPlugDayData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+	select date_format(datetime,"%Y-%m-%d") as datetime, sum(amp) as amp
+	from Smart_plug
+	where id=#{id} and store_id=#{store_id} and
+	datetime >= (last_day(#{date})-interval 1 month + interval 1 day) and
+	datetime < (last_day(#{date})+interval 1 day)
+	group by date_format(datetime,"%Y-%m-%d")
+	]]>
+	</select>
+
+	<select id="totalDayAmpData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+	select date_format(datetime,"%Y-%m-%d") as datetime,
+	sum(amp) as amp
+	from Smart_plug
+	where store_id=#{store_id} and 
+	datetime >= (last_day(#{date})-interval 1 month + interval 1 day) and
+	datetime < (last_day(#{date})+interval 1 day)
+	group by date_format(datetime,"%Y-%m-%d")
+	]]>
+	</select>
+
+	<select id="totalDayReductionAmpData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+	select date_format(s.datetime,"%Y-%m-%d") as datetime,
+	sum(
+	case
+	when e.people = 0 and s.id = 3 then 40/220
+	when e.people = 0 and s.id = 4 then 20/220
+	when e.people = 0 and s.id = 5 then 25/220
+	when e.people = 0 and s.id = 6 then 50/220
+	when s.id = 111 then 0
+	else s.amp
+	end
+	) as amp
+	from Smart_plug s
+	left join Env e
+	on s.datetime=e.datetime
+	where s.store_id=#{store_id} and 
+	s.datetime>=(last_day(#{date})-interval 1 month + interval 1 day) and
+	s.datetime < (last_day(#{date})+interval 1 day)
+	group by date_format(s.datetime,"%Y-%m-%d")
+	]]>
+	</select>
+	
+	<select id="smartPlugMonthData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+	select date_format(datetime,'%Y-%m-%d') as datetime, sum(amp) as amp
+	from Smart_plug
+	where id=#{id} and store_id=#{store_id} and
+	datetime >= date(concat(year(#{date}),'-01-01')) and
+	datetime < (date(concat(year(#{date}),'-12-31')) + interval 1 day)
+	group by date_format(datetime,'%Y-%m')
+	]]>	
+	</select>
+	
+	<select id="totalMonthData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+	select date_format(datetime,'%Y-%m-%d') as datetime, sum(amp) as amp
+	from Smart_plug 
+	where store_id=#{store_id} and
+	datetime >= date(concat(year(#{date}),'-01-01')) and
+	datetime < (date(concat(year(#{date}),'-12-31')) + interval 1 day)
+	group by date_format(datetime,'%Y-%m')
+	]]>
+	</select>
+	
+	<select id="totalMonthReductionAmpData" resultType="dto.SmartPlugDTO">
+	<![CDATA[
+	select date_format(s.datetime,'%Y-%m-%d') as datetime,
+	sum(
+	case
+	when e.people = 0 and s.id = 3 then 40/220
+	when e.people = 0 and s.id = 4 then 20/220
+	when e.people = 0 and s.id = 5 then 25/220
+	when e.people = 0 and s.id = 6 then 50/220
+	when s.id = 111 then 0
+	else s.amp
+	end
+	) as amp
+	from Smart_plug s
+	left join Env e
+	on s.datetime=e.datetime
+	where s.store_id=#{store_id} and
+	s.datetime >= date(concat(year(#{date}),'-01-01')) and
+	s.datetime < (date(concat(year(#{date}),'-12-31')) + interval 1 day)
+	group by date_format(s.datetime,'%Y-%m')
+	]]>
+	</select>
+</mapper>
