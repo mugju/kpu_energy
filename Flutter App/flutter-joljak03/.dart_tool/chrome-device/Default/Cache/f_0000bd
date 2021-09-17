@@ -1,0 +1,536 @@
+define(['dart_sdk', 'packages/mysql1/src/results/field.dart', 'packages/logging/src/logger.dart', 'packages/mysql1/src/blob.dart', 'packages/mysql1/src/buffer.dart', 'packages/mysql1/src/mysql_client_error.dart', 'packages/mysql1/src/handlers/handler.dart', 'packages/mysql1/src/handlers/ok_packet.dart', 'packages/mysql1/src/results/results_impl.dart', 'packages/mysql1/src/results/row.dart', 'packages/mysql1/src/query/result_set_header_packet.dart', 'packages/mysql1/src/prepared_statements/binary_data_packet.dart', 'packages/mysql1/src/prepared_statements/prepare_handler.dart'], (function load__packages__mysql1__src__prepared_statements__execute_query_handler_dart(dart_sdk, packages__mysql1__src__results__field$46dart, packages__logging__src__logger$46dart, packages__mysql1__src__blob$46dart, packages__mysql1__src__buffer$46dart, packages__mysql1__src__mysql_client_error$46dart, packages__mysql1__src__handlers__handler$46dart, packages__mysql1__src__handlers__ok_packet$46dart, packages__mysql1__src__results__results_impl$46dart, packages__mysql1__src__results__row$46dart, packages__mysql1__src__query__result_set_header_packet$46dart, packages__mysql1__src__prepared_statements__binary_data_packet$46dart, packages__mysql1__src__prepared_statements__prepare_handler$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _interceptors = dart_sdk._interceptors;
+  const _internal = dart_sdk._internal;
+  const convert = dart_sdk.convert;
+  const async = dart_sdk.async;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const field = packages__mysql1__src__results__field$46dart.src__results__field;
+  const logger = packages__logging__src__logger$46dart.src__logger;
+  const blob = packages__mysql1__src__blob$46dart.src__blob;
+  const buffer$ = packages__mysql1__src__buffer$46dart.src__buffer;
+  const mysql_client_error = packages__mysql1__src__mysql_client_error$46dart.src__mysql_client_error;
+  const handler = packages__mysql1__src__handlers__handler$46dart.src__handlers__handler;
+  const ok_packet = packages__mysql1__src__handlers__ok_packet$46dart.src__handlers__ok_packet;
+  const results_impl = packages__mysql1__src__results__results_impl$46dart.src__results__results_impl;
+  const row = packages__mysql1__src__results__row$46dart.src__results__row;
+  const result_set_header_packet = packages__mysql1__src__query__result_set_header_packet$46dart.src__query__result_set_header_packet;
+  const binary_data_packet = packages__mysql1__src__prepared_statements__binary_data_packet$46dart.src__prepared_statements__binary_data_packet;
+  const prepared_query = packages__mysql1__src__prepared_statements__prepare_handler$46dart.src__prepared_statements__prepared_query;
+  var execute_query_handler = Object.create(dart.library);
+  var $length = dartx.length;
+  var $_get = dartx._get;
+  var $_set = dartx._set;
+  var $toString = dartx.toString;
+  var $floor = dartx.floor;
+  var $toInt = dartx.toInt;
+  var $leftShift = dartx['<<'];
+  var $add = dartx.add;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    JSArrayOfField: () => (T.JSArrayOfField = dart.constFn(_interceptors.JSArray$(field.Field)))(),
+    ListOfint: () => (T.ListOfint = dart.constFn(core.List$(core.int)))(),
+    StreamControllerOfResultRow: () => (T.StreamControllerOfResultRow = dart.constFn(async.StreamController$(row.ResultRow)))(),
+    VoidToNull: () => (T.VoidToNull = dart.constFn(dart.fnType(core.Null, [])))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/prepared_statements/execute_query_handler.dart",
+    "package:mysql1/src/prepared_statements/execute_query_handler.dart"
+  ];
+  var fieldPackets = dart.privateName(execute_query_handler, "ExecuteQueryHandler.fieldPackets");
+  var preparedValues = dart.privateName(execute_query_handler, "ExecuteQueryHandler.preparedValues");
+  var _state = dart.privateName(execute_query_handler, "_state");
+  var _streamController = dart.privateName(execute_query_handler, "_streamController");
+  var __ExecuteQueryHandler__okPacket = dart.privateName(execute_query_handler, "_#ExecuteQueryHandler#_okPacket");
+  var __ExecuteQueryHandler__okPacket_isSet = dart.privateName(execute_query_handler, "_#ExecuteQueryHandler#_okPacket#isSet");
+  var _cancelled = dart.privateName(execute_query_handler, "_cancelled");
+  var _preparedQuery$ = dart.privateName(execute_query_handler, "_preparedQuery");
+  var _executed$ = dart.privateName(execute_query_handler, "_executed");
+  var _values$ = dart.privateName(execute_query_handler, "_values");
+  var _okPacket = dart.privateName(execute_query_handler, "_okPacket");
+  var _getType = dart.privateName(execute_query_handler, "_getType");
+  var _prepareInt = dart.privateName(execute_query_handler, "_prepareInt");
+  var _prepareDouble = dart.privateName(execute_query_handler, "_prepareDouble");
+  var _prepareDateTime = dart.privateName(execute_query_handler, "_prepareDateTime");
+  var _prepareBool = dart.privateName(execute_query_handler, "_prepareBool");
+  var _prepareList = dart.privateName(execute_query_handler, "_prepareList");
+  var _prepareBlob = dart.privateName(execute_query_handler, "_prepareBlob");
+  var _prepareString = dart.privateName(execute_query_handler, "_prepareString");
+  var _measureInt = dart.privateName(execute_query_handler, "_measureInt");
+  var _measureDouble = dart.privateName(execute_query_handler, "_measureDouble");
+  var _measureDateTime = dart.privateName(execute_query_handler, "_measureDateTime");
+  var _measureBool = dart.privateName(execute_query_handler, "_measureBool");
+  var _measureList = dart.privateName(execute_query_handler, "_measureList");
+  var _measureBlob = dart.privateName(execute_query_handler, "_measureBlob");
+  var _measureString = dart.privateName(execute_query_handler, "_measureString");
+  var _writeInt = dart.privateName(execute_query_handler, "_writeInt");
+  var _writeDouble = dart.privateName(execute_query_handler, "_writeDouble");
+  var _writeDateTime = dart.privateName(execute_query_handler, "_writeDateTime");
+  var _writeBool = dart.privateName(execute_query_handler, "_writeBool");
+  var _writeList = dart.privateName(execute_query_handler, "_writeList");
+  var _writeBlob = dart.privateName(execute_query_handler, "_writeBlob");
+  var _writeString = dart.privateName(execute_query_handler, "_writeString");
+  var _writeValue = dart.privateName(execute_query_handler, "_writeValue");
+  var _handleEndOfFields = dart.privateName(execute_query_handler, "_handleEndOfFields");
+  var _handleEndOfRows = dart.privateName(execute_query_handler, "_handleEndOfRows");
+  var _handleHeaderPacket = dart.privateName(execute_query_handler, "_handleHeaderPacket");
+  var _handleFieldPacket = dart.privateName(execute_query_handler, "_handleFieldPacket");
+  var _handleRowPacket = dart.privateName(execute_query_handler, "_handleRowPacket");
+  execute_query_handler.ExecuteQueryHandler = class ExecuteQueryHandler extends handler.Handler {
+    get fieldPackets() {
+      return this[fieldPackets];
+    }
+    set fieldPackets(value) {
+      this[fieldPackets] = value;
+    }
+    get preparedValues() {
+      return this[preparedValues];
+    }
+    set preparedValues(value) {
+      this[preparedValues] = value;
+    }
+    get [_okPacket]() {
+      let t0;
+      return dart.test(this[__ExecuteQueryHandler__okPacket_isSet]) ? (t0 = this[__ExecuteQueryHandler__okPacket], t0) : dart.throw(new _internal.LateError.fieldNI("_okPacket"));
+    }
+    set [_okPacket](t0) {
+      if (t0 == null) dart.nullFailed(I[0], 39, 17, "null");
+      this[__ExecuteQueryHandler__okPacket_isSet] = true;
+      this[__ExecuteQueryHandler__okPacket] = t0;
+    }
+    createRequest() {
+      let length = 0;
+      let types = T.ListOfint().filled(dart.notNull(this[_values$][$length]) * 2, 0);
+      let nullMap = this.createNullMap();
+      this.preparedValues = core.List.filled(this[_values$][$length], null);
+      for (let i = 0; i < dart.notNull(this[_values$][$length]); i = i + 1) {
+        let value = this[_values$][$_get](i);
+        let parameterType = this[_getType](value);
+        types[$_set](i * 2, parameterType);
+        types[$_set](i * 2 + 1, 0);
+        dart.nullCheck(this.preparedValues)[$_set](i, this.prepareValue(value));
+        length = length + dart.notNull(this.measureValue(value, dart.nullCheck(this.preparedValues)[$_get](i)));
+      }
+      let buffer = this.writeValuesToBuffer(nullMap, length, types);
+      return buffer;
+    }
+    prepareValue(value) {
+      if (value == null) {
+        return null;
+      }
+      if (core.int.is(value)) {
+        return this[_prepareInt](value);
+      }
+      if (typeof value == 'number') {
+        return this[_prepareDouble](value);
+      }
+      if (core.DateTime.is(value)) {
+        return this[_prepareDateTime](value);
+      }
+      if (typeof value == 'boolean') {
+        return this[_prepareBool](value);
+      }
+      if (T.ListOfint().is(value)) {
+        return this[_prepareList](value);
+      }
+      if (blob.Blob.is(value)) {
+        return this[_prepareBlob](value);
+      }
+      return this[_prepareString](value);
+    }
+    measureValue(value, preparedValue) {
+      if (value != null) {
+        if (core.int.is(value)) {
+          return this[_measureInt](value, preparedValue);
+        } else if (typeof value == 'number') {
+          return this[_measureDouble](value, preparedValue);
+        } else if (core.DateTime.is(value)) {
+          return this[_measureDateTime](value, preparedValue);
+        } else if (typeof value == 'boolean') {
+          return this[_measureBool](value, preparedValue);
+        } else if (T.ListOfint().is(value)) {
+          return this[_measureList](value, preparedValue);
+        } else if (blob.Blob.is(value)) {
+          return this[_measureBlob](value, preparedValue);
+        } else {
+          return this[_measureString](core.String.as(value), preparedValue);
+        }
+      }
+      return 0;
+    }
+    [_getType](value) {
+      if (value == null) {
+        return 6;
+      }
+      if (core.int.is(value)) {
+        return 8;
+      }
+      if (typeof value == 'number') {
+        return 15;
+      }
+      if (core.DateTime.is(value)) {
+        return 12;
+      }
+      if (typeof value == 'boolean') {
+        return 1;
+      }
+      if (T.ListOfint().is(value)) {
+        return 252;
+      }
+      if (blob.Blob.is(value)) {
+        return 252;
+      }
+      return 15;
+    }
+    [_writeValue](value, preparedValue, buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 140, 49, "buffer");
+      if (value != null) {
+        if (core.int.is(value)) {
+          this[_writeInt](value, preparedValue, buffer);
+        } else if (typeof value == 'number') {
+          this[_writeDouble](value, preparedValue, buffer);
+        } else if (core.DateTime.is(value)) {
+          this[_writeDateTime](value, preparedValue, buffer);
+        } else if (typeof value == 'boolean') {
+          this[_writeBool](value, preparedValue, buffer);
+        } else if (T.ListOfint().is(value)) {
+          this[_writeList](value, preparedValue, buffer);
+        } else if (blob.Blob.is(value)) {
+          this[_writeBlob](value, preparedValue, buffer);
+        } else {
+          this[_writeString](value, preparedValue, buffer);
+        }
+      }
+    }
+    [_prepareInt](value) {
+      if (value == null) dart.nullFailed(I[0], 160, 23, "value");
+      return value;
+    }
+    [_measureInt](value, preparedValue) {
+      return 8;
+    }
+    [_writeInt](value, preparedValue, buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 168, 47, "buffer");
+      this.log.fine("LONG: " + dart.str(value));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [0]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [8]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [16]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [24]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [32]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [40]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [48]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(value, '>>', [56]), '&', [255])));
+    }
+    [_prepareDouble](value) {
+      return convert.utf8.encode(dart.toString(value));
+    }
+    [_measureDouble](value, preparedValue) {
+      if (value == null) dart.nullFailed(I[0], 191, 29, "value");
+      return dart.notNull(buffer$.Buffer.measureLengthCodedBinary(core.int.as(dart.dload(preparedValue, 'length')))) + dart.notNull(core.int.as(dart.dload(preparedValue, 'length')));
+    }
+    [_writeDouble](value, preparedValue, buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 196, 50, "buffer");
+      this.log.fine("DOUBLE: " + dart.str(value));
+      buffer.writeLengthCodedBinary(core.int.as(dart.dload(preparedValue, 'length')));
+      buffer.writeList(T.ListOfint().as(preparedValue));
+    }
+    [_prepareDateTime](value) {
+      if (value == null) dart.nullFailed(I[0], 208, 38, "value");
+      if (!dart.test(value.isUtc)) {
+        dart.throw(new mysql_client_error.MySqlClientError.new("DateTime value is not in UTC"));
+      }
+      return value;
+    }
+    [_measureDateTime](value, preparedValue) {
+      return 8;
+    }
+    [_writeDateTime](value, preparedValue, buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 220, 52, "buffer");
+      this.log.fine("DATE: " + dart.str(value));
+      buffer.writeByte(7);
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(dart.dload(value, 'year'), '>>', [0]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dsend(dart.dsend(dart.dload(value, 'year'), '>>', [8]), '&', [255])));
+      buffer.writeByte(core.int.as(dart.dload(value, 'month')));
+      buffer.writeByte(core.int.as(dart.dload(value, 'day')));
+      buffer.writeByte(core.int.as(dart.dload(value, 'hour')));
+      buffer.writeByte(core.int.as(dart.dload(value, 'minute')));
+      buffer.writeByte(core.int.as(dart.dload(value, 'second')));
+    }
+    [_prepareBool](value) {
+      return value;
+    }
+    [_measureBool](value, preparedValue) {
+      return 1;
+    }
+    [_writeBool](value, preparedValue, buffer) {
+      if (value == null) dart.nullFailed(I[0], 241, 24, "value");
+      if (buffer == null) dart.nullFailed(I[0], 241, 53, "buffer");
+      this.log.fine("BOOL: " + dart.str(value));
+      buffer.writeByte(dart.test(value) ? 1 : 0);
+    }
+    [_prepareList](value) {
+      return value;
+    }
+    [_measureList](value, preparedValue) {
+      if (value == null) dart.nullFailed(I[0], 250, 25, "value");
+      return dart.notNull(buffer$.Buffer.measureLengthCodedBinary(value[$length])) + dart.notNull(value[$length]);
+    }
+    [_writeList](value, preparedValue, buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 254, 48, "buffer");
+      this.log.fine("LIST: " + dart.str(value));
+      buffer.writeLengthCodedBinary(core.int.as(dart.dload(value, 'length')));
+      buffer.writeList(T.ListOfint().as(value));
+    }
+    [_prepareBlob](value) {
+      return blob.Blob.as(value).toBytes();
+    }
+    [_measureBlob](value, preparedValue) {
+      if (value == null) dart.nullFailed(I[0], 264, 25, "value");
+      return dart.notNull(buffer$.Buffer.measureLengthCodedBinary(core.int.as(dart.dload(preparedValue, 'length')))) + dart.notNull(core.int.as(dart.dload(preparedValue, 'length')));
+    }
+    [_writeBlob](value, preparedValue, buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 269, 48, "buffer");
+      this.log.fine("BLOB: " + dart.str(value));
+      buffer.writeLengthCodedBinary(core.int.as(dart.dload(preparedValue, 'length')));
+      buffer.writeList(T.ListOfint().as(preparedValue));
+    }
+    [_prepareString](value) {
+      return convert.utf8.encode(dart.toString(value));
+    }
+    [_measureString](value, preparedValue) {
+      if (value == null) dart.nullFailed(I[0], 279, 29, "value");
+      return dart.notNull(buffer$.Buffer.measureLengthCodedBinary(core.int.as(dart.dload(preparedValue, 'length')))) + dart.notNull(core.int.as(dart.dload(preparedValue, 'length')));
+    }
+    [_writeString](value, preparedValue, buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 284, 50, "buffer");
+      this.log.fine("STRING: " + dart.str(value));
+      buffer.writeLengthCodedBinary(core.int.as(dart.dload(preparedValue, 'length')));
+      buffer.writeList(T.ListOfint().as(preparedValue));
+    }
+    createNullMap() {
+      let bytes = ((dart.notNull(this[_values$][$length]) + 7) / 8)[$floor]()[$toInt]();
+      let nullMap = T.ListOfint().filled(bytes, 0);
+      let byte = 0;
+      let bit = 0;
+      for (let i = 0; i < dart.notNull(this[_values$][$length]); i = i + 1) {
+        if (this[_values$][$_get](i) == null) {
+          nullMap[$_set](byte, dart.notNull(nullMap[$_get](byte)) + (1)[$leftShift](bit));
+        }
+        bit = bit + 1;
+        if (bit > 7) {
+          bit = 0;
+          byte = byte + 1;
+        }
+      }
+      return nullMap;
+    }
+    writeValuesToBuffer(nullMap, length, types) {
+      if (nullMap == null) dart.nullFailed(I[0], 309, 40, "nullMap");
+      if (length == null) dart.nullFailed(I[0], 309, 53, "length");
+      if (types == null) dart.nullFailed(I[0], 309, 71, "types");
+      let buffer = new buffer$.Buffer.new(10 + dart.notNull(nullMap[$length]) + 1 + dart.notNull(types[$length]) + dart.notNull(length));
+      buffer.writeByte(23);
+      buffer.writeUint32(dart.nullCheck(this[_preparedQuery$]).statementHandlerId);
+      buffer.writeByte(0);
+      buffer.writeUint32(1);
+      buffer.writeList(nullMap);
+      if (!dart.test(this[_executed$])) {
+        buffer.writeByte(1);
+        buffer.writeList(types);
+        for (let i = 0; i < dart.notNull(this[_values$][$length]); i = i + 1) {
+          this[_writeValue](this[_values$][$_get](i), dart.nullCheck(this.preparedValues)[$_get](i), buffer);
+        }
+      } else {
+        buffer.writeByte(0);
+      }
+      return buffer;
+    }
+    processResponse(response) {
+      let t1;
+      if (response == null) dart.nullFailed(I[0], 329, 42, "response");
+      let packet = null;
+      if (dart.test(this[_cancelled])) {
+        t1 = this[_streamController];
+        t1 == null ? null : t1.close();
+        return new handler.HandlerResponse.new({finished: true});
+      }
+      if (this[_state] === 0) {
+        packet = this.checkResponse(response);
+      }
+      if (packet == null) {
+        if (response._get(0) === 254) {
+          this.log.fine("Got an EOF");
+          if (this[_state] === 1) {
+            return this[_handleEndOfFields]();
+          } else if (this[_state] === 2) {
+            return this[_handleEndOfRows]();
+          }
+        } else {
+          switch (this[_state]) {
+            case 0:
+            {
+              this[_handleHeaderPacket](response);
+              break;
+            }
+            case 1:
+            {
+              this[_handleFieldPacket](response);
+              break;
+            }
+            case 2:
+            {
+              this[_handleRowPacket](response);
+              break;
+            }
+          }
+        }
+      } else if (ok_packet.OkPacket.is(packet)) {
+        this[_okPacket] = packet;
+        if ((dart.notNull(packet.serverStatus) & 8) === 0) {
+          return new handler.HandlerResponse.new({finished: true, result: results_impl.ResultsStream.new(this[_okPacket].insertId, this[_okPacket].affectedRows, null)});
+        }
+      }
+      return handler.HandlerResponse.notFinished;
+    }
+    [_handleEndOfFields]() {
+      let t1;
+      this[_state] = 2;
+      this[_streamController] = T.StreamControllerOfResultRow().new();
+      dart.nullCheck(this[_streamController]).onCancel = dart.fn(() => {
+        this[_cancelled] = true;
+      }, T.VoidToNull());
+      return new handler.HandlerResponse.new({result: results_impl.ResultsStream.new(null, null, this.fieldPackets, {stream: (t1 = this[_streamController], t1 == null ? null : t1.stream)})});
+    }
+    [_handleEndOfRows]() {
+      let t1;
+      t1 = this[_streamController];
+      t1 == null ? null : t1.close();
+      return new handler.HandlerResponse.new({finished: true});
+    }
+    [_handleHeaderPacket](response) {
+      if (response == null) dart.nullFailed(I[0], 387, 35, "response");
+      this.log.fine("Got a header packet");
+      let resultSetHeaderPacket = new result_set_header_packet.ResultSetHeaderPacket.new(response);
+      this.log.fine(resultSetHeaderPacket.toString());
+      this[_state] = 1;
+    }
+    [_handleFieldPacket](response) {
+      if (response == null) dart.nullFailed(I[0], 394, 34, "response");
+      this.log.fine("Got a field packet");
+      let fieldPacket = field.Field.new(response);
+      this.log.fine(dart.toString(fieldPacket));
+      this.fieldPackets[$add](fieldPacket);
+    }
+    [_handleRowPacket](response) {
+      let t1;
+      if (response == null) dart.nullFailed(I[0], 401, 32, "response");
+      this.log.fine("Got a row packet");
+      let dataPacket = new binary_data_packet.BinaryDataPacket.new(response, this.fieldPackets);
+      this.log.fine(dataPacket.toString());
+      t1 = this[_streamController];
+      t1 == null ? null : t1.add(dataPacket);
+    }
+  };
+  (execute_query_handler.ExecuteQueryHandler.new = function(_preparedQuery, _executed, _values) {
+    if (_executed == null) dart.nullFailed(I[0], 43, 49, "_executed");
+    if (_values == null) dart.nullFailed(I[0], 43, 65, "_values");
+    this[_state] = 0;
+    this[_streamController] = null;
+    this[preparedValues] = null;
+    this[__ExecuteQueryHandler__okPacket] = null;
+    this[__ExecuteQueryHandler__okPacket_isSet] = false;
+    this[_cancelled] = false;
+    this[_preparedQuery$] = _preparedQuery;
+    this[_executed$] = _executed;
+    this[_values$] = _values;
+    this[fieldPackets] = T.JSArrayOfField().of([]);
+    execute_query_handler.ExecuteQueryHandler.__proto__.new.call(this, logger.Logger.new("ExecuteQueryHandler"));
+    ;
+  }).prototype = execute_query_handler.ExecuteQueryHandler.prototype;
+  dart.addTypeTests(execute_query_handler.ExecuteQueryHandler);
+  dart.addTypeCaches(execute_query_handler.ExecuteQueryHandler);
+  dart.setMethodSignature(execute_query_handler.ExecuteQueryHandler, () => ({
+    __proto__: dart.getMethods(execute_query_handler.ExecuteQueryHandler.__proto__),
+    createRequest: dart.fnType(buffer$.Buffer, []),
+    prepareValue: dart.fnType(dart.nullable(core.Object), [dart.nullable(core.Object)]),
+    measureValue: dart.fnType(core.int, [dart.dynamic, dart.dynamic]),
+    [_getType]: dart.fnType(core.int, [dart.nullable(core.Object)]),
+    [_writeValue]: dart.fnType(dart.void, [dart.dynamic, dart.dynamic, buffer$.Buffer]),
+    [_prepareInt]: dart.fnType(core.int, [core.int]),
+    [_measureInt]: dart.fnType(core.int, [dart.dynamic, dart.dynamic]),
+    [_writeInt]: dart.fnType(dart.void, [dart.dynamic, dart.dynamic, buffer$.Buffer]),
+    [_prepareDouble]: dart.fnType(core.List$(core.int), [dart.dynamic]),
+    [_measureDouble]: dart.fnType(core.int, [core.double, dart.dynamic]),
+    [_writeDouble]: dart.fnType(dart.void, [dart.dynamic, dart.dynamic, buffer$.Buffer]),
+    [_prepareDateTime]: dart.fnType(core.DateTime, [core.DateTime]),
+    [_measureDateTime]: dart.fnType(core.int, [dart.dynamic, dart.dynamic]),
+    [_writeDateTime]: dart.fnType(dart.void, [dart.dynamic, dart.dynamic, buffer$.Buffer]),
+    [_prepareBool]: dart.fnType(dart.dynamic, [dart.dynamic]),
+    [_measureBool]: dart.fnType(core.int, [dart.dynamic, dart.dynamic]),
+    [_writeBool]: dart.fnType(dart.void, [core.bool, dart.dynamic, buffer$.Buffer]),
+    [_prepareList]: dart.fnType(dart.dynamic, [dart.dynamic]),
+    [_measureList]: dart.fnType(core.int, [core.List, dart.dynamic]),
+    [_writeList]: dart.fnType(dart.void, [dart.dynamic, dart.dynamic, buffer$.Buffer]),
+    [_prepareBlob]: dart.fnType(dart.dynamic, [dart.dynamic]),
+    [_measureBlob]: dart.fnType(core.int, [blob.Blob, dart.dynamic]),
+    [_writeBlob]: dart.fnType(dart.void, [dart.dynamic, dart.dynamic, buffer$.Buffer]),
+    [_prepareString]: dart.fnType(dart.dynamic, [dart.dynamic]),
+    [_measureString]: dart.fnType(core.int, [core.String, dart.dynamic]),
+    [_writeString]: dart.fnType(dart.void, [dart.dynamic, dart.dynamic, buffer$.Buffer]),
+    createNullMap: dart.fnType(core.List$(core.int), []),
+    writeValuesToBuffer: dart.fnType(buffer$.Buffer, [core.List$(core.int), core.int, core.List$(core.int)]),
+    [_handleEndOfFields]: dart.fnType(handler.HandlerResponse, []),
+    [_handleEndOfRows]: dart.fnType(handler.HandlerResponse, []),
+    [_handleHeaderPacket]: dart.fnType(dart.void, [buffer$.Buffer]),
+    [_handleFieldPacket]: dart.fnType(dart.void, [buffer$.Buffer]),
+    [_handleRowPacket]: dart.fnType(dart.void, [buffer$.Buffer])
+  }));
+  dart.setGetterSignature(execute_query_handler.ExecuteQueryHandler, () => ({
+    __proto__: dart.getGetters(execute_query_handler.ExecuteQueryHandler.__proto__),
+    [_okPacket]: ok_packet.OkPacket
+  }));
+  dart.setSetterSignature(execute_query_handler.ExecuteQueryHandler, () => ({
+    __proto__: dart.getSetters(execute_query_handler.ExecuteQueryHandler.__proto__),
+    [_okPacket]: ok_packet.OkPacket
+  }));
+  dart.setLibraryUri(execute_query_handler.ExecuteQueryHandler, I[1]);
+  dart.setFieldSignature(execute_query_handler.ExecuteQueryHandler, () => ({
+    __proto__: dart.getFields(execute_query_handler.ExecuteQueryHandler.__proto__),
+    [_state]: dart.fieldType(core.int),
+    fieldPackets: dart.fieldType(core.List$(field.Field)),
+    [_streamController]: dart.fieldType(dart.nullable(async.StreamController$(row.ResultRow))),
+    [_preparedQuery$]: dart.finalFieldType(dart.nullable(prepared_query.PreparedQuery)),
+    [_values$]: dart.finalFieldType(core.List$(dart.nullable(core.Object))),
+    preparedValues: dart.fieldType(dart.nullable(core.List)),
+    [__ExecuteQueryHandler__okPacket]: dart.fieldType(dart.nullable(ok_packet.OkPacket)),
+    [__ExecuteQueryHandler__okPacket_isSet]: dart.fieldType(core.bool),
+    [_executed$]: dart.finalFieldType(core.bool),
+    [_cancelled]: dart.fieldType(core.bool)
+  }));
+  dart.defineLazy(execute_query_handler.ExecuteQueryHandler, {
+    /*execute_query_handler.ExecuteQueryHandler.STATE_HEADER_PACKET*/get STATE_HEADER_PACKET() {
+      return 0;
+    },
+    /*execute_query_handler.ExecuteQueryHandler.STATE_FIELD_PACKETS*/get STATE_FIELD_PACKETS() {
+      return 1;
+    },
+    /*execute_query_handler.ExecuteQueryHandler.STATE_ROW_PACKETS*/get STATE_ROW_PACKETS() {
+      return 2;
+    }
+  }, false);
+  dart.trackLibraries("packages/mysql1/src/prepared_statements/execute_query_handler.dart", {
+    "package:mysql1/src/prepared_statements/execute_query_handler.dart": execute_query_handler
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["execute_query_handler.dart"],"names":[],"mappings":"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","file":"../../../../../../../../../packages/mysql1/src/prepared_statements/execute_query_handler.dart.lib.js"}');
+  // Exports:
+  return {
+    src__prepared_statements__execute_query_handler: execute_query_handler
+  };
+}));
+
+//# sourceMappingURL=execute_query_handler.dart.lib.js.map

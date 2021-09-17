@@ -1,0 +1,560 @@
+define(['dart_sdk', 'packages/logging/src/logger.dart', 'packages/mysql1/src/buffer.dart', 'packages/mysql1/src/handlers/handler.dart', 'packages/crypto/src/sha1.dart', 'packages/crypto/src/sha256.dart', 'packages/mysql1/src/mysql_client_error.dart', 'packages/mysql1/src/auth/ssl_handler.dart'], (function load__packages__mysql1__src__auth__auth_handler_dart(dart_sdk, packages__logging__src__logger$46dart, packages__mysql1__src__buffer$46dart, packages__mysql1__src__handlers__handler$46dart, packages__crypto__src__sha1$46dart, packages__crypto__src__sha256$46dart, packages__mysql1__src__mysql_client_error$46dart, packages__mysql1__src__auth__ssl_handler$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _interceptors = dart_sdk._interceptors;
+  const convert = dart_sdk.convert;
+  const _internal = dart_sdk._internal;
+  const math = dart_sdk.math;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const logger = packages__logging__src__logger$46dart.src__logger;
+  const buffer$ = packages__mysql1__src__buffer$46dart.src__buffer;
+  const handler = packages__mysql1__src__handlers__handler$46dart.src__handlers__handler;
+  const sha1 = packages__crypto__src__sha1$46dart.src__sha1;
+  const sha256 = packages__crypto__src__sha256$46dart.src__sha256;
+  const mysql_client_error = packages__mysql1__src__mysql_client_error$46dart.src__mysql_client_error;
+  const ssl_handler = packages__mysql1__src__auth__ssl_handler$46dart.src__auth__ssl_handler;
+  var auth_handler = Object.create(dart.library);
+  var handshake_handler = Object.create(dart.library);
+  var $length = dartx.length;
+  var $isNotEmpty = dartx.isNotEmpty;
+  var $addAll = dartx.addAll;
+  var $_get = dartx._get;
+  var $_set = dartx._set;
+  var $codeUnitAt = dartx.codeUnitAt;
+  var $substring = dartx.substring;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    JSArrayOfint: () => (T.JSArrayOfint = dart.constFn(_interceptors.JSArray$(core.int)))(),
+    ListOfint: () => (T.ListOfint = dart.constFn(core.List$(core.int)))(),
+    VoidToListOfint: () => (T.VoidToListOfint = dart.constFn(dart.fnType(T.ListOfint(), [])))(),
+    ListOfintTodynamic: () => (T.ListOfintTodynamic = dart.constFn(dart.fnType(dart.dynamic, [T.ListOfint()])))(),
+    AuthPluginL: () => (T.AuthPluginL = dart.constFn(dart.legacy(handshake_handler.AuthPlugin)))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: handshake_handler.AuthPlugin.prototype,
+        [_name$]: "AuthPlugin.none",
+        index: 0
+      });
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: handshake_handler.AuthPlugin.prototype,
+        [_name$]: "AuthPlugin.mysqlNativePassword",
+        index: 1
+      });
+    },
+    get C2() {
+      return C[2] = dart.const({
+        __proto__: handshake_handler.AuthPlugin.prototype,
+        [_name$]: "AuthPlugin.cachingSha2Password",
+        index: 2
+      });
+    },
+    get C3() {
+      return C[3] = dart.constList([C[0] || CT.C0, C[1] || CT.C1, C[2] || CT.C2], T.AuthPluginL());
+    }
+  }, false);
+  var C = Array(4).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/auth/auth_handler.dart",
+    "package:mysql1/src/auth/auth_handler.dart",
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/auth/handshake_handler.dart",
+    "package:mysql1/src/auth/handshake_handler.dart"
+  ];
+  var username$ = dart.privateName(auth_handler, "AuthHandler.username");
+  var password$ = dart.privateName(auth_handler, "AuthHandler.password");
+  var db$ = dart.privateName(auth_handler, "AuthHandler.db");
+  var scrambleBuffer$ = dart.privateName(auth_handler, "AuthHandler.scrambleBuffer");
+  var clientFlags$ = dart.privateName(auth_handler, "AuthHandler.clientFlags");
+  var maxPacketSize$ = dart.privateName(auth_handler, "AuthHandler.maxPacketSize");
+  var characterSet$ = dart.privateName(auth_handler, "AuthHandler.characterSet");
+  var authPlugin$ = dart.privateName(auth_handler, "AuthHandler.authPlugin");
+  auth_handler.AuthHandler = class AuthHandler extends handler.Handler {
+    get username() {
+      return this[username$];
+    }
+    set username(value) {
+      super.username = value;
+    }
+    get password() {
+      return this[password$];
+    }
+    set password(value) {
+      super.password = value;
+    }
+    get db() {
+      return this[db$];
+    }
+    set db(value) {
+      super.db = value;
+    }
+    get scrambleBuffer() {
+      return this[scrambleBuffer$];
+    }
+    set scrambleBuffer(value) {
+      super.scrambleBuffer = value;
+    }
+    get clientFlags() {
+      return this[clientFlags$];
+    }
+    set clientFlags(value) {
+      super.clientFlags = value;
+    }
+    get maxPacketSize() {
+      return this[maxPacketSize$];
+    }
+    set maxPacketSize(value) {
+      super.maxPacketSize = value;
+    }
+    get characterSet() {
+      return this[characterSet$];
+    }
+    set characterSet(value) {
+      super.characterSet = value;
+    }
+    get authPlugin() {
+      return this[authPlugin$];
+    }
+    set authPlugin(value) {
+      super.authPlugin = value;
+    }
+    getHash() {
+      let hash = null;
+      if (this.password == null) {
+        hash = T.JSArrayOfint().of([]);
+      } else if (this.authPlugin == handshake_handler.AuthPlugin.cachingSha2Password) {
+        hash = auth_handler._makeCachingSha2Password(this.scrambleBuffer, dart.nullCheck(this.password));
+      } else {
+        hash = auth_handler._makeMysqlNativePassword(this.scrambleBuffer, dart.nullCheck(this.password));
+      }
+      return hash;
+    }
+    createRequest() {
+      let hash = this.getHash();
+      let encodedUsername = this.username == null ? T.JSArrayOfint().of([]) : convert.utf8.encode(dart.nullCheck(this.username));
+      let encodedDb = null;
+      let encodedDb$35isSet = false;
+      function encodedDb$35get() {
+        return encodedDb$35isSet ? encodedDb : dart.throw(new _internal.LateError.localNI("encodedDb"));
+      }
+      dart.fn(encodedDb$35get, T.VoidToListOfint());
+      function encodedDb$35set(t3) {
+        if (t3 == null) dart.nullFailed(I[0], 82, 20, "null");
+        encodedDb$35isSet = true;
+        return encodedDb = t3;
+      }
+      dart.fn(encodedDb$35set, T.ListOfintTodynamic());
+      let encodedAuth = T.JSArrayOfint().of([]);
+      let size = dart.notNull(hash[$length]) + dart.notNull(encodedUsername[$length]) + 2 + 32;
+      let clientFlags = this.clientFlags;
+      if (this.db != null) {
+        encodedDb$35set(convert.utf8.encode(dart.nullCheck(this.db)));
+        size = size + (dart.notNull(encodedDb$35get()[$length]) + 1);
+        clientFlags = (dart.notNull(clientFlags) | 8) >>> 0;
+      }
+      if ((dart.notNull(clientFlags) & 524288) >>> 0 > 0) {
+        encodedAuth = convert.utf8.encode(handshake_handler.authPluginToString(this.authPlugin));
+        size = size + (dart.notNull(encodedAuth[$length]) + 1);
+      }
+      let buffer = new buffer$.Buffer.new(size);
+      buffer.seekWrite(0);
+      buffer.writeUint32(clientFlags);
+      buffer.writeUint32(this.maxPacketSize);
+      buffer.writeByte(this.characterSet);
+      buffer.fill(23, 0);
+      buffer.writeNullTerminatedList(encodedUsername);
+      buffer.writeByte(hash[$length]);
+      buffer.writeList(hash);
+      if (this.db != null) {
+        buffer.writeNullTerminatedList(encodedDb$35get());
+      }
+      if (dart.test(encodedAuth[$isNotEmpty])) {
+        buffer.writeNullTerminatedList(encodedAuth);
+      }
+      return buffer;
+    }
+  };
+  (auth_handler.AuthHandler.new = function(username, password, db, scrambleBuffer, clientFlags, maxPacketSize, characterSet, authPlugin, opts) {
+    if (scrambleBuffer == null) dart.nullFailed(I[0], 58, 59, "scrambleBuffer");
+    if (clientFlags == null) dart.nullFailed(I[0], 59, 12, "clientFlags");
+    if (maxPacketSize == null) dart.nullFailed(I[0], 59, 30, "maxPacketSize");
+    if (characterSet == null) dart.nullFailed(I[0], 59, 50, "characterSet");
+    if (authPlugin == null) dart.nullFailed(I[0], 59, 69, "authPlugin");
+    let ssl = opts && 'ssl' in opts ? opts.ssl : false;
+    if (ssl == null) dart.nullFailed(I[0], 60, 13, "ssl");
+    this[username$] = username;
+    this[password$] = password;
+    this[db$] = db;
+    this[scrambleBuffer$] = scrambleBuffer;
+    this[clientFlags$] = clientFlags;
+    this[maxPacketSize$] = maxPacketSize;
+    this[characterSet$] = characterSet;
+    this[authPlugin$] = authPlugin;
+    auth_handler.AuthHandler.__proto__.new.call(this, logger.Logger.new("AuthHandler"));
+    ;
+  }).prototype = auth_handler.AuthHandler.prototype;
+  dart.addTypeTests(auth_handler.AuthHandler);
+  dart.addTypeCaches(auth_handler.AuthHandler);
+  dart.setMethodSignature(auth_handler.AuthHandler, () => ({
+    __proto__: dart.getMethods(auth_handler.AuthHandler.__proto__),
+    getHash: dart.fnType(core.List$(core.int), []),
+    createRequest: dart.fnType(buffer$.Buffer, [])
+  }));
+  dart.setLibraryUri(auth_handler.AuthHandler, I[1]);
+  dart.setFieldSignature(auth_handler.AuthHandler, () => ({
+    __proto__: dart.getFields(auth_handler.AuthHandler.__proto__),
+    username: dart.finalFieldType(dart.nullable(core.String)),
+    password: dart.finalFieldType(dart.nullable(core.String)),
+    db: dart.finalFieldType(dart.nullable(core.String)),
+    scrambleBuffer: dart.finalFieldType(core.List$(core.int)),
+    clientFlags: dart.finalFieldType(core.int),
+    maxPacketSize: dart.finalFieldType(core.int),
+    characterSet: dart.finalFieldType(core.int),
+    authPlugin: dart.finalFieldType(handshake_handler.AuthPlugin)
+  }));
+  auth_handler._makeMysqlNativePassword = function _makeMysqlNativePassword(scrambler, password) {
+    let t5, t5$;
+    if (scrambler == null) dart.nullFailed(I[0], 13, 46, "scrambler");
+    if (password == null) dart.nullFailed(I[0], 13, 64, "password");
+    let shaPwd = sha1.sha1.convert(convert.utf8.encode(password)).bytes;
+    let shaShaPwd = sha1.sha1.convert(shaPwd).bytes;
+    let bytes = (t5 = T.ListOfint().from(scrambler), (() => {
+      t5[$addAll](shaShaPwd);
+      return t5;
+    })());
+    let hash = sha1.sha1.convert(bytes).bytes;
+    for (let i = 0; i < dart.notNull(hash[$length]); i = i + 1) {
+      t5$ = i;
+      hash[$_set](t5$, (dart.notNull(hash[$_get](t5$)) ^ dart.notNull(shaPwd[$_get](i))) >>> 0);
+    }
+    return hash;
+  };
+  auth_handler._makeCachingSha2Password = function _makeCachingSha2Password(scrambler, password) {
+    let t5, t5$;
+    if (scrambler == null) dart.nullFailed(I[0], 33, 46, "scrambler");
+    if (password == null) dart.nullFailed(I[0], 33, 64, "password");
+    let shaPwd = sha256.sha256.convert(convert.utf8.encode(password)).bytes;
+    let shaShaPwd = sha256.sha256.convert(shaPwd).bytes;
+    let res = sha256.sha256.convert((t5 = T.ListOfint().from(shaShaPwd), (() => {
+      t5[$addAll](scrambler);
+      return t5;
+    })())).bytes;
+    for (let i = 0; i < dart.notNull(res[$length]); i = i + 1) {
+      t5$ = i;
+      res[$_set](t5$, (dart.notNull(res[$_get](t5$)) ^ dart.notNull(shaPwd[$_get](i))) >>> 0);
+    }
+    return res;
+  };
+  var _name$ = dart.privateName(handshake_handler, "_name");
+  handshake_handler.AuthPlugin = class AuthPlugin extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (handshake_handler.AuthPlugin.new = function(index, _name) {
+    if (index == null) dart.nullFailed(I[2], 14, 6, "index");
+    if (_name == null) dart.nullFailed(I[2], 14, 6, "_name");
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = handshake_handler.AuthPlugin.prototype;
+  dart.addTypeTests(handshake_handler.AuthPlugin);
+  dart.addTypeCaches(handshake_handler.AuthPlugin);
+  dart.setLibraryUri(handshake_handler.AuthPlugin, I[3]);
+  dart.setFieldSignature(handshake_handler.AuthPlugin, () => ({
+    __proto__: dart.getFields(handshake_handler.AuthPlugin.__proto__),
+    index: dart.finalFieldType(core.int),
+    [_name$]: dart.finalFieldType(core.String)
+  }));
+  dart.defineExtensionMethods(handshake_handler.AuthPlugin, ['toString']);
+  handshake_handler.AuthPlugin.none = C[0] || CT.C0;
+  handshake_handler.AuthPlugin.mysqlNativePassword = C[1] || CT.C1;
+  handshake_handler.AuthPlugin.cachingSha2Password = C[2] || CT.C2;
+  handshake_handler.AuthPlugin.values = C[3] || CT.C3;
+  var protocolVersion = dart.privateName(handshake_handler, "HandshakeHandler.protocolVersion");
+  var serverVersion = dart.privateName(handshake_handler, "HandshakeHandler.serverVersion");
+  var threadId = dart.privateName(handshake_handler, "HandshakeHandler.threadId");
+  var serverLanguage = dart.privateName(handshake_handler, "HandshakeHandler.serverLanguage");
+  var serverStatus = dart.privateName(handshake_handler, "HandshakeHandler.serverStatus");
+  var scrambleLength = dart.privateName(handshake_handler, "HandshakeHandler.scrambleLength");
+  var useCompression$ = dart.privateName(handshake_handler, "HandshakeHandler.useCompression");
+  var useSSL$ = dart.privateName(handshake_handler, "HandshakeHandler.useSSL");
+  var __HandshakeHandler_scrambleBuffer = dart.privateName(handshake_handler, "_#HandshakeHandler#scrambleBuffer");
+  var __HandshakeHandler_scrambleBuffer_isSet = dart.privateName(handshake_handler, "_#HandshakeHandler#scrambleBuffer#isSet");
+  var __HandshakeHandler_serverCapabilities = dart.privateName(handshake_handler, "_#HandshakeHandler#serverCapabilities");
+  var __HandshakeHandler_serverCapabilities_isSet = dart.privateName(handshake_handler, "_#HandshakeHandler#serverCapabilities#isSet");
+  var _authPlugin = dart.privateName(handshake_handler, "_authPlugin");
+  var _user$ = dart.privateName(handshake_handler, "_user");
+  var _password$ = dart.privateName(handshake_handler, "_password");
+  var _maxPacketSize$ = dart.privateName(handshake_handler, "_maxPacketSize");
+  var _characterSet$ = dart.privateName(handshake_handler, "_characterSet");
+  var _db = dart.privateName(handshake_handler, "_db");
+  handshake_handler.HandshakeHandler = class HandshakeHandler extends handler.Handler {
+    get protocolVersion() {
+      return this[protocolVersion];
+    }
+    set protocolVersion(value) {
+      this[protocolVersion] = value;
+    }
+    get serverVersion() {
+      return this[serverVersion];
+    }
+    set serverVersion(value) {
+      this[serverVersion] = value;
+    }
+    get threadId() {
+      return this[threadId];
+    }
+    set threadId(value) {
+      this[threadId] = value;
+    }
+    get serverLanguage() {
+      return this[serverLanguage];
+    }
+    set serverLanguage(value) {
+      this[serverLanguage] = value;
+    }
+    get serverStatus() {
+      return this[serverStatus];
+    }
+    set serverStatus(value) {
+      this[serverStatus] = value;
+    }
+    get scrambleLength() {
+      return this[scrambleLength];
+    }
+    set scrambleLength(value) {
+      this[scrambleLength] = value;
+    }
+    get useCompression() {
+      return this[useCompression$];
+    }
+    set useCompression(value) {
+      this[useCompression$] = value;
+    }
+    get useSSL() {
+      return this[useSSL$];
+    }
+    set useSSL(value) {
+      this[useSSL$] = value;
+    }
+    get scrambleBuffer() {
+      let t5;
+      return dart.test(this[__HandshakeHandler_scrambleBuffer_isSet]) ? (t5 = this[__HandshakeHandler_scrambleBuffer], t5) : dart.throw(new _internal.LateError.fieldNI("scrambleBuffer"));
+    }
+    set scrambleBuffer(t5) {
+      if (t5 == null) dart.nullFailed(I[2], 54, 18, "null");
+      this[__HandshakeHandler_scrambleBuffer_isSet] = true;
+      this[__HandshakeHandler_scrambleBuffer] = t5;
+    }
+    get serverCapabilities() {
+      let t6;
+      return dart.test(this[__HandshakeHandler_serverCapabilities_isSet]) ? (t6 = this[__HandshakeHandler_serverCapabilities], t6) : dart.throw(new _internal.LateError.fieldNI("serverCapabilities"));
+    }
+    set serverCapabilities(t6) {
+      if (t6 == null) dart.nullFailed(I[2], 55, 12, "null");
+      this[__HandshakeHandler_serverCapabilities_isSet] = true;
+      this[__HandshakeHandler_serverCapabilities] = t6;
+    }
+    get authPlugin() {
+      return this[_authPlugin];
+    }
+    createRequest() {
+      dart.throw(new mysql_client_error.MySqlClientError.new("Cannot create a handshake request"));
+    }
+    readResponseBuffer(response) {
+      if (response == null) dart.nullFailed(I[2], 79, 34, "response");
+      response.seek(0);
+      this.protocolVersion = response.readByte();
+      if (this.protocolVersion !== 10) {
+        dart.throw(new mysql_client_error.MySqlClientError.new("Protocol not supported"));
+      }
+      this.serverVersion = response.readNullTerminatedString();
+      this.threadId = response.readUint32();
+      let scrambleBuffer1 = response.readList(8);
+      response.skip(1);
+      this.serverCapabilities = response.readUint16();
+      if (dart.test(response.hasMore)) {
+        this.serverLanguage = response.readByte();
+        this.serverStatus = response.readUint16();
+        this.serverCapabilities = dart.notNull(this.serverCapabilities) + (dart.notNull(response.readUint16()) << 16 >>> 0);
+        this.scrambleLength = response.readByte();
+        response.skip(10);
+        if ((dart.notNull(this.serverCapabilities) & 32768) >>> 0 > 0) {
+          let scrambleBuffer2 = response.readList(math.max(core.int, 13, dart.nullCheck(this.scrambleLength) - 8) - 1);
+          response.readByte();
+          this.scrambleBuffer = T.ListOfint().from((() => {
+            let t7 = core.List.of(scrambleBuffer1);
+            t7[$addAll](scrambleBuffer2);
+            return t7;
+          })());
+        } else {
+          this.scrambleBuffer = scrambleBuffer1;
+        }
+        if ((dart.notNull(this.serverCapabilities) & 524288) >>> 0 > 0) {
+          let pluginName = response.readStringToEnd();
+          if (pluginName[$codeUnitAt](pluginName.length - 1) === 0) {
+            pluginName = pluginName[$substring](0, pluginName.length - 1);
+          }
+          this[_authPlugin] = handshake_handler.authPluginFromString(pluginName);
+        }
+      }
+    }
+    processResponse(response) {
+      if (response == null) dart.nullFailed(I[2], 128, 42, "response");
+      this.checkResponse(response);
+      this.readResponseBuffer(response);
+      if ((dart.notNull(this.serverCapabilities) & 512) === 0) {
+        dart.throw(new mysql_client_error.MySqlClientError.new("Unsupported protocol (must be 4.1 or newer"));
+      }
+      if ((dart.notNull(this.serverCapabilities) & 32768) === 0) {
+        dart.throw(new mysql_client_error.MySqlClientError.new("Old Password AUthentication is not supported"));
+      }
+      let clientFlags = (512 | 1 | 4 | 8192 | 32768 | 131072) >>> 0;
+      if ((dart.notNull(this.serverCapabilities) & 524288) !== 0) {
+        clientFlags = (clientFlags | 524288) >>> 0;
+      }
+      if (dart.test(this.useCompression) && (dart.notNull(this.serverCapabilities) & 32) !== 0) {
+        this.log.shout("Compression enabled");
+        clientFlags = (clientFlags | 32) >>> 0;
+      } else {
+        this.useCompression = false;
+      }
+      if (dart.test(this.useSSL) && (dart.notNull(this.serverCapabilities) & 2048) !== 0) {
+        this.log.shout("SSL enabled");
+        clientFlags = (clientFlags | (2048 | 32768) >>> 0) >>> 0;
+      } else {
+        this.useSSL = false;
+      }
+      if (dart.test(this.useSSL)) {
+        return new handler.HandlerResponse.new({nextHandler: new ssl_handler.SSLHandler.new(clientFlags, this[_maxPacketSize$], this[_characterSet$], new auth_handler.AuthHandler.new(this[_user$], this[_password$], this[_db], this.scrambleBuffer, clientFlags, this[_maxPacketSize$], this[_characterSet$], this[_authPlugin]))});
+      }
+      return new handler.HandlerResponse.new({nextHandler: new auth_handler.AuthHandler.new(this[_user$], this[_password$], this[_db], this.scrambleBuffer, clientFlags, this[_maxPacketSize$], this[_characterSet$], this[_authPlugin])});
+    }
+  };
+  (handshake_handler.HandshakeHandler.new = function(_user, _password, _maxPacketSize, _characterSet, db = null, useCompression = false, useSSL = false) {
+    if (_maxPacketSize == null) dart.nullFailed(I[2], 65, 40, "_maxPacketSize");
+    if (_characterSet == null) dart.nullFailed(I[2], 65, 61, "_characterSet");
+    if (useCompression == null) dart.nullFailed(I[2], 66, 25, "useCompression");
+    if (useSSL == null) dart.nullFailed(I[2], 66, 54, "useSSL");
+    this[protocolVersion] = null;
+    this[serverVersion] = null;
+    this[threadId] = null;
+    this[__HandshakeHandler_scrambleBuffer] = null;
+    this[__HandshakeHandler_scrambleBuffer_isSet] = false;
+    this[__HandshakeHandler_serverCapabilities] = null;
+    this[__HandshakeHandler_serverCapabilities_isSet] = false;
+    this[serverLanguage] = null;
+    this[serverStatus] = null;
+    this[scrambleLength] = null;
+    this[_authPlugin] = handshake_handler.AuthPlugin.none;
+    this[useCompression$] = false;
+    this[useSSL$] = false;
+    this[_user$] = _user;
+    this[_password$] = _password;
+    this[_maxPacketSize$] = _maxPacketSize;
+    this[_characterSet$] = _characterSet;
+    this[_db] = db;
+    this[useCompression$] = useCompression;
+    this[useSSL$] = useSSL;
+    handshake_handler.HandshakeHandler.__proto__.new.call(this, logger.Logger.new("HandshakeHandler"));
+    ;
+  }).prototype = handshake_handler.HandshakeHandler.prototype;
+  dart.addTypeTests(handshake_handler.HandshakeHandler);
+  dart.addTypeCaches(handshake_handler.HandshakeHandler);
+  dart.setMethodSignature(handshake_handler.HandshakeHandler, () => ({
+    __proto__: dart.getMethods(handshake_handler.HandshakeHandler.__proto__),
+    createRequest: dart.fnType(buffer$.Buffer, []),
+    readResponseBuffer: dart.fnType(dart.void, [buffer$.Buffer])
+  }));
+  dart.setGetterSignature(handshake_handler.HandshakeHandler, () => ({
+    __proto__: dart.getGetters(handshake_handler.HandshakeHandler.__proto__),
+    scrambleBuffer: core.List$(core.int),
+    serverCapabilities: core.int,
+    authPlugin: handshake_handler.AuthPlugin
+  }));
+  dart.setSetterSignature(handshake_handler.HandshakeHandler, () => ({
+    __proto__: dart.getSetters(handshake_handler.HandshakeHandler.__proto__),
+    scrambleBuffer: core.List$(core.int),
+    serverCapabilities: core.int
+  }));
+  dart.setLibraryUri(handshake_handler.HandshakeHandler, I[3]);
+  dart.setFieldSignature(handshake_handler.HandshakeHandler, () => ({
+    __proto__: dart.getFields(handshake_handler.HandshakeHandler.__proto__),
+    [_user$]: dart.finalFieldType(dart.nullable(core.String)),
+    [_password$]: dart.finalFieldType(dart.nullable(core.String)),
+    [_db]: dart.finalFieldType(dart.nullable(core.String)),
+    [_maxPacketSize$]: dart.finalFieldType(core.int),
+    [_characterSet$]: dart.finalFieldType(core.int),
+    protocolVersion: dart.fieldType(dart.nullable(core.int)),
+    serverVersion: dart.fieldType(dart.nullable(core.String)),
+    threadId: dart.fieldType(dart.nullable(core.int)),
+    [__HandshakeHandler_scrambleBuffer]: dart.fieldType(dart.nullable(core.List$(core.int))),
+    [__HandshakeHandler_scrambleBuffer_isSet]: dart.fieldType(core.bool),
+    [__HandshakeHandler_serverCapabilities]: dart.fieldType(dart.nullable(core.int)),
+    [__HandshakeHandler_serverCapabilities_isSet]: dart.fieldType(core.bool),
+    serverLanguage: dart.fieldType(dart.nullable(core.int)),
+    serverStatus: dart.fieldType(dart.nullable(core.int)),
+    scrambleLength: dart.fieldType(dart.nullable(core.int)),
+    [_authPlugin]: dart.fieldType(handshake_handler.AuthPlugin),
+    useCompression: dart.fieldType(core.bool),
+    useSSL: dart.fieldType(core.bool)
+  }));
+  dart.defineLazy(handshake_handler.HandshakeHandler, {
+    /*handshake_handler.HandshakeHandler.MYSQL_NATIVE_PASSWORD*/get MYSQL_NATIVE_PASSWORD() {
+      return "mysql_native_password";
+    }
+  }, false);
+  handshake_handler.authPluginFromString = function authPluginFromString(v) {
+    if (v == null) dart.nullFailed(I[2], 20, 40, "v");
+    switch (v) {
+      case "mysql_native_password":
+      {
+        return handshake_handler.AuthPlugin.mysqlNativePassword;
+      }
+      case "caching_sha2_password":
+      {
+        return handshake_handler.AuthPlugin.cachingSha2Password;
+      }
+      default:
+      {
+        dart.throw(new mysql_client_error.MySqlClientError.new("Authentication plugin not supported: " + dart.str(v)));
+      }
+    }
+  };
+  handshake_handler.authPluginToString = function authPluginToString(v) {
+    if (v == null) dart.nullFailed(I[2], 31, 38, "v");
+    switch (v) {
+      case C[1] || CT.C1:
+      {
+        return "mysql_native_password";
+      }
+      case C[2] || CT.C2:
+      {
+        return "caching_sha2_password";
+      }
+      default:
+      {
+        return "";
+      }
+    }
+  };
+  dart.trackLibraries("packages/mysql1/src/auth/auth_handler.dart", {
+    "package:mysql1/src/auth/auth_handler.dart": auth_handler,
+    "package:mysql1/src/auth/handshake_handler.dart": handshake_handler
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["auth_handler.dart","handshake_handler.dart"],"names":[],"mappings":"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","file":"../../../../../../../../../packages/mysql1/src/auth/auth_handler.dart.lib.js"}');
+  // Exports:
+  return {
+    src__auth__auth_handler: auth_handler,
+    src__auth__handshake_handler: handshake_handler
+  };
+}));
+
+//# sourceMappingURL=auth_handler.dart.lib.js.map

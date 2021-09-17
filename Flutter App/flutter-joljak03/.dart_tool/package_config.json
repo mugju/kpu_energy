@@ -92,6 +92,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_local_notifications",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-6.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-4.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/src/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -470,7 +482,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-08-24T01:21:09.986852Z",
+  "generated": "2021-09-14T00:42:28.220579Z",
   "generator": "pub",
   "generatorVersion": "2.13.4"
 }

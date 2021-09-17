@@ -1,0 +1,568 @@
+define(['dart_sdk', 'packages/flutter_local_notifications_platform_interface/src/helpers.dart', 'packages/flutter_local_notifications_platform_interface/src/notification_app_launch_details.dart', 'packages/flutter_local_notifications_platform_interface/src/types.dart', 'packages/flutter_local_notifications_platform_interface/flutter_local_notifications_platform_interface.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/method_channel_mappers.dart', 'packages/flutter_local_notifications/src/helpers.dart', 'packages/flutter_local_notifications/src/tz_datetime_mapper.dart', 'packages/flutter_local_notifications/src/type_mappers.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/active_notification.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/notification_channel.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/enums.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/notification_sound.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/initialization_settings.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/notification_details.dart', 'packages/timezone/src/date_time.dart', 'packages/flutter_local_notifications/src/types.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/notification_channel_group.dart', 'packages/flutter/src/services/system_channels.dart', 'packages/flutter_local_notifications/src/platform_specifics/ios/method_channel_mappers.dart', 'packages/flutter_local_notifications/src/platform_specifics/ios/enums.dart', 'packages/flutter_local_notifications/src/platform_specifics/ios/initialization_settings.dart', 'packages/flutter_local_notifications/src/platform_specifics/ios/notification_details.dart', 'packages/flutter_local_notifications/src/platform_specifics/macos/method_channel_mappers.dart', 'packages/flutter_local_notifications/src/platform_specifics/macos/initialization_settings.dart', 'packages/flutter_local_notifications/src/platform_specifics/macos/notification_details.dart'], (function load__packages__flutter_local_notifications__src__platform_flutter_local_notifications_dart(dart_sdk, packages__flutter_local_notifications_platform_interface__src__helpers$46dart, packages__flutter_local_notifications_platform_interface__src__notification_app_launch_details$46dart, packages__flutter_local_notifications_platform_interface__src__types$46dart, packages__flutter_local_notifications_platform_interface__flutter_local_notifications_platform_interface$46dart, packages__flutter_local_notifications__src__platform_specifics__android__method_channel_mappers$46dart, packages__flutter_local_notifications__src__helpers$46dart, packages__flutter_local_notifications__src__tz_datetime_mapper$46dart, packages__flutter_local_notifications__src__type_mappers$46dart, packages__flutter_local_notifications__src__platform_specifics__android__active_notification$46dart, packages__flutter_local_notifications__src__platform_specifics__android__notification_channel$46dart, packages__flutter_local_notifications__src__platform_specifics__android__enums$46dart, packages__flutter_local_notifications__src__platform_specifics__android__notification_sound$46dart, packages__flutter_local_notifications__src__platform_specifics__android__initialization_settings$46dart, packages__flutter_local_notifications__src__platform_specifics__android__notification_details$46dart, packages__timezone__src__date_time$46dart, packages__flutter_local_notifications__src__types$46dart, packages__flutter_local_notifications__src__platform_specifics__android__notification_channel_group$46dart, packages__flutter__src__services__system_channels$46dart, packages__flutter_local_notifications__src__platform_specifics__ios__method_channel_mappers$46dart, packages__flutter_local_notifications__src__platform_specifics__ios__enums$46dart, packages__flutter_local_notifications__src__platform_specifics__ios__initialization_settings$46dart, packages__flutter_local_notifications__src__platform_specifics__ios__notification_details$46dart, packages__flutter_local_notifications__src__platform_specifics__macos__method_channel_mappers$46dart, packages__flutter_local_notifications__src__platform_specifics__macos__initialization_settings$46dart, packages__flutter_local_notifications__src__platform_specifics__macos__notification_details$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const async = dart_sdk.async;
+  const _interceptors = dart_sdk._interceptors;
+  const _js_helper = dart_sdk._js_helper;
+  const typed_data = dart_sdk.typed_data;
+  const ui = dart_sdk.ui;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const helpers = packages__flutter_local_notifications_platform_interface__src__helpers$46dart.src__helpers;
+  const notification_app_launch_details = packages__flutter_local_notifications_platform_interface__src__notification_app_launch_details$46dart.src__notification_app_launch_details;
+  const types = packages__flutter_local_notifications_platform_interface__src__types$46dart.src__types;
+  const flutter_local_notifications_platform_interface = packages__flutter_local_notifications_platform_interface__flutter_local_notifications_platform_interface$46dart.flutter_local_notifications_platform_interface;
+  const method_channel_mappers = packages__flutter_local_notifications__src__platform_specifics__android__method_channel_mappers$46dart.src__platform_specifics__android__method_channel_mappers;
+  const helpers$ = packages__flutter_local_notifications__src__helpers$46dart.src__helpers;
+  const tz_datetime_mapper = packages__flutter_local_notifications__src__tz_datetime_mapper$46dart.src__tz_datetime_mapper;
+  const type_mappers = packages__flutter_local_notifications__src__type_mappers$46dart.src__type_mappers;
+  const active_notification = packages__flutter_local_notifications__src__platform_specifics__android__active_notification$46dart.src__platform_specifics__android__active_notification;
+  const notification_channel = packages__flutter_local_notifications__src__platform_specifics__android__notification_channel$46dart.src__platform_specifics__android__notification_channel;
+  const enums = packages__flutter_local_notifications__src__platform_specifics__android__enums$46dart.src__platform_specifics__android__enums;
+  const notification_sound = packages__flutter_local_notifications__src__platform_specifics__android__notification_sound$46dart.src__platform_specifics__android__notification_sound;
+  const initialization_settings = packages__flutter_local_notifications__src__platform_specifics__android__initialization_settings$46dart.src__platform_specifics__android__initialization_settings;
+  const notification_details = packages__flutter_local_notifications__src__platform_specifics__android__notification_details$46dart.src__platform_specifics__android__notification_details;
+  const date_time = packages__timezone__src__date_time$46dart.src__date_time;
+  const types$ = packages__flutter_local_notifications__src__types$46dart.src__types;
+  const notification_channel_group = packages__flutter_local_notifications__src__platform_specifics__android__notification_channel_group$46dart.src__platform_specifics__android__notification_channel_group;
+  const message_codec = packages__flutter__src__services__system_channels$46dart.src__services__message_codec;
+  const platform_channel = packages__flutter__src__services__system_channels$46dart.src__services__platform_channel;
+  const message_codecs = packages__flutter__src__services__system_channels$46dart.src__services__message_codecs;
+  const method_channel_mappers$ = packages__flutter_local_notifications__src__platform_specifics__ios__method_channel_mappers$46dart.src__platform_specifics__ios__method_channel_mappers;
+  const enums$ = packages__flutter_local_notifications__src__platform_specifics__ios__enums$46dart.src__platform_specifics__ios__enums;
+  const initialization_settings$ = packages__flutter_local_notifications__src__platform_specifics__ios__initialization_settings$46dart.src__platform_specifics__ios__initialization_settings;
+  const notification_details$ = packages__flutter_local_notifications__src__platform_specifics__ios__notification_details$46dart.src__platform_specifics__ios__notification_details;
+  const method_channel_mappers$0 = packages__flutter_local_notifications__src__platform_specifics__macos__method_channel_mappers$46dart.src__platform_specifics__macos__method_channel_mappers;
+  const initialization_settings$0 = packages__flutter_local_notifications__src__platform_specifics__macos__initialization_settings$46dart.src__platform_specifics__macos__initialization_settings;
+  const notification_details$0 = packages__flutter_local_notifications__src__platform_specifics__macos__notification_details$46dart.src__platform_specifics__macos__notification_details;
+  var platform_flutter_local_notifications = Object.create(dart.library);
+  var $_get = dartx._get;
+  var $containsKey = dartx.containsKey;
+  var $map = dartx.map;
+  var $toList = dartx.toList;
+  var $_set = dartx._set;
+  var $addAll = dartx.addAll;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    StringN: () => (T.StringN = dart.constFn(dart.nullable(core.String)))(),
+    NotificationAppLaunchDetailsN: () => (T.NotificationAppLaunchDetailsN = dart.constFn(dart.nullable(notification_app_launch_details.NotificationAppLaunchDetails)))(),
+    MapToPendingNotificationRequest: () => (T.MapToPendingNotificationRequest = dart.constFn(dart.fnType(types.PendingNotificationRequest, [core.Map])))(),
+    JSArrayOfPendingNotificationRequest: () => (T.JSArrayOfPendingNotificationRequest = dart.constFn(_interceptors.JSArray$(types.PendingNotificationRequest)))(),
+    ListOfPendingNotificationRequest: () => (T.ListOfPendingNotificationRequest = dart.constFn(core.List$(types.PendingNotificationRequest)))(),
+    boolN: () => (T.boolN = dart.constFn(dart.nullable(core.bool)))(),
+    IdentityMapOfString$Object: () => (T.IdentityMapOfString$Object = dart.constFn(_js_helper.IdentityMap$(core.String, core.Object)))(),
+    ObjectN: () => (T.ObjectN = dart.constFn(dart.nullable(core.Object)))(),
+    IdentityMapOfString$ObjectN: () => (T.IdentityMapOfString$ObjectN = dart.constFn(_js_helper.IdentityMap$(core.String, T.ObjectN())))(),
+    MapToActiveNotification: () => (T.MapToActiveNotification = dart.constFn(dart.fnType(active_notification.ActiveNotification, [core.Map])))(),
+    ListOfActiveNotification: () => (T.ListOfActiveNotification = dart.constFn(core.List$(active_notification.ActiveNotification)))(),
+    ListNOfActiveNotification: () => (T.ListNOfActiveNotification = dart.constFn(dart.nullable(T.ListOfActiveNotification())))(),
+    intN: () => (T.intN = dart.constFn(dart.nullable(core.int)))(),
+    Int64ListN: () => (T.Int64ListN = dart.constFn(dart.nullable(typed_data.Int64List)))(),
+    MapToAndroidNotificationChannel: () => (T.MapToAndroidNotificationChannel = dart.constFn(dart.fnType(notification_channel.AndroidNotificationChannel, [core.Map])))(),
+    ListOfAndroidNotificationChannel: () => (T.ListOfAndroidNotificationChannel = dart.constFn(core.List$(notification_channel.AndroidNotificationChannel)))(),
+    ListNOfAndroidNotificationChannel: () => (T.ListNOfAndroidNotificationChannel = dart.constFn(dart.nullable(T.ListOfAndroidNotificationChannel())))(),
+    FutureOfvoid: () => (T.FutureOfvoid = dart.constFn(async.Future$(dart.void)))(),
+    IdentityMapOfString$bool: () => (T.IdentityMapOfString$bool = dart.constFn(_js_helper.IdentityMap$(core.String, core.bool)))(),
+    IdentityMapOfString$boolN: () => (T.IdentityMapOfString$boolN = dart.constFn(_js_helper.IdentityMap$(core.String, T.boolN())))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C2() {
+      return C[2] = dart.const({
+        __proto__: message_codecs.StandardMessageCodec.prototype
+      });
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: message_codecs.StandardMethodCodec.prototype,
+        [StandardMethodCodec_messageCodec]: C[2] || CT.C2
+      });
+    },
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: platform_channel.MethodChannel.prototype,
+        [MethodChannel__binaryMessenger]: null,
+        [MethodChannel_codec]: C[1] || CT.C1,
+        [MethodChannel_name]: "dexterous.com/flutter/local_notifications"
+      });
+    }
+  }, false);
+  var C = Array(3).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-6.1.1/lib/src/platform_flutter_local_notifications.dart",
+    "package:flutter_local_notifications/src/platform_flutter_local_notifications.dart"
+  ];
+  platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin = class MethodChannelFlutterLocalNotificationsPlugin extends flutter_local_notifications_platform_interface.FlutterLocalNotificationsPlatform {
+    cancel(id) {
+      if (id == null) dart.nullFailed(I[0], 36, 27, "id");
+      helpers.validateId(id);
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "cancel", id);
+    }
+    cancelAll() {
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "cancelAll");
+    }
+    getNotificationAppLaunchDetails() {
+      return async.async(T.NotificationAppLaunchDetailsN(), function* getNotificationAppLaunchDetails() {
+        let result = (yield platform_flutter_local_notifications._channel.invokeMethod(core.Map, "getNotificationAppLaunchDetails"));
+        return result != null ? new notification_app_launch_details.NotificationAppLaunchDetails.new(core.bool.as(result[$_get]("notificationLaunchedApp")), T.StringN().as(dart.test(result[$containsKey]("payload")) ? result[$_get]("payload") : null)) : null;
+      });
+    }
+    pendingNotificationRequests() {
+      return async.async(T.ListOfPendingNotificationRequest(), function* pendingNotificationRequests() {
+        let t0, t0$;
+        let pendingNotifications = (yield platform_flutter_local_notifications._channel.invokeListMethod(core.Map, "pendingNotificationRequests"));
+        t0$ = (t0 = pendingNotifications, t0 == null ? null : t0[$map](types.PendingNotificationRequest, dart.fn(p => {
+          if (p == null) dart.nullFailed(I[0], 61, 20, "p");
+          return new types.PendingNotificationRequest.new(core.int.as(p[$_get]("id")), T.StringN().as(p[$_get]("title")), T.StringN().as(p[$_get]("body")), T.StringN().as(p[$_get]("payload")));
+        }, T.MapToPendingNotificationRequest()))[$toList]());
+        return t0$ == null ? T.JSArrayOfPendingNotificationRequest().of([]) : t0$;
+      });
+    }
+  };
+  (platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin.new = function() {
+    platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin.__proto__.new.call(this);
+    ;
+  }).prototype = platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin.prototype;
+  dart.addTypeTests(platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin);
+  dart.addTypeCaches(platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin);
+  dart.setLibraryUri(platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin, I[1]);
+  var _onSelectNotification = dart.privateName(platform_flutter_local_notifications, "_onSelectNotification");
+  var _handleMethod = dart.privateName(platform_flutter_local_notifications, "_handleMethod");
+  var _getNotificationChannelSound = dart.privateName(platform_flutter_local_notifications, "_getNotificationChannelSound");
+  platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin = class AndroidFlutterLocalNotificationsPlugin extends platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin {
+    initialize(initializationSettings, opts) {
+      if (initializationSettings == null) dart.nullFailed(I[0], 80, 35, "initializationSettings");
+      let onSelectNotification = opts && 'onSelectNotification' in opts ? opts.onSelectNotification : null;
+      return async.async(T.boolN(), (function* initialize() {
+        this[_onSelectNotification] = onSelectNotification;
+        platform_flutter_local_notifications._channel.setMethodCallHandler(dart.bind(this, _handleMethod));
+        return yield platform_flutter_local_notifications._channel.invokeMethod(core.bool, "initialize", method_channel_mappers['AndroidInitializationSettingsMapper|toMap'](initializationSettings));
+      }).bind(this));
+    }
+    schedule(id, title, body, scheduledDate, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 97, 9, "id");
+      if (scheduledDate == null) dart.nullFailed(I[0], 100, 14, "scheduledDate");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      let androidAllowWhileIdle = opts && 'androidAllowWhileIdle' in opts ? opts.androidAllowWhileIdle : false;
+      if (androidAllowWhileIdle == null) dart.nullFailed(I[0], 103, 10, "androidAllowWhileIdle");
+      return async.async(dart.void, function* schedule() {
+        let t0, t0$, t0$0;
+        helpers.validateId(id);
+        let serializedPlatformSpecifics = (t0$ = (t0 = notificationDetails, t0 == null ? null : method_channel_mappers['AndroidNotificationDetailsMapper|toMap'](t0)), t0$ == null ? new (T.IdentityMapOfString$Object()).new() : t0$);
+        serializedPlatformSpecifics[$_set]("allowWhileIdle", androidAllowWhileIdle);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "schedule", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "millisecondsSinceEpoch", scheduledDate.millisecondsSinceEpoch, "platformSpecifics", serializedPlatformSpecifics, "payload", (t0$0 = payload, t0$0 == null ? "" : t0$0)]));
+      });
+    }
+    zonedSchedule(id, title, body, scheduledDate, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 122, 9, "id");
+      if (scheduledDate == null) dart.nullFailed(I[0], 125, 16, "scheduledDate");
+      let androidAllowWhileIdle = opts && 'androidAllowWhileIdle' in opts ? opts.androidAllowWhileIdle : null;
+      if (androidAllowWhileIdle == null) dart.nullFailed(I[0], 127, 19, "androidAllowWhileIdle");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      let matchDateTimeComponents = opts && 'matchDateTimeComponents' in opts ? opts.matchDateTimeComponents : null;
+      return async.async(dart.void, function* zonedSchedule() {
+        let t0, t0$, t0$0, t0$1;
+        helpers.validateId(id);
+        helpers$.validateDateIsInTheFuture(scheduledDate, matchDateTimeComponents);
+        core.ArgumentError.checkNotNull(core.bool, androidAllowWhileIdle, "androidAllowWhileIdle");
+        let serializedPlatformSpecifics = (t0$ = (t0 = notificationDetails, t0 == null ? null : method_channel_mappers['AndroidNotificationDetailsMapper|toMap'](t0)), t0$ == null ? new (T.IdentityMapOfString$Object()).new() : t0$);
+        serializedPlatformSpecifics[$_set]("allowWhileIdle", androidAllowWhileIdle);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "zonedSchedule", (t0$1 = new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "platformSpecifics", serializedPlatformSpecifics, "payload", (t0$0 = payload, t0$0 == null ? "" : t0$0)]), (() => {
+          t0$1[$addAll](tz_datetime_mapper['TZDateTimeMapper|toMap'](scheduledDate));
+          t0$1[$addAll](matchDateTimeComponents == null ? new (T.IdentityMapOfString$Object()).new() : new (T.IdentityMapOfString$Object()).from(["matchDateTimeComponents", matchDateTimeComponents.index]));
+          return t0$1;
+        })()));
+      });
+    }
+    showDailyAtTime(id, title, body, notificationTime, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 158, 9, "id");
+      if (notificationTime == null) dart.nullFailed(I[0], 161, 10, "notificationTime");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      return async.async(dart.void, function* showDailyAtTime() {
+        let t0, t0$;
+        helpers.validateId(id);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "showDailyAtTime", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "calledAt", new core.DateTime.now().millisecondsSinceEpoch, "repeatInterval", types.RepeatInterval.daily.index, "repeatTime", type_mappers['TimeMapper|toMap'](notificationTime), "platformSpecifics", (t0 = notificationDetails, t0 == null ? null : method_channel_mappers['AndroidNotificationDetailsMapper|toMap'](t0)), "payload", (t0$ = payload, t0$ == null ? "" : t0$)]));
+      });
+    }
+    showWeeklyAtDayAndTime(id, title, body, day, notificationTime, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 182, 9, "id");
+      if (day == null) dart.nullFailed(I[0], 185, 9, "day");
+      if (notificationTime == null) dart.nullFailed(I[0], 186, 10, "notificationTime");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      return async.async(dart.void, function* showWeeklyAtDayAndTime() {
+        let t0, t0$;
+        helpers.validateId(id);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "showWeeklyAtDayAndTime", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "calledAt", new core.DateTime.now().millisecondsSinceEpoch, "repeatInterval", types.RepeatInterval.weekly.index, "repeatTime", type_mappers['TimeMapper|toMap'](notificationTime), "day", day.value, "platformSpecifics", (t0 = notificationDetails, t0 == null ? null : method_channel_mappers['AndroidNotificationDetailsMapper|toMap'](t0)), "payload", (t0$ = payload, t0$ == null ? "" : t0$)]));
+      });
+    }
+    show(id, title, body, opts) {
+      let t0, t0$;
+      if (id == null) dart.nullFailed(I[0], 207, 9, "id");
+      let notificationDetails = opts && 'notificationDetails' in opts ? opts.notificationDetails : null;
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      helpers.validateId(id);
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "show", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "payload", (t0 = payload, t0 == null ? "" : t0), "platformSpecifics", (t0$ = notificationDetails, t0$ == null ? null : method_channel_mappers['AndroidNotificationDetailsMapper|toMap'](t0$))]));
+    }
+    periodicallyShow(id, title, body, repeatInterval, opts) {
+      if (id == null) dart.nullFailed(I[0], 228, 9, "id");
+      if (repeatInterval == null) dart.nullFailed(I[0], 231, 20, "repeatInterval");
+      let notificationDetails = opts && 'notificationDetails' in opts ? opts.notificationDetails : null;
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      let androidAllowWhileIdle = opts && 'androidAllowWhileIdle' in opts ? opts.androidAllowWhileIdle : false;
+      if (androidAllowWhileIdle == null) dart.nullFailed(I[0], 234, 10, "androidAllowWhileIdle");
+      return async.async(dart.void, function* periodicallyShow() {
+        let t0, t0$, t0$0;
+        helpers.validateId(id);
+        let serializedPlatformSpecifics = (t0$ = (t0 = notificationDetails, t0 == null ? null : method_channel_mappers['AndroidNotificationDetailsMapper|toMap'](t0)), t0$ == null ? new (T.IdentityMapOfString$Object()).new() : t0$);
+        serializedPlatformSpecifics[$_set]("allowWhileIdle", androidAllowWhileIdle);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "periodicallyShow", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "calledAt", new core.DateTime.now().millisecondsSinceEpoch, "repeatInterval", repeatInterval.index, "platformSpecifics", serializedPlatformSpecifics, "payload", (t0$0 = payload, t0$0 == null ? "" : t0$0)]));
+      });
+    }
+    cancel(id, opts) {
+      if (id == null) dart.nullFailed(I[0], 260, 27, "id");
+      let tag = opts && 'tag' in opts ? opts.tag : null;
+      return async.async(dart.void, function* cancel() {
+        helpers.validateId(id);
+        return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "cancel", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "tag", tag]));
+      });
+    }
+    createNotificationChannelGroup(notificationChannelGroup) {
+      if (notificationChannelGroup == null) dart.nullFailed(I[0], 273, 43, "notificationChannelGroup");
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "createNotificationChannelGroup", method_channel_mappers['AndroidNotificationChannelGroupMapper|toMap'](notificationChannelGroup));
+    }
+    deleteNotificationChannelGroup(groupId) {
+      if (groupId == null) dart.nullFailed(I[0], 281, 54, "groupId");
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "deleteNotificationChannelGroup", groupId);
+    }
+    createNotificationChannel(notificationChannel) {
+      if (notificationChannel == null) dart.nullFailed(I[0], 288, 38, "notificationChannel");
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "createNotificationChannel", method_channel_mappers['AndroidNotificationChannelMapper|toMap'](notificationChannel));
+    }
+    deleteNotificationChannel(channelId) {
+      if (channelId == null) dart.nullFailed(I[0], 295, 49, "channelId");
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "deleteNotificationChannel", channelId);
+    }
+    getActiveNotifications() {
+      return async.async(T.ListNOfActiveNotification(), function* getActiveNotifications() {
+        let t0;
+        let activeNotifications = (yield platform_flutter_local_notifications._channel.invokeListMethod(core.Map, "getActiveNotifications"));
+        t0 = activeNotifications;
+        return t0 == null ? null : t0[$map](active_notification.ActiveNotification, dart.fn(a => {
+          if (a == null) dart.nullFailed(I[0], 309, 16, "a");
+          return new active_notification.ActiveNotification.new(core.int.as(a[$_get]("id")), T.StringN().as(a[$_get]("channelId")), T.StringN().as(a[$_get]("title")), T.StringN().as(a[$_get]("body")));
+        }, T.MapToActiveNotification()))[$toList]();
+      });
+    }
+    getNotificationChannels() {
+      return async.async(T.ListNOfAndroidNotificationChannel(), (function* getNotificationChannels() {
+        let t0;
+        let notificationChannels = (yield platform_flutter_local_notifications._channel.invokeListMethod(core.Map, "getNotificationChannels"));
+        t0 = notificationChannels;
+        return t0 == null ? null : t0[$map](notification_channel.AndroidNotificationChannel, dart.fn(a => {
+          if (a == null) dart.nullFailed(I[0], 328, 16, "a");
+          return new notification_channel.AndroidNotificationChannel.new(core.String.as(a[$_get]("id")), core.String.as(a[$_get]("name")), core.String.as(a[$_get]("description")), {groupId: T.StringN().as(a[$_get]("groupId")), showBadge: core.bool.as(a[$_get]("showBadge")), importance: new enums.Importance.new(T.intN().as(a[$_get]("importance"))), playSound: core.bool.as(a[$_get]("playSound")), sound: this[_getNotificationChannelSound](a), enableLights: core.bool.as(a[$_get]("enableLights")), enableVibration: core.bool.as(a[$_get]("enableVibration")), vibrationPattern: T.Int64ListN().as(a[$_get]("vibrationPattern")), ledColor: new ui.Color.new(core.int.as(a[$_get]("ledColor")))});
+        }, T.MapToAndroidNotificationChannel()))[$toList]();
+      }).bind(this));
+    }
+    [_getNotificationChannelSound](channelMap) {
+      if (channelMap == null) dart.nullFailed(I[0], 346, 29, "channelMap");
+      let soundSourceIndex = T.intN().as(channelMap[$_get]("soundSource"));
+      let sound = null;
+      if (soundSourceIndex != null) {
+        if (soundSourceIndex == enums.AndroidNotificationSoundSource.rawResource.index) {
+          sound = new notification_sound.RawResourceAndroidNotificationSound.new(T.StringN().as(channelMap[$_get]("sound")));
+        } else if (soundSourceIndex == enums.AndroidNotificationSoundSource.uri.index) {
+          sound = new notification_sound.UriAndroidNotificationSound.new(core.String.as(channelMap[$_get]("sound")));
+        }
+      }
+      return sound;
+    }
+    [_handleMethod](call) {
+      if (call == null) dart.nullFailed(I[0], 360, 41, "call");
+      switch (call.method) {
+        case "selectNotification":
+        {
+          return dart.nullCheck(this[_onSelectNotification])(T.StringN().as(call.arguments));
+        }
+        default:
+        {
+          return T.FutureOfvoid().error("Method not defined");
+        }
+      }
+    }
+  };
+  (platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin.new = function() {
+    this[_onSelectNotification] = null;
+    platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin.__proto__.new.call(this);
+    ;
+  }).prototype = platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin.prototype;
+  dart.addTypeTests(platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin);
+  dart.addTypeCaches(platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin);
+  dart.setMethodSignature(platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin, () => ({
+    __proto__: dart.getMethods(platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin.__proto__),
+    initialize: dart.fnType(async.Future$(dart.nullable(core.bool)), [initialization_settings.AndroidInitializationSettings], {onSelectNotification: dart.nullable(dart.fnType(async.Future, [dart.nullable(core.String)]))}, {}),
+    schedule: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), core.DateTime, dart.nullable(notification_details.AndroidNotificationDetails)], {androidAllowWhileIdle: core.bool, payload: dart.nullable(core.String)}, {}),
+    zonedSchedule: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), date_time.TZDateTime, dart.nullable(notification_details.AndroidNotificationDetails)], {matchDateTimeComponents: dart.nullable(types$.DateTimeComponents), payload: dart.nullable(core.String)}, {androidAllowWhileIdle: core.bool}),
+    showDailyAtTime: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), types$.Time, dart.nullable(notification_details.AndroidNotificationDetails)], {payload: dart.nullable(core.String)}, {}),
+    showWeeklyAtDayAndTime: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), types$.Day, types$.Time, dart.nullable(notification_details.AndroidNotificationDetails)], {payload: dart.nullable(core.String)}, {}),
+    show: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String)], {notificationDetails: dart.nullable(notification_details.AndroidNotificationDetails), payload: dart.nullable(core.String)}, {}),
+    periodicallyShow: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), types.RepeatInterval], {androidAllowWhileIdle: core.bool, notificationDetails: dart.nullable(notification_details.AndroidNotificationDetails), payload: dart.nullable(core.String)}, {}),
+    cancel: dart.fnType(async.Future$(dart.void), [core.int], {tag: dart.nullable(core.String)}, {}),
+    createNotificationChannelGroup: dart.fnType(async.Future$(dart.void), [notification_channel_group.AndroidNotificationChannelGroup]),
+    deleteNotificationChannelGroup: dart.fnType(async.Future$(dart.void), [core.String]),
+    createNotificationChannel: dart.fnType(async.Future$(dart.void), [notification_channel.AndroidNotificationChannel]),
+    deleteNotificationChannel: dart.fnType(async.Future$(dart.void), [core.String]),
+    getActiveNotifications: dart.fnType(async.Future$(dart.nullable(core.List$(active_notification.ActiveNotification))), []),
+    getNotificationChannels: dart.fnType(async.Future$(dart.nullable(core.List$(notification_channel.AndroidNotificationChannel))), []),
+    [_getNotificationChannelSound]: dart.fnType(dart.nullable(notification_sound.AndroidNotificationSound), [core.Map]),
+    [_handleMethod]: dart.fnType(async.Future$(dart.void), [message_codec.MethodCall])
+  }));
+  dart.setLibraryUri(platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin, I[1]);
+  dart.setFieldSignature(platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin, () => ({
+    __proto__: dart.getFields(platform_flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin.__proto__),
+    [_onSelectNotification]: dart.fieldType(dart.nullable(dart.fnType(async.Future, [dart.nullable(core.String)])))
+  }));
+  var _onDidReceiveLocalNotification = dart.privateName(platform_flutter_local_notifications, "_onDidReceiveLocalNotification");
+  platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin = class IOSFlutterLocalNotificationsPlugin extends platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin {
+    initialize(initializationSettings, opts) {
+      if (initializationSettings == null) dart.nullFailed(I[0], 394, 31, "initializationSettings");
+      let onSelectNotification = opts && 'onSelectNotification' in opts ? opts.onSelectNotification : null;
+      return async.async(T.boolN(), (function* initialize() {
+        this[_onSelectNotification] = onSelectNotification;
+        this[_onDidReceiveLocalNotification] = initializationSettings.onDidReceiveLocalNotification;
+        platform_flutter_local_notifications._channel.setMethodCallHandler(dart.bind(this, _handleMethod));
+        return yield platform_flutter_local_notifications._channel.invokeMethod(core.bool, "initialize", method_channel_mappers$['IOSInitializationSettingsMapper|toMap'](initializationSettings));
+      }).bind(this));
+    }
+    requestPermissions(opts) {
+      let sound = opts && 'sound' in opts ? opts.sound : false;
+      if (sound == null) dart.nullFailed(I[0], 408, 10, "sound");
+      let alert = opts && 'alert' in opts ? opts.alert : false;
+      if (alert == null) dart.nullFailed(I[0], 409, 10, "alert");
+      let badge = opts && 'badge' in opts ? opts.badge : false;
+      if (badge == null) dart.nullFailed(I[0], 410, 10, "badge");
+      return platform_flutter_local_notifications._channel.invokeMethod(T.boolN(), "requestPermissions", new (T.IdentityMapOfString$bool()).from(["sound", sound, "alert", alert, "badge", badge]));
+    }
+    schedule(id, title, body, scheduledDate, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 423, 9, "id");
+      if (scheduledDate == null) dart.nullFailed(I[0], 426, 14, "scheduledDate");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      return async.async(dart.void, function* schedule() {
+        let t0, t0$;
+        helpers.validateId(id);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "schedule", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "millisecondsSinceEpoch", scheduledDate.millisecondsSinceEpoch, "platformSpecifics", (t0 = notificationDetails, t0 == null ? null : method_channel_mappers$['IOSNotificationDetailsMapper|toMap'](t0)), "payload", (t0$ = payload, t0$ == null ? "" : t0$)]));
+      });
+    }
+    zonedSchedule(id, title, body, scheduledDate, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 455, 9, "id");
+      if (scheduledDate == null) dart.nullFailed(I[0], 458, 16, "scheduledDate");
+      let uiLocalNotificationDateInterpretation = opts && 'uiLocalNotificationDateInterpretation' in opts ? opts.uiLocalNotificationDateInterpretation : null;
+      if (uiLocalNotificationDateInterpretation == null) dart.nullFailed(I[0], 461, 9, "uiLocalNotificationDateInterpretation");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      let matchDateTimeComponents = opts && 'matchDateTimeComponents' in opts ? opts.matchDateTimeComponents : null;
+      return async.async(dart.void, function* zonedSchedule() {
+        let t0, t0$, t0$0, t0$1;
+        helpers.validateId(id);
+        helpers$.validateDateIsInTheFuture(scheduledDate, matchDateTimeComponents);
+        core.ArgumentError.checkNotNull(enums$.UILocalNotificationDateInterpretation, uiLocalNotificationDateInterpretation, "uiLocalNotificationDateInterpretation");
+        let serializedPlatformSpecifics = (t0$ = (t0 = notificationDetails, t0 == null ? null : method_channel_mappers$['IOSNotificationDetailsMapper|toMap'](t0)), t0$ == null ? new (T.IdentityMapOfString$Object()).new() : t0$);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "zonedSchedule", (t0$1 = new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "platformSpecifics", serializedPlatformSpecifics, "payload", (t0$0 = payload, t0$0 == null ? "" : t0$0), "uiLocalNotificationDateInterpretation", uiLocalNotificationDateInterpretation.index]), (() => {
+          t0$1[$addAll](tz_datetime_mapper['TZDateTimeMapper|toMap'](scheduledDate));
+          t0$1[$addAll](matchDateTimeComponents == null ? new (T.IdentityMapOfString$Object()).new() : new (T.IdentityMapOfString$Object()).from(["matchDateTimeComponents", matchDateTimeComponents.index]));
+          return t0$1;
+        })()));
+      });
+    }
+    showDailyAtTime(id, title, body, notificationTime, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 494, 9, "id");
+      if (notificationTime == null) dart.nullFailed(I[0], 497, 10, "notificationTime");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      return async.async(dart.void, function* showDailyAtTime() {
+        let t0, t0$;
+        helpers.validateId(id);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "showDailyAtTime", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "calledAt", new core.DateTime.now().millisecondsSinceEpoch, "repeatInterval", types.RepeatInterval.daily.index, "repeatTime", type_mappers['TimeMapper|toMap'](notificationTime), "platformSpecifics", (t0 = notificationDetails, t0 == null ? null : method_channel_mappers$['IOSNotificationDetailsMapper|toMap'](t0)), "payload", (t0$ = payload, t0$ == null ? "" : t0$)]));
+      });
+    }
+    showWeeklyAtDayAndTime(id, title, body, day, notificationTime, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 518, 9, "id");
+      if (day == null) dart.nullFailed(I[0], 521, 9, "day");
+      if (notificationTime == null) dart.nullFailed(I[0], 522, 10, "notificationTime");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      return async.async(dart.void, function* showWeeklyAtDayAndTime() {
+        let t0, t0$;
+        helpers.validateId(id);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "showWeeklyAtDayAndTime", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "calledAt", new core.DateTime.now().millisecondsSinceEpoch, "repeatInterval", types.RepeatInterval.weekly.index, "repeatTime", type_mappers['TimeMapper|toMap'](notificationTime), "day", day.value, "platformSpecifics", (t0 = notificationDetails, t0 == null ? null : method_channel_mappers$['IOSNotificationDetailsMapper|toMap'](t0)), "payload", (t0$ = payload, t0$ == null ? "" : t0$)]));
+      });
+    }
+    show(id, title, body, opts) {
+      let t0, t0$;
+      if (id == null) dart.nullFailed(I[0], 542, 9, "id");
+      let notificationDetails = opts && 'notificationDetails' in opts ? opts.notificationDetails : null;
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      helpers.validateId(id);
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "show", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "payload", (t0 = payload, t0 == null ? "" : t0), "platformSpecifics", (t0$ = notificationDetails, t0$ == null ? null : method_channel_mappers$['IOSNotificationDetailsMapper|toMap'](t0$))]));
+    }
+    periodicallyShow(id, title, body, repeatInterval, opts) {
+      if (id == null) dart.nullFailed(I[0], 563, 9, "id");
+      if (repeatInterval == null) dart.nullFailed(I[0], 566, 20, "repeatInterval");
+      let notificationDetails = opts && 'notificationDetails' in opts ? opts.notificationDetails : null;
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      return async.async(dart.void, function* periodicallyShow() {
+        let t0, t0$;
+        helpers.validateId(id);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "periodicallyShow", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "calledAt", new core.DateTime.now().millisecondsSinceEpoch, "repeatInterval", repeatInterval.index, "platformSpecifics", (t0 = notificationDetails, t0 == null ? null : method_channel_mappers$['IOSNotificationDetailsMapper|toMap'](t0)), "payload", (t0$ = payload, t0$ == null ? "" : t0$)]));
+      });
+    }
+    [_handleMethod](call) {
+      if (call == null) dart.nullFailed(I[0], 582, 41, "call");
+      switch (call.method) {
+        case "selectNotification":
+        {
+          return dart.nullCheck(this[_onSelectNotification])(T.StringN().as(call.arguments));
+        }
+        case "didReceiveLocalNotification":
+        {
+          return dart.nullCheck(this[_onDidReceiveLocalNotification])(core.int.as(dart.dsend(call.arguments, '_get', ["id"])), T.StringN().as(dart.dsend(call.arguments, '_get', ["title"])), T.StringN().as(dart.dsend(call.arguments, '_get', ["body"])), T.StringN().as(dart.dsend(call.arguments, '_get', ["payload"])));
+        }
+        default:
+        {
+          return T.FutureOfvoid().error("Method not defined");
+        }
+      }
+    }
+  };
+  (platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin.new = function() {
+    this[_onSelectNotification] = null;
+    this[_onDidReceiveLocalNotification] = null;
+    platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin.__proto__.new.call(this);
+    ;
+  }).prototype = platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin.prototype;
+  dart.addTypeTests(platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin);
+  dart.addTypeCaches(platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin);
+  dart.setMethodSignature(platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin, () => ({
+    __proto__: dart.getMethods(platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin.__proto__),
+    initialize: dart.fnType(async.Future$(dart.nullable(core.bool)), [initialization_settings$.IOSInitializationSettings], {onSelectNotification: dart.nullable(dart.fnType(async.Future, [dart.nullable(core.String)]))}, {}),
+    requestPermissions: dart.fnType(async.Future$(dart.nullable(core.bool)), [], {alert: core.bool, badge: core.bool, sound: core.bool}, {}),
+    schedule: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), core.DateTime, dart.nullable(notification_details$.IOSNotificationDetails)], {payload: dart.nullable(core.String)}, {}),
+    zonedSchedule: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), date_time.TZDateTime, dart.nullable(notification_details$.IOSNotificationDetails)], {matchDateTimeComponents: dart.nullable(types$.DateTimeComponents), payload: dart.nullable(core.String)}, {uiLocalNotificationDateInterpretation: enums$.UILocalNotificationDateInterpretation}),
+    showDailyAtTime: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), types$.Time, dart.nullable(notification_details$.IOSNotificationDetails)], {payload: dart.nullable(core.String)}, {}),
+    showWeeklyAtDayAndTime: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), types$.Day, types$.Time, dart.nullable(notification_details$.IOSNotificationDetails)], {payload: dart.nullable(core.String)}, {}),
+    show: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String)], {notificationDetails: dart.nullable(notification_details$.IOSNotificationDetails), payload: dart.nullable(core.String)}, {}),
+    periodicallyShow: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), types.RepeatInterval], {notificationDetails: dart.nullable(notification_details$.IOSNotificationDetails), payload: dart.nullable(core.String)}, {}),
+    [_handleMethod]: dart.fnType(async.Future$(dart.void), [message_codec.MethodCall])
+  }));
+  dart.setLibraryUri(platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin, I[1]);
+  dart.setFieldSignature(platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin, () => ({
+    __proto__: dart.getFields(platform_flutter_local_notifications.IOSFlutterLocalNotificationsPlugin.__proto__),
+    [_onSelectNotification]: dart.fieldType(dart.nullable(dart.fnType(async.Future, [dart.nullable(core.String)]))),
+    [_onDidReceiveLocalNotification]: dart.fieldType(dart.nullable(dart.fnType(async.Future, [core.int, dart.nullable(core.String), dart.nullable(core.String), dart.nullable(core.String)])))
+  }));
+  platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin = class MacOSFlutterLocalNotificationsPlugin extends platform_flutter_local_notifications.MethodChannelFlutterLocalNotificationsPlugin {
+    initialize(initializationSettings, opts) {
+      if (initializationSettings == null) dart.nullFailed(I[0], 621, 33, "initializationSettings");
+      let onSelectNotification = opts && 'onSelectNotification' in opts ? opts.onSelectNotification : null;
+      return async.async(T.boolN(), (function* initialize() {
+        this[_onSelectNotification] = onSelectNotification;
+        platform_flutter_local_notifications._channel.setMethodCallHandler(dart.bind(this, _handleMethod));
+        return yield platform_flutter_local_notifications._channel.invokeMethod(core.bool, "initialize", method_channel_mappers$0['MacOSInitializationSettingsMapper|toMap'](initializationSettings));
+      }).bind(this));
+    }
+    requestPermissions(opts) {
+      let sound = opts && 'sound' in opts ? opts.sound : null;
+      let alert = opts && 'alert' in opts ? opts.alert : null;
+      let badge = opts && 'badge' in opts ? opts.badge : null;
+      return platform_flutter_local_notifications._channel.invokeMethod(core.bool, "requestPermissions", new (T.IdentityMapOfString$boolN()).from(["sound", sound, "alert", alert, "badge", badge]));
+    }
+    zonedSchedule(id, title, body, scheduledDate, notificationDetails, opts) {
+      if (id == null) dart.nullFailed(I[0], 646, 9, "id");
+      if (scheduledDate == null) dart.nullFailed(I[0], 649, 16, "scheduledDate");
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      let matchDateTimeComponents = opts && 'matchDateTimeComponents' in opts ? opts.matchDateTimeComponents : null;
+      return async.async(dart.void, function* zonedSchedule() {
+        let t0, t0$, t0$0, t0$1;
+        helpers.validateId(id);
+        helpers$.validateDateIsInTheFuture(scheduledDate, matchDateTimeComponents);
+        let serializedPlatformSpecifics = (t0$ = (t0 = notificationDetails, t0 == null ? null : method_channel_mappers$0['MacOSNotificationDetailsMapper|toMap'](t0)), t0$ == null ? new (T.IdentityMapOfString$Object()).new() : t0$);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "zonedSchedule", (t0$1 = new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "platformSpecifics", serializedPlatformSpecifics, "payload", (t0$0 = payload, t0$0 == null ? "" : t0$0)]), (() => {
+          t0$1[$addAll](tz_datetime_mapper['TZDateTimeMapper|toMap'](scheduledDate));
+          t0$1[$addAll](matchDateTimeComponents == null ? new (T.IdentityMapOfString$Object()).new() : new (T.IdentityMapOfString$Object()).from(["matchDateTimeComponents", matchDateTimeComponents.index]));
+          return t0$1;
+        })()));
+      });
+    }
+    show(id, title, body, opts) {
+      let t0, t0$;
+      if (id == null) dart.nullFailed(I[0], 677, 9, "id");
+      let notificationDetails = opts && 'notificationDetails' in opts ? opts.notificationDetails : null;
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      helpers.validateId(id);
+      return platform_flutter_local_notifications._channel.invokeMethod(dart.void, "show", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "payload", (t0 = payload, t0 == null ? "" : t0), "platformSpecifics", (t0$ = notificationDetails, t0$ == null ? null : method_channel_mappers$0['MacOSNotificationDetailsMapper|toMap'](t0$))]));
+    }
+    periodicallyShow(id, title, body, repeatInterval, opts) {
+      if (id == null) dart.nullFailed(I[0], 698, 9, "id");
+      if (repeatInterval == null) dart.nullFailed(I[0], 701, 20, "repeatInterval");
+      let notificationDetails = opts && 'notificationDetails' in opts ? opts.notificationDetails : null;
+      let payload = opts && 'payload' in opts ? opts.payload : null;
+      return async.async(dart.void, function* periodicallyShow() {
+        let t0, t0$;
+        helpers.validateId(id);
+        yield platform_flutter_local_notifications._channel.invokeMethod(dart.dynamic, "periodicallyShow", new (T.IdentityMapOfString$ObjectN()).from(["id", id, "title", title, "body", body, "calledAt", new core.DateTime.now().millisecondsSinceEpoch, "repeatInterval", repeatInterval.index, "platformSpecifics", (t0 = notificationDetails, t0 == null ? null : method_channel_mappers$0['MacOSNotificationDetailsMapper|toMap'](t0)), "payload", (t0$ = payload, t0$ == null ? "" : t0$)]));
+      });
+    }
+    [_handleMethod](call) {
+      if (call == null) dart.nullFailed(I[0], 717, 41, "call");
+      switch (call.method) {
+        case "selectNotification":
+        {
+          return dart.nullCheck(this[_onSelectNotification])(T.StringN().as(call.arguments));
+        }
+        default:
+        {
+          return T.FutureOfvoid().error("Method not defined");
+        }
+      }
+    }
+  };
+  (platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin.new = function() {
+    this[_onSelectNotification] = null;
+    platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin.__proto__.new.call(this);
+    ;
+  }).prototype = platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin.prototype;
+  dart.addTypeTests(platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin);
+  dart.addTypeCaches(platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin);
+  dart.setMethodSignature(platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin, () => ({
+    __proto__: dart.getMethods(platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin.__proto__),
+    initialize: dart.fnType(async.Future$(dart.nullable(core.bool)), [initialization_settings$0.MacOSInitializationSettings], {onSelectNotification: dart.nullable(dart.fnType(async.Future, [dart.nullable(core.String)]))}, {}),
+    requestPermissions: dart.fnType(async.Future$(dart.nullable(core.bool)), [], {alert: dart.nullable(core.bool), badge: dart.nullable(core.bool), sound: dart.nullable(core.bool)}, {}),
+    zonedSchedule: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), date_time.TZDateTime, dart.nullable(notification_details$0.MacOSNotificationDetails)], {matchDateTimeComponents: dart.nullable(types$.DateTimeComponents), payload: dart.nullable(core.String)}, {}),
+    show: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String)], {notificationDetails: dart.nullable(notification_details$0.MacOSNotificationDetails), payload: dart.nullable(core.String)}, {}),
+    periodicallyShow: dart.fnType(async.Future$(dart.void), [core.int, dart.nullable(core.String), dart.nullable(core.String), types.RepeatInterval], {notificationDetails: dart.nullable(notification_details$0.MacOSNotificationDetails), payload: dart.nullable(core.String)}, {}),
+    [_handleMethod]: dart.fnType(async.Future$(dart.void), [message_codec.MethodCall])
+  }));
+  dart.setLibraryUri(platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin, I[1]);
+  dart.setFieldSignature(platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin, () => ({
+    __proto__: dart.getFields(platform_flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin.__proto__),
+    [_onSelectNotification]: dart.fieldType(dart.nullable(dart.fnType(async.Future, [dart.nullable(core.String)])))
+  }));
+  var MethodChannel__binaryMessenger = dart.privateName(platform_channel, "MethodChannel._binaryMessenger");
+  var StandardMethodCodec_messageCodec = dart.privateName(message_codecs, "StandardMethodCodec.messageCodec");
+  var MethodChannel_codec = dart.privateName(platform_channel, "MethodChannel.codec");
+  var MethodChannel_name = dart.privateName(platform_channel, "MethodChannel.name");
+  dart.defineLazy(platform_flutter_local_notifications, {
+    /*platform_flutter_local_notifications._channel*/get _channel() {
+      return C[0] || CT.C0;
+    }
+  }, false);
+  dart.trackLibraries("packages/flutter_local_notifications/src/platform_flutter_local_notifications.dart", {
+    "package:flutter_local_notifications/src/platform_flutter_local_notifications.dart": platform_flutter_local_notifications
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["platform_flutter_local_notifications.dart"],"names":[],"mappings":"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","file":"../../../../../../../../packages/flutter_local_notifications/src/platform_flutter_local_notifications.dart.lib.js"}');
+  // Exports:
+  return {
+    src__platform_flutter_local_notifications: platform_flutter_local_notifications
+  };
+}));
+
+//# sourceMappingURL=platform_flutter_local_notifications.dart.lib.js.map

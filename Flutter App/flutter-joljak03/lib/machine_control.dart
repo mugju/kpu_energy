@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:typed_data/typed_buffers.dart' show Uint8Buffer;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class MachineControl extends StatefulWidget {
   MachineControl({Key? key, required this.title}) : super(key: key);
@@ -20,14 +21,34 @@ class _MachineControlState extends State<MachineControl> {
 
   String smp_elec_topic = 'Smplug1_elec';
 
+  String people = 'People';
+
+  String sct = 'SCT013';
+
+  String sct_total = 'Total_power';
+
+  // 5개
   late mqtt.MqttClient client;
+  late mqtt.MqttClient client_elec;
+  late mqtt.MqttClient client_people;
+  late mqtt.MqttClient client_sct;
+  late mqtt.MqttClient client_total;
+
   late mqtt.MqttConnectionState connectionState;
 
   //초기 값
-  double _temp = 0;
+  String _temp = 'OFF';
   double _smplug_amp = 0;
+  String _people = '인원 없음';
+  double _SCT_amp = 0;
+  double _SCT_total = 0;
 
   late StreamSubscription subscription;
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  // 사용자 지정 기준 amp 설정 예정
 
   /*
   Conecta no servidor MQTT assim que inicializar a tela
@@ -35,7 +56,35 @@ class _MachineControlState extends State<MachineControl> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => _connect());
+
+    init();
   }
+
+  void init() async {
+    // 알림용 ICON 설정
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('ic_launcher');
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+
+    // 알림 초기화
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (String? payload) async {
+      //onSelectNotification은 알림을 선택했을때 발생
+      if (payload != null) {
+        debugPrint('notification payload: $payload');
+      }
+    });
+  }
+
+  // 알림 더미 타이틀
+  List<String> pushTitleList = ['ON', 'OFF'];
+  // 알림 그룹 ID 카운트용, 알림이 올때마다 이 값을 1씩 증가 시킨다.
+  int groupedNotificationCounter = 1;
+
+  // late final String onMessage;
+  // late int num = int.parse(onMessage);
 
   /*
   Assina o t?pico onde vir?o os dados de temperatura
@@ -44,7 +93,16 @@ class _MachineControlState extends State<MachineControl> {
     if (connectionState == mqtt.MqttConnectionState.connected) {
       print('[MQTT client] Subscribing to ${topic.trim()}');
       print('[MQTT client] topic data : ${topic.characters}');
+      // 5개 만들기
       client.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+      // client_elec.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+      // client_people.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+      // client_sct.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+      // client_total.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+
+
+
+
       print('[client connectionStatus]: ${client.connectionStatus}');
       print("");
       print('[client connectionMessage]: ${client.connectionMessage}');
@@ -149,13 +207,80 @@ class _MachineControlState extends State<MachineControl> {
             indent: 20.0,
             endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
           ),
+          Text(
+            '[재실 인원 유무] ',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          // Text(
+          //   '[Smart Plug 제어] ',
+          //   style: Theme.of(context).textTheme.headline6,
+          // ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            '$_people',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Divider(
+            // Divider -> 공간을 나누는 선
+            height:
+                30.0, // height ->  높이 설정 -> 위와 아래 사이의 간격이 합쳐서 60.0 이라는 뜻(위 아래로 각 30px)
+            color: Colors.blue[600], // color -> 색상 설정
+            thickness: 2, // thickness -> 선의 굵기
+            indent: 20.0,
+            endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
+          ),
+          Text(
+            '[배전반 순간 전력] ',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          // Text(
+          //   '[Smart Plug 제어] ',
+          //   style: Theme.of(context).textTheme.headline6,
+          // ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            '$_SCT_amp',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Divider(
+            // Divider -> 공간을 나누는 선
+            height:
+                30.0, // height ->  높이 설정 -> 위와 아래 사이의 간격이 합쳐서 60.0 이라는 뜻(위 아래로 각 30px)
+            color: Colors.blue[600], // color -> 색상 설정
+            thickness: 2, // thickness -> 선의 굵기
+            indent: 20.0,
+            endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
+          ),
+          Text(
+            '[배전반 누적 전력] ',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          // Text(
+          //   '[Smart Plug 제어] ',
+          //   style: Theme.of(context).textTheme.headline6,
+          // ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            '$_SCT_total',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Divider(
+            // Divider -> 공간을 나누는 선
+            height:
+                30.0, // height ->  높이 설정 -> 위와 아래 사이의 간격이 합쳐서 60.0 이라는 뜻(위 아래로 각 30px)
+            color: Colors.blue[600], // color -> 색상 설정
+            thickness: 2, // thickness -> 선의 굵기
+            indent: 20.0,
+            endIndent: 20.0, // endIndent -> 선이 끝에서 부터 어느정도 떨어질 지 결정하는 속성
+          ),
         ],
       )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onoff,
-        tooltip: 'Ligar/Desligar',
-        child: Icon(Icons.play_arrow),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
@@ -201,33 +326,16 @@ class _MachineControlState extends State<MachineControl> {
       _disconnect();
     }
 
-    
     _subscribeToTopic(smp_topic);
-
-    client.updates.listen((List<mqtt.MqttReceivedMessage> event) {
-      print(event.length);
-      final mqtt.MqttPublishMessage recMess =
-          event[0].payload as mqtt.MqttPublishMessage;
-      final String message = mqtt.MqttPublishPayload.bytesToStringAsString(
-          recMess.payload.message);
-
-      print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
-          'payload is <-- ${message} -->');
-      print(client.connectionState);
-      print("[MQTT client] message with topic: ${event[0].topic}");
-      print("[MQTT client] message with message: ${message}");
-
-      setState(() {
-        _temp = double.parse(message);
-      });
-    });
-    
-
-
-
 
     _subscribeToTopic(smp_elec_topic);
 
+    _subscribeToTopic(people);
+
+    _subscribeToTopic(sct);
+
+    _subscribeToTopic(sct_total);
+
     client.updates.listen((List<mqtt.MqttReceivedMessage> event) {
       print(event.length);
       final mqtt.MqttPublishMessage recMess =
@@ -242,19 +350,36 @@ class _MachineControlState extends State<MachineControl> {
       print("[MQTT client] message with message: ${message}");
 
       setState(() {
-        _smplug_amp = double.parse(message);
+        if (event[0].topic == "Smplug1_elec") {
+          _smplug_amp = double.parse(message);
+        }
+        if (event[0].topic == "Smplug1") {
+          if (double.parse(message) == 1 && _temp != 'ON') {
+            _temp = 'ON';
+            _showGroupedNotifications(_temp);
+          } else if (double.parse(message) == 0 && _temp != 'OFF') {
+            _temp = 'OFF';
+            _showGroupedNotifications(_temp);
+          }
+        }
+        if (event[0].topic == "People") {
+          if (double.parse(message) >= 1) {
+            _people = '재실중';
+          } else {
+            _people = '인원 없음';
+          }
+        }
+        if (event[0].topic == "SCT013") {
+          _SCT_amp = double.parse(message);
+        }
+        if(event[0].topic == "Total_power"){
+          _SCT_total = double.parse(message);
+        }
       });
     });
 
-    
-    
-
-
-
     //subscription = client.updates.listen(_onMessage);
   }
-
-  
 
   /*
   Desconecta do servidor MQTT
@@ -283,20 +408,71 @@ class _MachineControlState extends State<MachineControl> {
   /*
  mqtt 수정 부분
    */
-  void _onMessage(List<mqtt.MqttReceivedMessage> event) {
-    print(event.length);
-    final mqtt.MqttPublishMessage recMess =
-        event[0].payload as mqtt.MqttPublishMessage;
-    final String message =
-        mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-    print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
-        'payload is <-- ${message} -->');
-    print(client.connectionState);
-    print("[MQTT client] message with topic: ${event[0].topic}");
-    print("[MQTT client] message with message: ${message}");
-    setState(() {
-      _temp = double.parse(message);
-    });
+  // void _onMessage(List<mqtt.MqttReceivedMessage> event) {
+  //   print(event.length);
+  //   final mqtt.MqttPublishMessage recMess =
+  //       event[0].payload as mqtt.MqttPublishMessage;
+  //   onMessage =
+  //       mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+  //   print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
+  //       'payload is <-- ${onMessage} -->');
+  //   print(client.connectionState);
+  //   print("[MQTT client] message with topic: ${event[0].topic}");
+  //   print("[MQTT client] message with message: ${onMessage}");
+  //   setState(() {
+  //     _showGroupedNotifications();
+  //     if (double.parse(onMessage) == 1) {
+  //       _temp = 'ON';
+  //     } else {
+  //       _temp = 'OFF';
+  //     }
+  //   });
+  // }
+  // 알림 발생 함수!!
+  Future<void> _showGroupedNotifications(String temp) async {
+    // 알림 그룹 키
+    const String groupKey = 'com.android.example.WORK_EMAIL';
+    // 알림 채널
+    const String groupChannelId = 'grouped channel id';
+    // 채널 이름
+    const String groupChannelName = 'grouped channel name';
+    // 채널 설명
+    const String groupChannelDescription = 'grouped channel description';
+
+    // 더미 타이틀 랜덤으로 얻기위함
+    //// 삼항 연산자로 사용은 가능
+    //int num = (pushTitleList.length >= 3) ? 0 : 1;
+
+    // 안드로이드 알림 설정
+    const AndroidNotificationDetails notificationAndroidSpecifics =
+        AndroidNotificationDetails(
+            groupChannelId, groupChannelName, groupChannelDescription,
+            importance: Importance.max,
+            priority: Priority.high,
+            groupKey: groupKey);
+
+    // 플랫폼별 설정 - 현재 안드로이드만 적용됨
+    const NotificationDetails notificationPlatformSpecifics =
+        NotificationDetails(android: notificationAndroidSpecifics);
+
+    // 알림 발생!
+    await flutterLocalNotificationsPlugin.show(groupedNotificationCounter, temp,
+        '스마트 플러그 작동 상태 - ${temp}', notificationPlatformSpecifics);
+
+    // 그룹용 알림 설정
+    // 특징 setAsGroupSummary 가 true 이다.
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+            groupChannelId, groupChannelName, groupChannelDescription,
+            onlyAlertOnce: true, groupKey: groupKey, setAsGroupSummary: true);
+
+    // 플랫폼별 설정 - 현재 안드로이드만 적용됨
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    // 그룹용 알림 출력
+    // 이때는 ID를 0으로 고정시켜 새로 생성되지 않게 한다.
+    await flutterLocalNotificationsPlugin.show(
+        0, '', '', platformChannelSpecifics);
   }
 
   void publishString(String data) {

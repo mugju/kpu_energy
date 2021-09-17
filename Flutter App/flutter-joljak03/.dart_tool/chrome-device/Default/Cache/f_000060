@@ -1,0 +1,425 @@
+define(['dart_sdk', 'packages/flutter/src/foundation/debug.dart'], (function load__packages__syncfusion_flutter_sliders__src__common_dart(dart_sdk, packages__flutter__src__foundation__debug$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const diagnostics = packages__flutter__src__foundation__debug$46dart.src__foundation__diagnostics;
+  var common = Object.create(dart.library);
+  var $runtimeType = dartx.runtimeType;
+  var $toInt = dartx.toInt;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    LabelPlacementL: () => (T.LabelPlacementL = dart.constFn(dart.legacy(common.LabelPlacement)))(),
+    DateIntervalTypeL: () => (T.DateIntervalTypeL = dart.constFn(dart.legacy(common.DateIntervalType)))(),
+    SfThumbL: () => (T.SfThumbL = dart.constFn(dart.legacy(common.SfThumb)))(),
+    SliderDragModeL: () => (T.SliderDragModeL = dart.constFn(dart.legacy(common.SliderDragMode)))(),
+    SliderTooltipPositionL: () => (T.SliderTooltipPositionL = dart.constFn(dart.legacy(common.SliderTooltipPosition)))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: common.LabelPlacement.prototype,
+        [_name$]: "LabelPlacement.onTicks",
+        index: 0
+      });
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: common.LabelPlacement.prototype,
+        [_name$]: "LabelPlacement.betweenTicks",
+        index: 1
+      });
+    },
+    get C2() {
+      return C[2] = dart.constList([C[0] || CT.C0, C[1] || CT.C1], T.LabelPlacementL());
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: common.DateIntervalType.prototype,
+        [_name$]: "DateIntervalType.years",
+        index: 0
+      });
+    },
+    get C4() {
+      return C[4] = dart.const({
+        __proto__: common.DateIntervalType.prototype,
+        [_name$]: "DateIntervalType.months",
+        index: 1
+      });
+    },
+    get C5() {
+      return C[5] = dart.const({
+        __proto__: common.DateIntervalType.prototype,
+        [_name$]: "DateIntervalType.days",
+        index: 2
+      });
+    },
+    get C6() {
+      return C[6] = dart.const({
+        __proto__: common.DateIntervalType.prototype,
+        [_name$]: "DateIntervalType.hours",
+        index: 3
+      });
+    },
+    get C7() {
+      return C[7] = dart.const({
+        __proto__: common.DateIntervalType.prototype,
+        [_name$]: "DateIntervalType.minutes",
+        index: 4
+      });
+    },
+    get C8() {
+      return C[8] = dart.const({
+        __proto__: common.DateIntervalType.prototype,
+        [_name$]: "DateIntervalType.seconds",
+        index: 5
+      });
+    },
+    get C9() {
+      return C[9] = dart.constList([C[3] || CT.C3, C[4] || CT.C4, C[5] || CT.C5, C[6] || CT.C6, C[7] || CT.C7, C[8] || CT.C8], T.DateIntervalTypeL());
+    },
+    get C10() {
+      return C[10] = dart.const({
+        __proto__: common.SfThumb.prototype,
+        [_name$]: "SfThumb.start",
+        index: 0
+      });
+    },
+    get C11() {
+      return C[11] = dart.const({
+        __proto__: common.SfThumb.prototype,
+        [_name$]: "SfThumb.end",
+        index: 1
+      });
+    },
+    get C12() {
+      return C[12] = dart.constList([C[10] || CT.C10, C[11] || CT.C11], T.SfThumbL());
+    },
+    get C13() {
+      return C[13] = dart.const({
+        __proto__: common.SliderDragMode.prototype,
+        [_name$]: "SliderDragMode.onThumb",
+        index: 0
+      });
+    },
+    get C14() {
+      return C[14] = dart.const({
+        __proto__: common.SliderDragMode.prototype,
+        [_name$]: "SliderDragMode.betweenThumbs",
+        index: 1
+      });
+    },
+    get C15() {
+      return C[15] = dart.const({
+        __proto__: common.SliderDragMode.prototype,
+        [_name$]: "SliderDragMode.both",
+        index: 2
+      });
+    },
+    get C16() {
+      return C[16] = dart.constList([C[13] || CT.C13, C[14] || CT.C14, C[15] || CT.C15], T.SliderDragModeL());
+    },
+    get C17() {
+      return C[17] = dart.const({
+        __proto__: common.SliderTooltipPosition.prototype,
+        [_name$]: "SliderTooltipPosition.left",
+        index: 0
+      });
+    },
+    get C18() {
+      return C[18] = dart.const({
+        __proto__: common.SliderTooltipPosition.prototype,
+        [_name$]: "SliderTooltipPosition.right",
+        index: 1
+      });
+    },
+    get C19() {
+      return C[19] = dart.constList([C[17] || CT.C17, C[18] || CT.C18], T.SliderTooltipPositionL());
+    }
+  }, false);
+  var C = Array(20).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_sliders-19.2.49/lib/src/common.dart",
+    "package:syncfusion_flutter_sliders/src/common.dart"
+  ];
+  var _name$ = dart.privateName(common, "_name");
+  common.LabelPlacement = class LabelPlacement extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (common.LabelPlacement.new = function(index, _name) {
+    if (index == null) dart.nullFailed(I[0], 39, 6, "index");
+    if (_name == null) dart.nullFailed(I[0], 39, 6, "_name");
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = common.LabelPlacement.prototype;
+  dart.addTypeTests(common.LabelPlacement);
+  dart.addTypeCaches(common.LabelPlacement);
+  dart.setLibraryUri(common.LabelPlacement, I[1]);
+  dart.setFieldSignature(common.LabelPlacement, () => ({
+    __proto__: dart.getFields(common.LabelPlacement.__proto__),
+    index: dart.finalFieldType(core.int),
+    [_name$]: dart.finalFieldType(core.String)
+  }));
+  dart.defineExtensionMethods(common.LabelPlacement, ['toString']);
+  common.LabelPlacement.onTicks = C[0] || CT.C0;
+  common.LabelPlacement.betweenTicks = C[1] || CT.C1;
+  common.LabelPlacement.values = C[2] || CT.C2;
+  common.DateIntervalType = class DateIntervalType extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (common.DateIntervalType.new = function(index, _name) {
+    if (index == null) dart.nullFailed(I[0], 48, 6, "index");
+    if (_name == null) dart.nullFailed(I[0], 48, 6, "_name");
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = common.DateIntervalType.prototype;
+  dart.addTypeTests(common.DateIntervalType);
+  dart.addTypeCaches(common.DateIntervalType);
+  dart.setLibraryUri(common.DateIntervalType, I[1]);
+  dart.setFieldSignature(common.DateIntervalType, () => ({
+    __proto__: dart.getFields(common.DateIntervalType.__proto__),
+    index: dart.finalFieldType(core.int),
+    [_name$]: dart.finalFieldType(core.String)
+  }));
+  dart.defineExtensionMethods(common.DateIntervalType, ['toString']);
+  common.DateIntervalType.years = C[3] || CT.C3;
+  common.DateIntervalType.months = C[4] || CT.C4;
+  common.DateIntervalType.days = C[5] || CT.C5;
+  common.DateIntervalType.hours = C[6] || CT.C6;
+  common.DateIntervalType.minutes = C[7] || CT.C7;
+  common.DateIntervalType.seconds = C[8] || CT.C8;
+  common.DateIntervalType.values = C[9] || CT.C9;
+  common.SfThumb = class SfThumb extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (common.SfThumb.new = function(index, _name) {
+    if (index == null) dart.nullFailed(I[0], 104, 6, "index");
+    if (_name == null) dart.nullFailed(I[0], 104, 6, "_name");
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = common.SfThumb.prototype;
+  dart.addTypeTests(common.SfThumb);
+  dart.addTypeCaches(common.SfThumb);
+  dart.setLibraryUri(common.SfThumb, I[1]);
+  dart.setFieldSignature(common.SfThumb, () => ({
+    __proto__: dart.getFields(common.SfThumb.__proto__),
+    index: dart.finalFieldType(core.int),
+    [_name$]: dart.finalFieldType(core.String)
+  }));
+  dart.defineExtensionMethods(common.SfThumb, ['toString']);
+  common.SfThumb.start = C[10] || CT.C10;
+  common.SfThumb.end = C[11] || CT.C11;
+  common.SfThumb.values = C[12] || CT.C12;
+  common.SliderDragMode = class SliderDragMode extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (common.SliderDragMode.new = function(index, _name) {
+    if (index == null) dart.nullFailed(I[0], 113, 6, "index");
+    if (_name == null) dart.nullFailed(I[0], 113, 6, "_name");
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = common.SliderDragMode.prototype;
+  dart.addTypeTests(common.SliderDragMode);
+  dart.addTypeCaches(common.SliderDragMode);
+  dart.setLibraryUri(common.SliderDragMode, I[1]);
+  dart.setFieldSignature(common.SliderDragMode, () => ({
+    __proto__: dart.getFields(common.SliderDragMode.__proto__),
+    index: dart.finalFieldType(core.int),
+    [_name$]: dart.finalFieldType(core.String)
+  }));
+  dart.defineExtensionMethods(common.SliderDragMode, ['toString']);
+  common.SliderDragMode.onThumb = C[13] || CT.C13;
+  common.SliderDragMode.betweenThumbs = C[14] || CT.C14;
+  common.SliderDragMode.both = C[15] || CT.C15;
+  common.SliderDragMode.values = C[16] || CT.C16;
+  common.SliderTooltipPosition = class SliderTooltipPosition extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (common.SliderTooltipPosition.new = function(index, _name) {
+    if (index == null) dart.nullFailed(I[0], 130, 6, "index");
+    if (_name == null) dart.nullFailed(I[0], 130, 6, "_name");
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = common.SliderTooltipPosition.prototype;
+  dart.addTypeTests(common.SliderTooltipPosition);
+  dart.addTypeCaches(common.SliderTooltipPosition);
+  dart.setLibraryUri(common.SliderTooltipPosition, I[1]);
+  dart.setFieldSignature(common.SliderTooltipPosition, () => ({
+    __proto__: dart.getFields(common.SliderTooltipPosition.__proto__),
+    index: dart.finalFieldType(core.int),
+    [_name$]: dart.finalFieldType(core.String)
+  }));
+  dart.defineExtensionMethods(common.SliderTooltipPosition, ['toString']);
+  common.SliderTooltipPosition.left = C[17] || CT.C17;
+  common.SliderTooltipPosition.right = C[18] || CT.C18;
+  common.SliderTooltipPosition.values = C[19] || CT.C19;
+  var start$ = dart.privateName(common, "SfRangeValues.start");
+  var end$ = dart.privateName(common, "SfRangeValues.end");
+  common.SfRangeValues = class SfRangeValues extends diagnostics.DiagnosticableTree {
+    get start() {
+      return this[start$];
+    }
+    set start(value) {
+      super.start = value;
+    }
+    get end() {
+      return this[end$];
+    }
+    set end(value) {
+      super.end = value;
+    }
+    copyWith(opts) {
+      let t0, t0$, t0$0, t0$1;
+      let start = opts && 'start' in opts ? opts.start : null;
+      let end = opts && 'end' in opts ? opts.end : null;
+      if (start != null && dart.equals(dart.runtimeType(start), dart.wrapType(core.num)) && dart.equals(dart.runtimeType(this.end), dart.wrapType(core.DateTime))) {
+        let value = core.double.as(start);
+        return new common.SfRangeValues.new(new core.DateTime.fromMillisecondsSinceEpoch(value[$toInt]()), (t0 = end, t0 == null ? this.end : t0));
+      } else if (end != null && dart.equals(dart.runtimeType(end), dart.wrapType(core.num)) && dart.equals(dart.runtimeType(this.start), dart.wrapType(core.DateTime))) {
+        let value = core.double.as(end);
+        return new common.SfRangeValues.new((t0$ = start, t0$ == null ? this.start : t0$), new core.DateTime.fromMillisecondsSinceEpoch(value[$toInt]()));
+      }
+      return new common.SfRangeValues.new((t0$0 = start, t0$0 == null ? this.start : t0$0), (t0$1 = end, t0$1 == null ? this.end : t0$1));
+    }
+    debugFillProperties(properties) {
+      if (properties == null) dart.nullFailed(I[0], 167, 56, "properties");
+      super.debugFillProperties(properties);
+      properties.add(new diagnostics.DiagnosticsProperty.new("start", this.start));
+      properties.add(new diagnostics.DiagnosticsProperty.new("end", this.end));
+    }
+  };
+  (common.SfRangeValues.new = function(start, end) {
+    this[start$] = start;
+    this[end$] = end;
+    common.SfRangeValues.__proto__.new.call(this);
+    ;
+  }).prototype = common.SfRangeValues.prototype;
+  dart.addTypeTests(common.SfRangeValues);
+  dart.addTypeCaches(common.SfRangeValues);
+  dart.setMethodSignature(common.SfRangeValues, () => ({
+    __proto__: dart.getMethods(common.SfRangeValues.__proto__),
+    copyWith: dart.fnType(common.SfRangeValues, [], {end: dart.dynamic, start: dart.dynamic}, {})
+  }));
+  dart.setLibraryUri(common.SfRangeValues, I[1]);
+  dart.setFieldSignature(common.SfRangeValues, () => ({
+    __proto__: dart.getFields(common.SfRangeValues.__proto__),
+    start: dart.finalFieldType(dart.dynamic),
+    end: dart.finalFieldType(dart.dynamic)
+  }));
+  var years$ = dart.privateName(common, "SliderStepDuration.years");
+  var months$ = dart.privateName(common, "SliderStepDuration.months");
+  var days$ = dart.privateName(common, "SliderStepDuration.days");
+  var hours$ = dart.privateName(common, "SliderStepDuration.hours");
+  var minutes$ = dart.privateName(common, "SliderStepDuration.minutes");
+  var seconds$ = dart.privateName(common, "SliderStepDuration.seconds");
+  common.SliderStepDuration = class SliderStepDuration extends diagnostics.DiagnosticableTree {
+    get years() {
+      return this[years$];
+    }
+    set years(value) {
+      super.years = value;
+    }
+    get months() {
+      return this[months$];
+    }
+    set months(value) {
+      super.months = value;
+    }
+    get days() {
+      return this[days$];
+    }
+    set days(value) {
+      super.days = value;
+    }
+    get hours() {
+      return this[hours$];
+    }
+    set hours(value) {
+      super.hours = value;
+    }
+    get minutes() {
+      return this[minutes$];
+    }
+    set minutes(value) {
+      super.minutes = value;
+    }
+    get seconds() {
+      return this[seconds$];
+    }
+    set seconds(value) {
+      super.seconds = value;
+    }
+    debugFillProperties(properties) {
+      if (properties == null) dart.nullFailed(I[0], 245, 56, "properties");
+      super.debugFillProperties(properties);
+      properties.add(new diagnostics.IntProperty.new("years", this.years));
+      properties.add(new diagnostics.IntProperty.new("months", this.months));
+      properties.add(new diagnostics.IntProperty.new("days", this.days));
+      properties.add(new diagnostics.IntProperty.new("hours", this.hours));
+      properties.add(new diagnostics.IntProperty.new("minutes", this.minutes));
+      properties.add(new diagnostics.IntProperty.new("seconds", this.seconds));
+    }
+  };
+  (common.SliderStepDuration.new = function(opts) {
+    let years = opts && 'years' in opts ? opts.years : 0;
+    if (years == null) dart.nullFailed(I[0], 184, 13, "years");
+    let months = opts && 'months' in opts ? opts.months : 0;
+    if (months == null) dart.nullFailed(I[0], 185, 12, "months");
+    let days = opts && 'days' in opts ? opts.days : 0;
+    if (days == null) dart.nullFailed(I[0], 186, 12, "days");
+    let hours = opts && 'hours' in opts ? opts.hours : 0;
+    if (hours == null) dart.nullFailed(I[0], 187, 12, "hours");
+    let minutes = opts && 'minutes' in opts ? opts.minutes : 0;
+    if (minutes == null) dart.nullFailed(I[0], 188, 12, "minutes");
+    let seconds = opts && 'seconds' in opts ? opts.seconds : 0;
+    if (seconds == null) dart.nullFailed(I[0], 189, 12, "seconds");
+    this[years$] = years;
+    this[months$] = months;
+    this[days$] = days;
+    this[hours$] = hours;
+    this[minutes$] = minutes;
+    this[seconds$] = seconds;
+    common.SliderStepDuration.__proto__.new.call(this);
+    ;
+  }).prototype = common.SliderStepDuration.prototype;
+  dart.addTypeTests(common.SliderStepDuration);
+  dart.addTypeCaches(common.SliderStepDuration);
+  dart.setLibraryUri(common.SliderStepDuration, I[1]);
+  dart.setFieldSignature(common.SliderStepDuration, () => ({
+    __proto__: dart.getFields(common.SliderStepDuration.__proto__),
+    years: dart.finalFieldType(core.int),
+    months: dart.finalFieldType(core.int),
+    days: dart.finalFieldType(core.int),
+    hours: dart.finalFieldType(core.int),
+    minutes: dart.finalFieldType(core.int),
+    seconds: dart.finalFieldType(core.int)
+  }));
+  dart.trackLibraries("packages/syncfusion_flutter_sliders/src/common.dart", {
+    "package:syncfusion_flutter_sliders/src/common.dart": common
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["common.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IA4CA;;;QANK;;;;;EAML;;;;;;;;;;;;;;;;IAwDA;;;QArDK;;;;;EAqDL;;;;;;;;;;;;;;;;;;;;IASA;;;QANK;;;;;EAML;;;;;;;;;;;;;;;;IAmBA;;;QAhBK;;;;;EAgBL;;;;;;;;;;;;;;;;;IACyC;;;QAApC;;;;;EAAoC;;;;;;;;;;;;;;;;IAWzB;;;;;;IAGA;;;;;;;;UAEkB;UAAe;AAC7C,UAAI,KAAK,YACa,YAAZ,iBAAN,KAAK,+BACgB,YAAZ,iBAAJ;AAEM,oBAAc,eAAN,KAAK;AAC1B,cAAO,8BACM,6CAA2B,AAAM,KAAD,cAAe,KAAJ,GAAG,EAAH,aAAY;YAC/D,KAAI,GAAG,YACM,YAAZ,iBAAJ,GAAG,+BACoB,YAAZ,iBAAN;AAEM,oBAAY,eAAJ,GAAG;AACxB,cAAO,+BAAoB,MAAN,KAAK,EAAL,cAAc,mBACtB,6CAA2B,AAAM,KAAD;;AAG/C,YAAO,+BAAoB,OAAN,KAAK,EAAL,eAAc,qBAAW,OAAJ,GAAG,EAAH,eAAY;IACxD;;UAGqD;AACd,MAA/B,0BAAoB,UAAU;AACwB,MAA5D,AAAW,UAAD,KAAK,wCAA6B,SAAS;AACG,MAAxD,AAAW,UAAD,KAAK,wCAA6B,OAAO;IACrD;;uCAjCyB,OAAY;IAAZ;IAAY;AAA/B;;EAAmC;;;;;;;;;;;;;;;;;;;;IA2D/B;;;;;;IAQA;;;;;;IASA;;;;;;IASA;;;;;;IASA;;;;;;IAUA;;;;;;;UAG2C;AACd,MAA/B,0BAAoB,UAAU;AAEO,MAA3C,AAAW,UAAD,KAAK,gCAAY,SAAS;AACS,MAA7C,AAAW,UAAD,KAAK,gCAAY,UAAU;AACI,MAAzC,AAAW,UAAD,KAAK,gCAAY,QAAQ;AACQ,MAA3C,AAAW,UAAD,KAAK,gCAAY,SAAS;AACW,MAA/C,AAAW,UAAD,KAAK,gCAAY,WAAW;AACS,MAA/C,AAAW,UAAD,KAAK,gCAAY,WAAW;IACxC;;;QAtEU;;QACD;;QACA;;QACA;;QACA;;QACA;;IALC;IACD;IACA;IACA;IACA;IACA;AANH;;EAMgB","file":"../../../../../../../../packages/syncfusion_flutter_sliders/src/common.dart.lib.js"}');
+  // Exports:
+  return {
+    src__common: common
+  };
+}));
+
+//# sourceMappingURL=common.dart.lib.js.map

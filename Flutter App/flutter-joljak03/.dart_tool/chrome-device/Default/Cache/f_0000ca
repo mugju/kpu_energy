@@ -1,0 +1,503 @@
+define(['dart_sdk', 'packages/flutter_local_notifications/src/platform_specifics/android/enums.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/notification_sound.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/styles/style_information.dart', 'packages/flutter_local_notifications/src/platform_specifics/android/bitmap.dart'], (function load__packages__flutter_local_notifications__src__platform_specifics__android__notification_details_dart(dart_sdk, packages__flutter_local_notifications__src__platform_specifics__android__enums$46dart, packages__flutter_local_notifications__src__platform_specifics__android__notification_sound$46dart, packages__flutter_local_notifications__src__platform_specifics__android__styles__style_information$46dart, packages__flutter_local_notifications__src__platform_specifics__android__bitmap$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const typed_data = dart_sdk.typed_data;
+  const ui = dart_sdk.ui;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const enums = packages__flutter_local_notifications__src__platform_specifics__android__enums$46dart.src__platform_specifics__android__enums;
+  const notification_sound = packages__flutter_local_notifications__src__platform_specifics__android__notification_sound$46dart.src__platform_specifics__android__notification_sound;
+  const style_information = packages__flutter_local_notifications__src__platform_specifics__android__styles__style_information$46dart.src__platform_specifics__android__styles__style_information;
+  const bitmap = packages__flutter_local_notifications__src__platform_specifics__android__bitmap$46dart.src__platform_specifics__android__bitmap;
+  var notification_details = Object.create(dart.library);
+  dart._checkModuleNullSafetyMode(false);
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: enums.Importance.prototype,
+        [Importance_value]: 3
+      });
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: enums.Priority.prototype,
+        [Priority_value]: 0
+      });
+    },
+    get C2() {
+      return C[2] = dart.const({
+        __proto__: enums.GroupAlertBehavior.prototype,
+        [_name]: "GroupAlertBehavior.all",
+        index: 0
+      });
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: enums.AndroidNotificationChannelAction.prototype,
+        [_name]: "AndroidNotificationChannelAction.createIfNotExists",
+        index: 0
+      });
+    }
+  }, false);
+  var C = Array(4).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-6.1.1/lib/src/platform_specifics/android/notification_details.dart",
+    "package:flutter_local_notifications/src/platform_specifics/android/notification_details.dart"
+  ];
+  var icon$ = dart.privateName(notification_details, "AndroidNotificationDetails.icon");
+  var channelId$ = dart.privateName(notification_details, "AndroidNotificationDetails.channelId");
+  var channelName$ = dart.privateName(notification_details, "AndroidNotificationDetails.channelName");
+  var channelDescription$ = dart.privateName(notification_details, "AndroidNotificationDetails.channelDescription");
+  var channelShowBadge$ = dart.privateName(notification_details, "AndroidNotificationDetails.channelShowBadge");
+  var importance$ = dart.privateName(notification_details, "AndroidNotificationDetails.importance");
+  var priority$ = dart.privateName(notification_details, "AndroidNotificationDetails.priority");
+  var playSound$ = dart.privateName(notification_details, "AndroidNotificationDetails.playSound");
+  var sound$ = dart.privateName(notification_details, "AndroidNotificationDetails.sound");
+  var enableVibration$ = dart.privateName(notification_details, "AndroidNotificationDetails.enableVibration");
+  var enableLights$ = dart.privateName(notification_details, "AndroidNotificationDetails.enableLights");
+  var vibrationPattern$ = dart.privateName(notification_details, "AndroidNotificationDetails.vibrationPattern");
+  var styleInformation$ = dart.privateName(notification_details, "AndroidNotificationDetails.styleInformation");
+  var groupKey$ = dart.privateName(notification_details, "AndroidNotificationDetails.groupKey");
+  var setAsGroupSummary$ = dart.privateName(notification_details, "AndroidNotificationDetails.setAsGroupSummary");
+  var groupAlertBehavior$ = dart.privateName(notification_details, "AndroidNotificationDetails.groupAlertBehavior");
+  var autoCancel$ = dart.privateName(notification_details, "AndroidNotificationDetails.autoCancel");
+  var ongoing$ = dart.privateName(notification_details, "AndroidNotificationDetails.ongoing");
+  var color$ = dart.privateName(notification_details, "AndroidNotificationDetails.color");
+  var largeIcon$ = dart.privateName(notification_details, "AndroidNotificationDetails.largeIcon");
+  var onlyAlertOnce$ = dart.privateName(notification_details, "AndroidNotificationDetails.onlyAlertOnce");
+  var showWhen$ = dart.privateName(notification_details, "AndroidNotificationDetails.showWhen");
+  var when$ = dart.privateName(notification_details, "AndroidNotificationDetails.when");
+  var usesChronometer$ = dart.privateName(notification_details, "AndroidNotificationDetails.usesChronometer");
+  var showProgress$ = dart.privateName(notification_details, "AndroidNotificationDetails.showProgress");
+  var maxProgress$ = dart.privateName(notification_details, "AndroidNotificationDetails.maxProgress");
+  var progress$ = dart.privateName(notification_details, "AndroidNotificationDetails.progress");
+  var indeterminate$ = dart.privateName(notification_details, "AndroidNotificationDetails.indeterminate");
+  var ledColor$ = dart.privateName(notification_details, "AndroidNotificationDetails.ledColor");
+  var ledOnMs$ = dart.privateName(notification_details, "AndroidNotificationDetails.ledOnMs");
+  var ledOffMs$ = dart.privateName(notification_details, "AndroidNotificationDetails.ledOffMs");
+  var ticker$ = dart.privateName(notification_details, "AndroidNotificationDetails.ticker");
+  var channelAction$ = dart.privateName(notification_details, "AndroidNotificationDetails.channelAction");
+  var visibility$ = dart.privateName(notification_details, "AndroidNotificationDetails.visibility");
+  var timeoutAfter$ = dart.privateName(notification_details, "AndroidNotificationDetails.timeoutAfter");
+  var category$ = dart.privateName(notification_details, "AndroidNotificationDetails.category");
+  var fullScreenIntent$ = dart.privateName(notification_details, "AndroidNotificationDetails.fullScreenIntent");
+  var shortcutId$ = dart.privateName(notification_details, "AndroidNotificationDetails.shortcutId");
+  var additionalFlags$ = dart.privateName(notification_details, "AndroidNotificationDetails.additionalFlags");
+  var subText$ = dart.privateName(notification_details, "AndroidNotificationDetails.subText");
+  var tag$ = dart.privateName(notification_details, "AndroidNotificationDetails.tag");
+  var Importance_value = dart.privateName(enums, "Importance.value");
+  var Priority_value = dart.privateName(enums, "Priority.value");
+  var _name = dart.privateName(enums, "_name");
+  notification_details.AndroidNotificationDetails = class AndroidNotificationDetails extends core.Object {
+    get icon() {
+      return this[icon$];
+    }
+    set icon(value) {
+      super.icon = value;
+    }
+    get channelId() {
+      return this[channelId$];
+    }
+    set channelId(value) {
+      super.channelId = value;
+    }
+    get channelName() {
+      return this[channelName$];
+    }
+    set channelName(value) {
+      super.channelName = value;
+    }
+    get channelDescription() {
+      return this[channelDescription$];
+    }
+    set channelDescription(value) {
+      super.channelDescription = value;
+    }
+    get channelShowBadge() {
+      return this[channelShowBadge$];
+    }
+    set channelShowBadge(value) {
+      super.channelShowBadge = value;
+    }
+    get importance() {
+      return this[importance$];
+    }
+    set importance(value) {
+      super.importance = value;
+    }
+    get priority() {
+      return this[priority$];
+    }
+    set priority(value) {
+      super.priority = value;
+    }
+    get playSound() {
+      return this[playSound$];
+    }
+    set playSound(value) {
+      super.playSound = value;
+    }
+    get sound() {
+      return this[sound$];
+    }
+    set sound(value) {
+      super.sound = value;
+    }
+    get enableVibration() {
+      return this[enableVibration$];
+    }
+    set enableVibration(value) {
+      super.enableVibration = value;
+    }
+    get enableLights() {
+      return this[enableLights$];
+    }
+    set enableLights(value) {
+      super.enableLights = value;
+    }
+    get vibrationPattern() {
+      return this[vibrationPattern$];
+    }
+    set vibrationPattern(value) {
+      super.vibrationPattern = value;
+    }
+    get styleInformation() {
+      return this[styleInformation$];
+    }
+    set styleInformation(value) {
+      super.styleInformation = value;
+    }
+    get groupKey() {
+      return this[groupKey$];
+    }
+    set groupKey(value) {
+      super.groupKey = value;
+    }
+    get setAsGroupSummary() {
+      return this[setAsGroupSummary$];
+    }
+    set setAsGroupSummary(value) {
+      super.setAsGroupSummary = value;
+    }
+    get groupAlertBehavior() {
+      return this[groupAlertBehavior$];
+    }
+    set groupAlertBehavior(value) {
+      super.groupAlertBehavior = value;
+    }
+    get autoCancel() {
+      return this[autoCancel$];
+    }
+    set autoCancel(value) {
+      super.autoCancel = value;
+    }
+    get ongoing() {
+      return this[ongoing$];
+    }
+    set ongoing(value) {
+      super.ongoing = value;
+    }
+    get color() {
+      return this[color$];
+    }
+    set color(value) {
+      super.color = value;
+    }
+    get largeIcon() {
+      return this[largeIcon$];
+    }
+    set largeIcon(value) {
+      super.largeIcon = value;
+    }
+    get onlyAlertOnce() {
+      return this[onlyAlertOnce$];
+    }
+    set onlyAlertOnce(value) {
+      super.onlyAlertOnce = value;
+    }
+    get showWhen() {
+      return this[showWhen$];
+    }
+    set showWhen(value) {
+      super.showWhen = value;
+    }
+    get when() {
+      return this[when$];
+    }
+    set when(value) {
+      super.when = value;
+    }
+    get usesChronometer() {
+      return this[usesChronometer$];
+    }
+    set usesChronometer(value) {
+      super.usesChronometer = value;
+    }
+    get showProgress() {
+      return this[showProgress$];
+    }
+    set showProgress(value) {
+      super.showProgress = value;
+    }
+    get maxProgress() {
+      return this[maxProgress$];
+    }
+    set maxProgress(value) {
+      super.maxProgress = value;
+    }
+    get progress() {
+      return this[progress$];
+    }
+    set progress(value) {
+      super.progress = value;
+    }
+    get indeterminate() {
+      return this[indeterminate$];
+    }
+    set indeterminate(value) {
+      super.indeterminate = value;
+    }
+    get ledColor() {
+      return this[ledColor$];
+    }
+    set ledColor(value) {
+      super.ledColor = value;
+    }
+    get ledOnMs() {
+      return this[ledOnMs$];
+    }
+    set ledOnMs(value) {
+      super.ledOnMs = value;
+    }
+    get ledOffMs() {
+      return this[ledOffMs$];
+    }
+    set ledOffMs(value) {
+      super.ledOffMs = value;
+    }
+    get ticker() {
+      return this[ticker$];
+    }
+    set ticker(value) {
+      super.ticker = value;
+    }
+    get channelAction() {
+      return this[channelAction$];
+    }
+    set channelAction(value) {
+      super.channelAction = value;
+    }
+    get visibility() {
+      return this[visibility$];
+    }
+    set visibility(value) {
+      super.visibility = value;
+    }
+    get timeoutAfter() {
+      return this[timeoutAfter$];
+    }
+    set timeoutAfter(value) {
+      super.timeoutAfter = value;
+    }
+    get category() {
+      return this[category$];
+    }
+    set category(value) {
+      super.category = value;
+    }
+    get fullScreenIntent() {
+      return this[fullScreenIntent$];
+    }
+    set fullScreenIntent(value) {
+      super.fullScreenIntent = value;
+    }
+    get shortcutId() {
+      return this[shortcutId$];
+    }
+    set shortcutId(value) {
+      super.shortcutId = value;
+    }
+    get additionalFlags() {
+      return this[additionalFlags$];
+    }
+    set additionalFlags(value) {
+      super.additionalFlags = value;
+    }
+    get subText() {
+      return this[subText$];
+    }
+    set subText(value) {
+      super.subText = value;
+    }
+    get tag() {
+      return this[tag$];
+    }
+    set tag(value) {
+      super.tag = value;
+    }
+  };
+  (notification_details.AndroidNotificationDetails.new = function(channelId, channelName, channelDescription, opts) {
+    if (channelId == null) dart.nullFailed(I[0], 13, 10, "channelId");
+    if (channelName == null) dart.nullFailed(I[0], 14, 10, "channelName");
+    if (channelDescription == null) dart.nullFailed(I[0], 15, 10, "channelDescription");
+    let icon = opts && 'icon' in opts ? opts.icon : null;
+    let importance = opts && 'importance' in opts ? opts.importance : C[0] || CT.C0;
+    if (importance == null) dart.nullFailed(I[0], 17, 10, "importance");
+    let priority = opts && 'priority' in opts ? opts.priority : C[1] || CT.C1;
+    if (priority == null) dart.nullFailed(I[0], 18, 10, "priority");
+    let styleInformation = opts && 'styleInformation' in opts ? opts.styleInformation : null;
+    let playSound = opts && 'playSound' in opts ? opts.playSound : true;
+    if (playSound == null) dart.nullFailed(I[0], 20, 10, "playSound");
+    let sound = opts && 'sound' in opts ? opts.sound : null;
+    let enableVibration = opts && 'enableVibration' in opts ? opts.enableVibration : true;
+    if (enableVibration == null) dart.nullFailed(I[0], 22, 10, "enableVibration");
+    let vibrationPattern = opts && 'vibrationPattern' in opts ? opts.vibrationPattern : null;
+    let groupKey = opts && 'groupKey' in opts ? opts.groupKey : null;
+    let setAsGroupSummary = opts && 'setAsGroupSummary' in opts ? opts.setAsGroupSummary : false;
+    if (setAsGroupSummary == null) dart.nullFailed(I[0], 25, 10, "setAsGroupSummary");
+    let groupAlertBehavior = opts && 'groupAlertBehavior' in opts ? opts.groupAlertBehavior : C[2] || CT.C2;
+    if (groupAlertBehavior == null) dart.nullFailed(I[0], 26, 10, "groupAlertBehavior");
+    let autoCancel = opts && 'autoCancel' in opts ? opts.autoCancel : true;
+    if (autoCancel == null) dart.nullFailed(I[0], 27, 10, "autoCancel");
+    let ongoing = opts && 'ongoing' in opts ? opts.ongoing : false;
+    if (ongoing == null) dart.nullFailed(I[0], 28, 10, "ongoing");
+    let color = opts && 'color' in opts ? opts.color : null;
+    let largeIcon = opts && 'largeIcon' in opts ? opts.largeIcon : null;
+    let onlyAlertOnce = opts && 'onlyAlertOnce' in opts ? opts.onlyAlertOnce : false;
+    if (onlyAlertOnce == null) dart.nullFailed(I[0], 31, 10, "onlyAlertOnce");
+    let showWhen = opts && 'showWhen' in opts ? opts.showWhen : true;
+    if (showWhen == null) dart.nullFailed(I[0], 32, 10, "showWhen");
+    let when = opts && 'when' in opts ? opts.when : null;
+    let usesChronometer = opts && 'usesChronometer' in opts ? opts.usesChronometer : false;
+    if (usesChronometer == null) dart.nullFailed(I[0], 34, 10, "usesChronometer");
+    let channelShowBadge = opts && 'channelShowBadge' in opts ? opts.channelShowBadge : true;
+    if (channelShowBadge == null) dart.nullFailed(I[0], 35, 10, "channelShowBadge");
+    let showProgress = opts && 'showProgress' in opts ? opts.showProgress : false;
+    if (showProgress == null) dart.nullFailed(I[0], 36, 10, "showProgress");
+    let maxProgress = opts && 'maxProgress' in opts ? opts.maxProgress : 0;
+    if (maxProgress == null) dart.nullFailed(I[0], 37, 10, "maxProgress");
+    let progress = opts && 'progress' in opts ? opts.progress : 0;
+    if (progress == null) dart.nullFailed(I[0], 38, 10, "progress");
+    let indeterminate = opts && 'indeterminate' in opts ? opts.indeterminate : false;
+    if (indeterminate == null) dart.nullFailed(I[0], 39, 10, "indeterminate");
+    let channelAction = opts && 'channelAction' in opts ? opts.channelAction : C[3] || CT.C3;
+    if (channelAction == null) dart.nullFailed(I[0], 40, 10, "channelAction");
+    let enableLights = opts && 'enableLights' in opts ? opts.enableLights : false;
+    if (enableLights == null) dart.nullFailed(I[0], 41, 10, "enableLights");
+    let ledColor = opts && 'ledColor' in opts ? opts.ledColor : null;
+    let ledOnMs = opts && 'ledOnMs' in opts ? opts.ledOnMs : null;
+    let ledOffMs = opts && 'ledOffMs' in opts ? opts.ledOffMs : null;
+    let ticker = opts && 'ticker' in opts ? opts.ticker : null;
+    let visibility = opts && 'visibility' in opts ? opts.visibility : null;
+    let timeoutAfter = opts && 'timeoutAfter' in opts ? opts.timeoutAfter : null;
+    let category = opts && 'category' in opts ? opts.category : null;
+    let fullScreenIntent = opts && 'fullScreenIntent' in opts ? opts.fullScreenIntent : false;
+    if (fullScreenIntent == null) dart.nullFailed(I[0], 49, 10, "fullScreenIntent");
+    let shortcutId = opts && 'shortcutId' in opts ? opts.shortcutId : null;
+    let additionalFlags = opts && 'additionalFlags' in opts ? opts.additionalFlags : null;
+    let subText = opts && 'subText' in opts ? opts.subText : null;
+    let tag = opts && 'tag' in opts ? opts.tag : null;
+    this[channelId$] = channelId;
+    this[channelName$] = channelName;
+    this[channelDescription$] = channelDescription;
+    this[icon$] = icon;
+    this[importance$] = importance;
+    this[priority$] = priority;
+    this[styleInformation$] = styleInformation;
+    this[playSound$] = playSound;
+    this[sound$] = sound;
+    this[enableVibration$] = enableVibration;
+    this[vibrationPattern$] = vibrationPattern;
+    this[groupKey$] = groupKey;
+    this[setAsGroupSummary$] = setAsGroupSummary;
+    this[groupAlertBehavior$] = groupAlertBehavior;
+    this[autoCancel$] = autoCancel;
+    this[ongoing$] = ongoing;
+    this[color$] = color;
+    this[largeIcon$] = largeIcon;
+    this[onlyAlertOnce$] = onlyAlertOnce;
+    this[showWhen$] = showWhen;
+    this[when$] = when;
+    this[usesChronometer$] = usesChronometer;
+    this[channelShowBadge$] = channelShowBadge;
+    this[showProgress$] = showProgress;
+    this[maxProgress$] = maxProgress;
+    this[progress$] = progress;
+    this[indeterminate$] = indeterminate;
+    this[channelAction$] = channelAction;
+    this[enableLights$] = enableLights;
+    this[ledColor$] = ledColor;
+    this[ledOnMs$] = ledOnMs;
+    this[ledOffMs$] = ledOffMs;
+    this[ticker$] = ticker;
+    this[visibility$] = visibility;
+    this[timeoutAfter$] = timeoutAfter;
+    this[category$] = category;
+    this[fullScreenIntent$] = fullScreenIntent;
+    this[shortcutId$] = shortcutId;
+    this[additionalFlags$] = additionalFlags;
+    this[subText$] = subText;
+    this[tag$] = tag;
+    ;
+  }).prototype = notification_details.AndroidNotificationDetails.prototype;
+  dart.addTypeTests(notification_details.AndroidNotificationDetails);
+  dart.addTypeCaches(notification_details.AndroidNotificationDetails);
+  dart.setLibraryUri(notification_details.AndroidNotificationDetails, I[1]);
+  dart.setFieldSignature(notification_details.AndroidNotificationDetails, () => ({
+    __proto__: dart.getFields(notification_details.AndroidNotificationDetails.__proto__),
+    icon: dart.finalFieldType(dart.nullable(core.String)),
+    channelId: dart.finalFieldType(core.String),
+    channelName: dart.finalFieldType(core.String),
+    channelDescription: dart.finalFieldType(core.String),
+    channelShowBadge: dart.finalFieldType(core.bool),
+    importance: dart.finalFieldType(enums.Importance),
+    priority: dart.finalFieldType(enums.Priority),
+    playSound: dart.finalFieldType(core.bool),
+    sound: dart.finalFieldType(dart.nullable(notification_sound.AndroidNotificationSound)),
+    enableVibration: dart.finalFieldType(core.bool),
+    enableLights: dart.finalFieldType(core.bool),
+    vibrationPattern: dart.finalFieldType(dart.nullable(typed_data.Int64List)),
+    styleInformation: dart.finalFieldType(dart.nullable(style_information.StyleInformation)),
+    groupKey: dart.finalFieldType(dart.nullable(core.String)),
+    setAsGroupSummary: dart.finalFieldType(core.bool),
+    groupAlertBehavior: dart.finalFieldType(enums.GroupAlertBehavior),
+    autoCancel: dart.finalFieldType(core.bool),
+    ongoing: dart.finalFieldType(core.bool),
+    color: dart.finalFieldType(dart.nullable(ui.Color)),
+    largeIcon: dart.finalFieldType(dart.nullable(bitmap.AndroidBitmap)),
+    onlyAlertOnce: dart.finalFieldType(core.bool),
+    showWhen: dart.finalFieldType(core.bool),
+    when: dart.finalFieldType(dart.nullable(core.int)),
+    usesChronometer: dart.finalFieldType(core.bool),
+    showProgress: dart.finalFieldType(core.bool),
+    maxProgress: dart.finalFieldType(core.int),
+    progress: dart.finalFieldType(core.int),
+    indeterminate: dart.finalFieldType(core.bool),
+    ledColor: dart.finalFieldType(dart.nullable(ui.Color)),
+    ledOnMs: dart.finalFieldType(dart.nullable(core.int)),
+    ledOffMs: dart.finalFieldType(dart.nullable(core.int)),
+    ticker: dart.finalFieldType(dart.nullable(core.String)),
+    channelAction: dart.finalFieldType(enums.AndroidNotificationChannelAction),
+    visibility: dart.finalFieldType(dart.nullable(enums.NotificationVisibility)),
+    timeoutAfter: dart.finalFieldType(dart.nullable(core.int)),
+    category: dart.finalFieldType(dart.nullable(core.String)),
+    fullScreenIntent: dart.finalFieldType(core.bool),
+    shortcutId: dart.finalFieldType(dart.nullable(core.String)),
+    additionalFlags: dart.finalFieldType(dart.nullable(typed_data.Int32List)),
+    subText: dart.finalFieldType(dart.nullable(core.String)),
+    tag: dart.finalFieldType(dart.nullable(core.String))
+  }));
+  dart.trackLibraries("packages/flutter_local_notifications/src/platform_specifics/android/notification_details.dart", {
+    "package:flutter_local_notifications/src/platform_specifics/android/notification_details.dart": notification_details
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["notification_details.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IA2DgB;;;;;;IAKD;;;;;;IAKA;;;;;;IAKA;;;;;;IAIF;;;;;;IAGM;;;;;;IAGF;;;;;;IAMJ;;;;;;IAUqB;;;;;;IAOrB;;;;;;IAMA;;;;;;IAOM;;;;;;IAIO;;;;;;IAKV;;;;;;IAIH;;;;;;IAMc;;;;;;IAId;;;;;;IAGA;;;;;;IAGE;;;;;;IAGQ;;;;;;IAIV;;;;;;IAMA;;;;;;IAWA;;;;;;IAOA;;;;;;IAGA;;;;;;IAGD;;;;;;IAGA;;;;;;IAGC;;;;;;IAME;;;;;;IAKF;;;;;;IAKA;;;;;;IAGG;;;;;;IAMyB;;;;;;IAGT;;;;;;IAInB;;;;;;IAKG;;;;;;IAWH;;;;;;IAOG;;;;;;IAOG;;;;;;IAgBH;;;;;;IAWA;;;;;;;kEA7QP,WACA,aACA;QAFA;QACA;QACA;QACA;QACA;;QACA;;QACA;QACA;;QACA;QACA;;QACA;QACA;QACA;;QACA;;QACA;;QACA;;QACA;QACA;QACA;;QACA;;QACA;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;QACA;QACA;QACA;QACA;QACA;QACA;QACA;;QACA;QACA;QACA;QACA;IAxCA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;;EACL","file":"../../../../../../../../../../packages/flutter_local_notifications/src/platform_specifics/android/notification_details.dart.lib.js"}');
+  // Exports:
+  return {
+    src__platform_specifics__android__notification_details: notification_details
+  };
+}));
+
+//# sourceMappingURL=notification_details.dart.lib.js.map

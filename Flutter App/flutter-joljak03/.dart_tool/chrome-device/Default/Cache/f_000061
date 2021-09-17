@@ -1,0 +1,2468 @@
+define(['dart_sdk', 'packages/syncfusion_flutter_sliders/src/common.dart', 'packages/syncfusion_flutter_sliders/src/slider_shapes.dart', 'packages/flutter/src/foundation/debug.dart', 'packages/flutter/src/painting/colors.dart', 'packages/intl/src/intl/number_parser.dart', 'packages/flutter/src/widgets/widget_span.dart', 'packages/syncfusion_flutter_core/src/slider_controller.dart', 'packages/intl/src/intl/date_format.dart', 'packages/syncfusion_flutter_core/src/theme/theme_widget.dart', 'packages/flutter/src/animation/animation_controller.dart', 'packages/flutter/src/material/icon_button.dart', 'packages/flutter/src/rendering/layer.dart', 'packages/syncfusion_flutter_sliders/src/constants.dart', 'packages/flutter/src/painting/edge_insets.dart', 'packages/flutter/src/semantics/semantics.dart', 'packages/syncfusion_flutter_sliders/src/range_slider_base.dart'], (function load__packages__syncfusion_flutter_sliders__src__range_selector_dart(dart_sdk, packages__syncfusion_flutter_sliders__src__common$46dart, packages__syncfusion_flutter_sliders__src__slider_shapes$46dart, packages__flutter__src__foundation__debug$46dart, packages__flutter__src__painting__colors$46dart, packages__intl__src__intl__number_parser$46dart, packages__flutter__src__widgets__widget_span$46dart, packages__syncfusion_flutter_core__src__slider_controller$46dart, packages__intl__src__intl__date_format$46dart, packages__syncfusion_flutter_core__src__theme__theme_widget$46dart, packages__flutter__src__animation__animation_controller$46dart, packages__flutter__src__material__icon_button$46dart, packages__flutter__src__rendering__layer$46dart, packages__syncfusion_flutter_sliders__src__constants$46dart, packages__flutter__src__painting__edge_insets$46dart, packages__flutter__src__semantics__semantics$46dart, packages__syncfusion_flutter_sliders__src__range_slider_base$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const ui = dart_sdk.ui;
+  const _internal = dart_sdk._internal;
+  const math = dart_sdk.math;
+  const _js_helper = dart_sdk._js_helper;
+  const async = dart_sdk.async;
+  const _interceptors = dart_sdk._interceptors;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const common = packages__syncfusion_flutter_sliders__src__common$46dart.src__common;
+  const slider_shapes = packages__syncfusion_flutter_sliders__src__slider_shapes$46dart.src__slider_shapes;
+  const diagnostics = packages__flutter__src__foundation__debug$46dart.src__foundation__diagnostics;
+  const colors = packages__flutter__src__painting__colors$46dart.src__painting__colors;
+  const number_format = packages__intl__src__intl__number_parser$46dart.src__intl__number_format;
+  const framework = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const widget_inspector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__widget_inspector;
+  const ticker_provider = packages__flutter__src__widgets__widget_span$46dart.src__widgets__ticker_provider;
+  const basic = packages__flutter__src__widgets__widget_span$46dart.src__widgets__basic;
+  const media_query = packages__flutter__src__widgets__widget_span$46dart.src__widgets__media_query;
+  const slider_controller = packages__syncfusion_flutter_core__src__slider_controller$46dart.src__slider_controller;
+  const date_format = packages__intl__src__intl__date_format$46dart.src__intl__date_format;
+  const range_selector_theme = packages__syncfusion_flutter_core__src__theme__theme_widget$46dart.src__theme__range_selector_theme;
+  const animation_controller = packages__flutter__src__animation__animation_controller$46dart.src__animation__animation_controller;
+  const theme = packages__flutter__src__material__icon_button$46dart.src__material__theme;
+  const theme_data = packages__flutter__src__material__icon_button$46dart.src__material__theme_data;
+  const object = packages__flutter__src__rendering__layer$46dart.src__rendering__object;
+  const box = packages__flutter__src__rendering__layer$46dart.src__rendering__box;
+  const constants = packages__syncfusion_flutter_sliders__src__constants$46dart.src__constants;
+  const edge_insets = packages__flutter__src__painting__edge_insets$46dart.src__painting__edge_insets;
+  const semantics = packages__flutter__src__semantics__semantics$46dart.src__semantics__semantics;
+  const range_slider_base = packages__syncfusion_flutter_sliders__src__range_slider_base$46dart.src__range_slider_base;
+  var range_selector = Object.create(dart.library);
+  var $runtimeType = dartx.runtimeType;
+  var $toString = dartx.toString;
+  var $_get = dartx._get;
+  var $remove = dartx.remove;
+  var $_set = dartx._set;
+  var $values = dartx.values;
+  var $forEach = dartx.forEach;
+  var $keys = dartx.keys;
+  var $contains = dartx.contains;
+  var $last = dartx.last;
+  var $split = dartx.split;
+  var $isEmpty = dartx.isEmpty;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    EnumPropertyOfSliderDragMode: () => (T.EnumPropertyOfSliderDragMode = dart.constFn(diagnostics.EnumProperty$(common.SliderDragMode)))(),
+    EnumPropertyOfLabelPlacement: () => (T.EnumPropertyOfLabelPlacement = dart.constFn(diagnostics.EnumProperty$(common.LabelPlacement)))(),
+    DiagnosticsPropertyOfNumberFormat: () => (T.DiagnosticsPropertyOfNumberFormat = dart.constFn(diagnostics.DiagnosticsProperty$(number_format.NumberFormat)))(),
+    SfRangeValuesTovoid: () => (T.SfRangeValuesTovoid = dart.constFn(dart.fnType(dart.void, [common.SfRangeValues])))(),
+    ObjectFlagPropertyOfSfRangeValuesTovoid: () => (T.ObjectFlagPropertyOfSfRangeValuesTovoid = dart.constFn(diagnostics.ObjectFlagProperty$(T.SfRangeValuesTovoid())))(),
+    EnumPropertyOfDateIntervalType: () => (T.EnumPropertyOfDateIntervalType = dart.constFn(diagnostics.EnumProperty$(common.DateIntervalType)))(),
+    dynamicAndStringToString: () => (T.dynamicAndStringToString = dart.constFn(dart.fnType(core.String, [dart.dynamic, core.String])))(),
+    ObjectFlagPropertyOfdynamicAndStringToString: () => (T.ObjectFlagPropertyOfdynamicAndStringToString = dart.constFn(diagnostics.ObjectFlagProperty$(T.dynamicAndStringToString())))(),
+    dynamicAndSfThumbToString: () => (T.dynamicAndSfThumbToString = dart.constFn(dart.fnType(core.String, [dart.dynamic, common.SfThumb])))(),
+    ObjectFlagPropertyOfdynamicAndSfThumbToString: () => (T.ObjectFlagPropertyOfdynamicAndSfThumbToString = dart.constFn(diagnostics.ObjectFlagProperty$(T.dynamicAndSfThumbToString())))(),
+    _LocationL: () => (T._LocationL = dart.constFn(dart.legacy(widget_inspector._Location)))(),
+    LinkedMapOfChildElements$Element: () => (T.LinkedMapOfChildElements$Element = dart.constFn(_js_helper.LinkedMap$(constants.ChildElements, framework.Element)))(),
+    LinkedMapOfElement$ChildElements: () => (T.LinkedMapOfElement$ChildElements = dart.constFn(_js_helper.LinkedMap$(framework.Element, constants.ChildElements)))(),
+    RenderBoxN: () => (T.RenderBoxN = dart.constFn(dart.nullable(box.RenderBox)))(),
+    SyncIterableOfRenderBox: () => (T.SyncIterableOfRenderBox = dart.constFn(_js_helper.SyncIterable$(box.RenderBox)))(),
+    VoidTovoid: () => (T.VoidTovoid = dart.constFn(dart.fnType(dart.void, [])))(),
+    JSArrayOfSemanticsNode: () => (T.JSArrayOfSemanticsNode = dart.constFn(_interceptors.JSArray$(semantics.SemanticsNode)))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: common.SliderDragMode.prototype,
+        [_name]: "SliderDragMode.onThumb",
+        index: 0
+      });
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: common.LabelPlacement.prototype,
+        [_name]: "LabelPlacement.onTicks",
+        index: 0
+      });
+    },
+    get C2() {
+      return C[2] = dart.const({
+        __proto__: slider_shapes.SfTrackShape.prototype
+      });
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: slider_shapes.SfDividerShape.prototype
+      });
+    },
+    get C4() {
+      return C[4] = dart.const({
+        __proto__: slider_shapes.SfOverlayShape.prototype
+      });
+    },
+    get C5() {
+      return C[5] = dart.const({
+        __proto__: slider_shapes.SfThumbShape.prototype
+      });
+    },
+    get C6() {
+      return C[6] = dart.const({
+        __proto__: slider_shapes.SfTickShape.prototype
+      });
+    },
+    get C7() {
+      return C[7] = dart.const({
+        __proto__: slider_shapes.SfMinorTickShape.prototype
+      });
+    },
+    get C8() {
+      return C[8] = dart.const({
+        __proto__: slider_shapes.SfRectangularTooltipShape.prototype
+      });
+    },
+    get C9() {
+      return C[9] = dart.const({
+        __proto__: core.Duration.prototype,
+        [Duration__duration]: 100000
+      });
+    },
+    get C10() {
+      return C[10] = dart.const({
+        __proto__: ui.Offset.prototype,
+        [OffsetBase__dy]: 5,
+        [OffsetBase__dx]: 0
+      });
+    },
+    get C11() {
+      return C[11] = dart.const({
+        __proto__: ui.Offset.prototype,
+        [OffsetBase__dy]: 13,
+        [OffsetBase__dx]: 0
+      });
+    },
+    get C12() {
+      return C[12] = dart.const({
+        __proto__: ui.Color.prototype,
+        [Color_value]: 4294967295.0
+      });
+    },
+    get C13() {
+      return C[13] = dart.const({
+        __proto__: ui.Color.prototype,
+        [Color_value]: 4278190080.0
+      });
+    },
+    get C14() {
+      return C[14] = dart.const({
+        __proto__: ui.Color.prototype,
+        [Color_value]: 4284572001.0
+      });
+    },
+    get C15() {
+      return C[15] = dart.const({
+        __proto__: ui.Color.prototype,
+        [Color_value]: 4292927712.0
+      });
+    },
+    get C18() {
+      return C[18] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 7,
+        [_Location_line]: 1555,
+        [_Location_file]: null
+      });
+    },
+    get C19() {
+      return C[19] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "min",
+        [_Location_column]: 7,
+        [_Location_line]: 1556,
+        [_Location_file]: null
+      });
+    },
+    get C20() {
+      return C[20] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "max",
+        [_Location_column]: 7,
+        [_Location_line]: 1557,
+        [_Location_file]: null
+      });
+    },
+    get C21() {
+      return C[21] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "values",
+        [_Location_column]: 7,
+        [_Location_line]: 1558,
+        [_Location_file]: null
+      });
+    },
+    get C22() {
+      return C[22] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "enabled",
+        [_Location_column]: 7,
+        [_Location_line]: 1559,
+        [_Location_file]: null
+      });
+    },
+    get C23() {
+      return C[23] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "interval",
+        [_Location_column]: 7,
+        [_Location_line]: 1560,
+        [_Location_file]: null
+      });
+    },
+    get C24() {
+      return C[24] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "stepSize",
+        [_Location_column]: 7,
+        [_Location_line]: 1561,
+        [_Location_file]: null
+      });
+    },
+    get C25() {
+      return C[25] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "stepDuration",
+        [_Location_column]: 7,
+        [_Location_line]: 1562,
+        [_Location_file]: null
+      });
+    },
+    get C26() {
+      return C[26] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "deferUpdateDelay",
+        [_Location_column]: 7,
+        [_Location_line]: 1563,
+        [_Location_file]: null
+      });
+    },
+    get C27() {
+      return C[27] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "minorTicksPerInterval",
+        [_Location_column]: 7,
+        [_Location_line]: 1564,
+        [_Location_file]: null
+      });
+    },
+    get C28() {
+      return C[28] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "showTicks",
+        [_Location_column]: 7,
+        [_Location_line]: 1565,
+        [_Location_file]: null
+      });
+    },
+    get C29() {
+      return C[29] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "showLabels",
+        [_Location_column]: 7,
+        [_Location_line]: 1566,
+        [_Location_file]: null
+      });
+    },
+    get C30() {
+      return C[30] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "showDividers",
+        [_Location_column]: 7,
+        [_Location_line]: 1567,
+        [_Location_file]: null
+      });
+    },
+    get C31() {
+      return C[31] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "enableTooltip",
+        [_Location_column]: 7,
+        [_Location_line]: 1568,
+        [_Location_file]: null
+      });
+    },
+    get C32() {
+      return C[32] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "enableIntervalSelection",
+        [_Location_column]: 7,
+        [_Location_line]: 1569,
+        [_Location_file]: null
+      });
+    },
+    get C33() {
+      return C[33] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "deferUpdate",
+        [_Location_column]: 7,
+        [_Location_line]: 1570,
+        [_Location_file]: null
+      });
+    },
+    get C34() {
+      return C[34] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "dragMode",
+        [_Location_column]: 7,
+        [_Location_line]: 1571,
+        [_Location_file]: null
+      });
+    },
+    get C35() {
+      return C[35] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "inactiveColor",
+        [_Location_column]: 7,
+        [_Location_line]: 1572,
+        [_Location_file]: null
+      });
+    },
+    get C36() {
+      return C[36] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "activeColor",
+        [_Location_column]: 7,
+        [_Location_line]: 1574,
+        [_Location_file]: null
+      });
+    },
+    get C37() {
+      return C[37] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "labelPlacement",
+        [_Location_column]: 7,
+        [_Location_line]: 1575,
+        [_Location_file]: null
+      });
+    },
+    get C38() {
+      return C[38] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "numberFormat",
+        [_Location_column]: 7,
+        [_Location_line]: 1576,
+        [_Location_file]: null
+      });
+    },
+    get C39() {
+      return C[39] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "dateFormat",
+        [_Location_column]: 7,
+        [_Location_line]: 1577,
+        [_Location_file]: null
+      });
+    },
+    get C40() {
+      return C[40] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "dateIntervalType",
+        [_Location_column]: 7,
+        [_Location_line]: 1578,
+        [_Location_file]: null
+      });
+    },
+    get C41() {
+      return C[41] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "labelFormatterCallback",
+        [_Location_column]: 7,
+        [_Location_line]: 1579,
+        [_Location_file]: null
+      });
+    },
+    get C42() {
+      return C[42] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "tooltipTextFormatterCallback",
+        [_Location_column]: 7,
+        [_Location_line]: 1581,
+        [_Location_file]: null
+      });
+    },
+    get C43() {
+      return C[43] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "semanticFormatterCallback",
+        [_Location_column]: 7,
+        [_Location_line]: 1583,
+        [_Location_file]: null
+      });
+    },
+    get C44() {
+      return C[44] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "trackShape",
+        [_Location_column]: 7,
+        [_Location_line]: 1584,
+        [_Location_file]: null
+      });
+    },
+    get C45() {
+      return C[45] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "dividerShape",
+        [_Location_column]: 7,
+        [_Location_line]: 1585,
+        [_Location_file]: null
+      });
+    },
+    get C46() {
+      return C[46] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "overlayShape",
+        [_Location_column]: 7,
+        [_Location_line]: 1586,
+        [_Location_file]: null
+      });
+    },
+    get C47() {
+      return C[47] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "thumbShape",
+        [_Location_column]: 7,
+        [_Location_line]: 1587,
+        [_Location_file]: null
+      });
+    },
+    get C48() {
+      return C[48] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "tickShape",
+        [_Location_column]: 7,
+        [_Location_line]: 1588,
+        [_Location_file]: null
+      });
+    },
+    get C49() {
+      return C[49] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "minorTickShape",
+        [_Location_column]: 7,
+        [_Location_line]: 1589,
+        [_Location_file]: null
+      });
+    },
+    get C50() {
+      return C[50] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "tooltipShape",
+        [_Location_column]: 7,
+        [_Location_line]: 1590,
+        [_Location_file]: null
+      });
+    },
+    get C51() {
+      return C[51] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 1591,
+        [_Location_file]: null
+      });
+    },
+    get C52() {
+      return C[52] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "rangeSelectorThemeData",
+        [_Location_column]: 7,
+        [_Location_line]: 1592,
+        [_Location_file]: null
+      });
+    },
+    get C53() {
+      return C[53] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "startThumbIcon",
+        [_Location_column]: 7,
+        [_Location_line]: 1593,
+        [_Location_file]: null
+      });
+    },
+    get C54() {
+      return C[54] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "endThumbIcon",
+        [_Location_column]: 7,
+        [_Location_line]: 1594,
+        [_Location_file]: null
+      });
+    },
+    get C55() {
+      return C[55] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "state",
+        [_Location_column]: 7,
+        [_Location_line]: 1595,
+        [_Location_file]: null
+      });
+    },
+    get C17() {
+      return C[17] = dart.constList([C[18] || CT.C18, C[19] || CT.C19, C[20] || CT.C20, C[21] || CT.C21, C[22] || CT.C22, C[23] || CT.C23, C[24] || CT.C24, C[25] || CT.C25, C[26] || CT.C26, C[27] || CT.C27, C[28] || CT.C28, C[29] || CT.C29, C[30] || CT.C30, C[31] || CT.C31, C[32] || CT.C32, C[33] || CT.C33, C[34] || CT.C34, C[35] || CT.C35, C[36] || CT.C36, C[37] || CT.C37, C[38] || CT.C38, C[39] || CT.C39, C[40] || CT.C40, C[41] || CT.C41, C[42] || CT.C42, C[43] || CT.C43, C[44] || CT.C44, C[45] || CT.C45, C[46] || CT.C46, C[47] || CT.C47, C[48] || CT.C48, C[49] || CT.C49, C[50] || CT.C50, C[51] || CT.C51, C[52] || CT.C52, C[53] || CT.C53, C[54] || CT.C54, C[55] || CT.C55], T._LocationL());
+    },
+    get C16() {
+      return C[16] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[17] || CT.C17,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 1554,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_sliders-19.2.49/lib/src/range_selector.dart"
+      });
+    },
+    get C56() {
+      return C[56] = dart.const({
+        __proto__: constants.ChildElements.prototype,
+        [_name$]: "ChildElements.startThumbIcon",
+        index: 0
+      });
+    },
+    get C57() {
+      return C[57] = dart.const({
+        __proto__: constants.ChildElements.prototype,
+        [_name$]: "ChildElements.endThumbIcon",
+        index: 1
+      });
+    },
+    get C58() {
+      return C[58] = dart.const({
+        __proto__: constants.ChildElements.prototype,
+        [_name$]: "ChildElements.child",
+        index: 2
+      });
+    },
+    get C59() {
+      return C[59] = dart.const({
+        __proto__: ui.TextDirection.prototype,
+        [_name$0]: "TextDirection.ltr",
+        index: 1
+      });
+    },
+    get C60() {
+      return C[60] = dart.const({
+        __proto__: ui.TextDirection.prototype,
+        [_name$0]: "TextDirection.rtl",
+        index: 0
+      });
+    }
+  }, false);
+  var C = Array(61).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_sliders-19.2.49/lib/src/range_selector.dart",
+    "package:syncfusion_flutter_sliders/src/range_selector.dart"
+  ];
+  var min$ = dart.privateName(range_selector, "SfRangeSelector.min");
+  var max$ = dart.privateName(range_selector, "SfRangeSelector.max");
+  var initialValues$ = dart.privateName(range_selector, "SfRangeSelector.initialValues");
+  var onChanged$ = dart.privateName(range_selector, "SfRangeSelector.onChanged");
+  var controller$ = dart.privateName(range_selector, "SfRangeSelector.controller");
+  var enabled$ = dart.privateName(range_selector, "SfRangeSelector.enabled");
+  var interval$ = dart.privateName(range_selector, "SfRangeSelector.interval");
+  var stepSize$ = dart.privateName(range_selector, "SfRangeSelector.stepSize");
+  var stepDuration$ = dart.privateName(range_selector, "SfRangeSelector.stepDuration");
+  var deferredUpdateDelay$ = dart.privateName(range_selector, "SfRangeSelector.deferredUpdateDelay");
+  var minorTicksPerInterval$ = dart.privateName(range_selector, "SfRangeSelector.minorTicksPerInterval");
+  var showTicks$ = dart.privateName(range_selector, "SfRangeSelector.showTicks");
+  var showLabels$ = dart.privateName(range_selector, "SfRangeSelector.showLabels");
+  var showDividers$ = dart.privateName(range_selector, "SfRangeSelector.showDividers");
+  var enableTooltip$ = dart.privateName(range_selector, "SfRangeSelector.enableTooltip");
+  var enableIntervalSelection$ = dart.privateName(range_selector, "SfRangeSelector.enableIntervalSelection");
+  var enableDeferredUpdate$ = dart.privateName(range_selector, "SfRangeSelector.enableDeferredUpdate");
+  var dragMode$ = dart.privateName(range_selector, "SfRangeSelector.dragMode");
+  var inactiveColor$ = dart.privateName(range_selector, "SfRangeSelector.inactiveColor");
+  var activeColor$ = dart.privateName(range_selector, "SfRangeSelector.activeColor");
+  var labelPlacement$ = dart.privateName(range_selector, "SfRangeSelector.labelPlacement");
+  var numberFormat$ = dart.privateName(range_selector, "SfRangeSelector.numberFormat");
+  var dateFormat$ = dart.privateName(range_selector, "SfRangeSelector.dateFormat");
+  var dateIntervalType$ = dart.privateName(range_selector, "SfRangeSelector.dateIntervalType");
+  var labelFormatterCallback$ = dart.privateName(range_selector, "SfRangeSelector.labelFormatterCallback");
+  var tooltipTextFormatterCallback$ = dart.privateName(range_selector, "SfRangeSelector.tooltipTextFormatterCallback");
+  var semanticFormatterCallback$ = dart.privateName(range_selector, "SfRangeSelector.semanticFormatterCallback");
+  var trackShape$ = dart.privateName(range_selector, "SfRangeSelector.trackShape");
+  var dividerShape$ = dart.privateName(range_selector, "SfRangeSelector.dividerShape");
+  var overlayShape$ = dart.privateName(range_selector, "SfRangeSelector.overlayShape");
+  var thumbShape$ = dart.privateName(range_selector, "SfRangeSelector.thumbShape");
+  var tickShape$ = dart.privateName(range_selector, "SfRangeSelector.tickShape");
+  var minorTickShape$ = dart.privateName(range_selector, "SfRangeSelector.minorTickShape");
+  var tooltipShape$ = dart.privateName(range_selector, "SfRangeSelector.tooltipShape");
+  var child$ = dart.privateName(range_selector, "SfRangeSelector.child");
+  var startThumbIcon$ = dart.privateName(range_selector, "SfRangeSelector.startThumbIcon");
+  var endThumbIcon$ = dart.privateName(range_selector, "SfRangeSelector.endThumbIcon");
+  var _name = dart.privateName(common, "_name");
+  range_selector.SfRangeSelector = class SfRangeSelector extends framework.StatefulWidget {
+    get min() {
+      return this[min$];
+    }
+    set min(value) {
+      super.min = value;
+    }
+    get max() {
+      return this[max$];
+    }
+    set max(value) {
+      super.max = value;
+    }
+    get initialValues() {
+      return this[initialValues$];
+    }
+    set initialValues(value) {
+      super.initialValues = value;
+    }
+    get onChanged() {
+      return this[onChanged$];
+    }
+    set onChanged(value) {
+      super.onChanged = value;
+    }
+    get controller() {
+      return this[controller$];
+    }
+    set controller(value) {
+      super.controller = value;
+    }
+    get enabled() {
+      return this[enabled$];
+    }
+    set enabled(value) {
+      super.enabled = value;
+    }
+    get interval() {
+      return this[interval$];
+    }
+    set interval(value) {
+      super.interval = value;
+    }
+    get stepSize() {
+      return this[stepSize$];
+    }
+    set stepSize(value) {
+      super.stepSize = value;
+    }
+    get stepDuration() {
+      return this[stepDuration$];
+    }
+    set stepDuration(value) {
+      super.stepDuration = value;
+    }
+    get deferredUpdateDelay() {
+      return this[deferredUpdateDelay$];
+    }
+    set deferredUpdateDelay(value) {
+      super.deferredUpdateDelay = value;
+    }
+    get minorTicksPerInterval() {
+      return this[minorTicksPerInterval$];
+    }
+    set minorTicksPerInterval(value) {
+      super.minorTicksPerInterval = value;
+    }
+    get showTicks() {
+      return this[showTicks$];
+    }
+    set showTicks(value) {
+      super.showTicks = value;
+    }
+    get showLabels() {
+      return this[showLabels$];
+    }
+    set showLabels(value) {
+      super.showLabels = value;
+    }
+    get showDividers() {
+      return this[showDividers$];
+    }
+    set showDividers(value) {
+      super.showDividers = value;
+    }
+    get enableTooltip() {
+      return this[enableTooltip$];
+    }
+    set enableTooltip(value) {
+      super.enableTooltip = value;
+    }
+    get enableIntervalSelection() {
+      return this[enableIntervalSelection$];
+    }
+    set enableIntervalSelection(value) {
+      super.enableIntervalSelection = value;
+    }
+    get enableDeferredUpdate() {
+      return this[enableDeferredUpdate$];
+    }
+    set enableDeferredUpdate(value) {
+      super.enableDeferredUpdate = value;
+    }
+    get dragMode() {
+      return this[dragMode$];
+    }
+    set dragMode(value) {
+      super.dragMode = value;
+    }
+    get inactiveColor() {
+      return this[inactiveColor$];
+    }
+    set inactiveColor(value) {
+      super.inactiveColor = value;
+    }
+    get activeColor() {
+      return this[activeColor$];
+    }
+    set activeColor(value) {
+      super.activeColor = value;
+    }
+    get labelPlacement() {
+      return this[labelPlacement$];
+    }
+    set labelPlacement(value) {
+      super.labelPlacement = value;
+    }
+    get numberFormat() {
+      return this[numberFormat$];
+    }
+    set numberFormat(value) {
+      super.numberFormat = value;
+    }
+    get dateFormat() {
+      return this[dateFormat$];
+    }
+    set dateFormat(value) {
+      super.dateFormat = value;
+    }
+    get dateIntervalType() {
+      return this[dateIntervalType$];
+    }
+    set dateIntervalType(value) {
+      super.dateIntervalType = value;
+    }
+    get labelFormatterCallback() {
+      return this[labelFormatterCallback$];
+    }
+    set labelFormatterCallback(value) {
+      super.labelFormatterCallback = value;
+    }
+    get tooltipTextFormatterCallback() {
+      return this[tooltipTextFormatterCallback$];
+    }
+    set tooltipTextFormatterCallback(value) {
+      super.tooltipTextFormatterCallback = value;
+    }
+    get semanticFormatterCallback() {
+      return this[semanticFormatterCallback$];
+    }
+    set semanticFormatterCallback(value) {
+      super.semanticFormatterCallback = value;
+    }
+    get trackShape() {
+      return this[trackShape$];
+    }
+    set trackShape(value) {
+      super.trackShape = value;
+    }
+    get dividerShape() {
+      return this[dividerShape$];
+    }
+    set dividerShape(value) {
+      super.dividerShape = value;
+    }
+    get overlayShape() {
+      return this[overlayShape$];
+    }
+    set overlayShape(value) {
+      super.overlayShape = value;
+    }
+    get thumbShape() {
+      return this[thumbShape$];
+    }
+    set thumbShape(value) {
+      super.thumbShape = value;
+    }
+    get tickShape() {
+      return this[tickShape$];
+    }
+    set tickShape(value) {
+      super.tickShape = value;
+    }
+    get minorTickShape() {
+      return this[minorTickShape$];
+    }
+    set minorTickShape(value) {
+      super.minorTickShape = value;
+    }
+    get tooltipShape() {
+      return this[tooltipShape$];
+    }
+    set tooltipShape(value) {
+      super.tooltipShape = value;
+    }
+    get child() {
+      return this[child$];
+    }
+    set child(value) {
+      super.child = value;
+    }
+    get startThumbIcon() {
+      return this[startThumbIcon$];
+    }
+    set startThumbIcon(value) {
+      super.startThumbIcon = value;
+    }
+    get endThumbIcon() {
+      return this[endThumbIcon$];
+    }
+    set endThumbIcon(value) {
+      super.endThumbIcon = value;
+    }
+    createState() {
+      return new range_selector._SfRangeSelectorState.new();
+    }
+    debugFillProperties(properties) {
+      if (properties == null) dart.nullFailed(I[0], 1295, 56, "properties");
+      super.debugFillProperties(properties);
+      if (this.initialValues != null) {
+        properties.add(dart.nullCheck(this.initialValues).toDiagnosticsNode({name: "initialValues"}));
+      }
+      properties.add(new diagnostics.DiagnosticsProperty.new("min", this.min));
+      properties.add(new diagnostics.DiagnosticsProperty.new("max", this.max));
+      if (this.controller != null) {
+        properties.add(dart.nullCheck(this.controller).toDiagnosticsNode({name: "controller"}));
+      }
+      properties.add(new diagnostics.FlagProperty.new("enabled", {value: this.enabled, ifTrue: "Range selector is enabled", ifFalse: "Range selector is disabled", showName: false}));
+      properties.add(new diagnostics.DoubleProperty.new("interval", this.interval));
+      properties.add(new diagnostics.DoubleProperty.new("stepSize", this.stepSize));
+      if (this.stepDuration != null) {
+        properties.add(dart.nullCheck(this.stepDuration).toDiagnosticsNode({name: "stepDuration"}));
+      }
+      properties.add(new diagnostics.IntProperty.new("minorTicksPerInterval", this.minorTicksPerInterval));
+      properties.add(new diagnostics.FlagProperty.new("showTicks", {value: this.showTicks, ifTrue: "Ticks are showing", ifFalse: "Ticks are not showing", showName: false}));
+      properties.add(new diagnostics.FlagProperty.new("showLabels", {value: this.showLabels, ifTrue: "Labels are showing", ifFalse: "Labels are not showing", showName: false}));
+      properties.add(new diagnostics.FlagProperty.new("showDividers", {value: this.showDividers, ifTrue: "Dividers are  showing", ifFalse: "Dividers are not showing", showName: false}));
+      properties.add(new diagnostics.FlagProperty.new("enableTooltip", {value: this.enableTooltip, ifTrue: "Tooltip is enabled", ifFalse: "Tooltip is disabled", showName: false}));
+      properties.add(new diagnostics.FlagProperty.new("enableIntervalSelection", {value: this.enableIntervalSelection, ifTrue: "Interval selection is enabled", ifFalse: "Interval selection is disabled", showName: false}));
+      properties.add(new diagnostics.FlagProperty.new("enableDeferredUpdate", {value: this.enableDeferredUpdate, ifTrue: "Deferred update is enabled", ifFalse: "Deferred update is disabled", showName: false}));
+      properties.add(new (T.EnumPropertyOfSliderDragMode()).new("dragMode", this.dragMode));
+      properties.add(new colors.ColorProperty.new("activeColor", this.activeColor));
+      properties.add(new colors.ColorProperty.new("inactiveColor", this.inactiveColor));
+      properties.add(new (T.EnumPropertyOfLabelPlacement()).new("labelPlacement", this.labelPlacement));
+      properties.add(new (T.DiagnosticsPropertyOfNumberFormat()).new("numberFormat", this.numberFormat));
+      if (this.initialValues != null && dart.equals(dart.runtimeType(dart.nullCheck(this.initialValues).start), dart.wrapType(core.DateTime)) && this.dateFormat != null) {
+        properties.add(new diagnostics.StringProperty.new("dateFormat", "Formatted value is " + dart.notNull(dart.toString(dart.nullCheck(this.dateFormat).format(core.DateTime.as(dart.nullCheck(this.initialValues).start))))));
+      }
+      properties.add(new (T.ObjectFlagPropertyOfSfRangeValuesTovoid()).has("onChanged", this.onChanged));
+      properties.add(new (T.EnumPropertyOfDateIntervalType()).new("dateIntervalType", this.dateIntervalType));
+      properties.add(new (T.ObjectFlagPropertyOfdynamicAndStringToString()).has("tooltipTextFormatterCallback", this.tooltipTextFormatterCallback));
+      properties.add(new (T.ObjectFlagPropertyOfdynamicAndStringToString()).has("labelFormatterCallback", this.labelFormatterCallback));
+      properties.add(new (T.ObjectFlagPropertyOfdynamicAndSfThumbToString()).has("semanticFormatterCallback", this.semanticFormatterCallback));
+    }
+  };
+  (range_selector.SfRangeSelector.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let min = opts && 'min' in opts ? opts.min : 0;
+    let max = opts && 'max' in opts ? opts.max : 1;
+    let initialValues = opts && 'initialValues' in opts ? opts.initialValues : null;
+    let onChanged = opts && 'onChanged' in opts ? opts.onChanged : null;
+    let controller = opts && 'controller' in opts ? opts.controller : null;
+    let enabled = opts && 'enabled' in opts ? opts.enabled : true;
+    if (enabled == null) dart.nullFailed(I[0], 126, 12, "enabled");
+    let interval = opts && 'interval' in opts ? opts.interval : null;
+    let stepSize = opts && 'stepSize' in opts ? opts.stepSize : null;
+    let stepDuration = opts && 'stepDuration' in opts ? opts.stepDuration : null;
+    let deferredUpdateDelay = opts && 'deferredUpdateDelay' in opts ? opts.deferredUpdateDelay : 500;
+    if (deferredUpdateDelay == null) dart.nullFailed(I[0], 130, 12, "deferredUpdateDelay");
+    let minorTicksPerInterval = opts && 'minorTicksPerInterval' in opts ? opts.minorTicksPerInterval : 0;
+    if (minorTicksPerInterval == null) dart.nullFailed(I[0], 131, 12, "minorTicksPerInterval");
+    let showTicks = opts && 'showTicks' in opts ? opts.showTicks : false;
+    if (showTicks == null) dart.nullFailed(I[0], 132, 12, "showTicks");
+    let showLabels = opts && 'showLabels' in opts ? opts.showLabels : false;
+    if (showLabels == null) dart.nullFailed(I[0], 133, 12, "showLabels");
+    let showDividers = opts && 'showDividers' in opts ? opts.showDividers : false;
+    if (showDividers == null) dart.nullFailed(I[0], 134, 12, "showDividers");
+    let enableTooltip = opts && 'enableTooltip' in opts ? opts.enableTooltip : false;
+    if (enableTooltip == null) dart.nullFailed(I[0], 135, 12, "enableTooltip");
+    let enableIntervalSelection = opts && 'enableIntervalSelection' in opts ? opts.enableIntervalSelection : false;
+    if (enableIntervalSelection == null) dart.nullFailed(I[0], 136, 12, "enableIntervalSelection");
+    let enableDeferredUpdate = opts && 'enableDeferredUpdate' in opts ? opts.enableDeferredUpdate : false;
+    if (enableDeferredUpdate == null) dart.nullFailed(I[0], 137, 12, "enableDeferredUpdate");
+    let dragMode = opts && 'dragMode' in opts ? opts.dragMode : C[0] || CT.C0;
+    if (dragMode == null) dart.nullFailed(I[0], 138, 12, "dragMode");
+    let inactiveColor = opts && 'inactiveColor' in opts ? opts.inactiveColor : null;
+    let activeColor = opts && 'activeColor' in opts ? opts.activeColor : null;
+    let labelPlacement = opts && 'labelPlacement' in opts ? opts.labelPlacement : C[1] || CT.C1;
+    if (labelPlacement == null) dart.nullFailed(I[0], 141, 12, "labelPlacement");
+    let numberFormat = opts && 'numberFormat' in opts ? opts.numberFormat : null;
+    let dateFormat = opts && 'dateFormat' in opts ? opts.dateFormat : null;
+    let dateIntervalType = opts && 'dateIntervalType' in opts ? opts.dateIntervalType : null;
+    let labelFormatterCallback = opts && 'labelFormatterCallback' in opts ? opts.labelFormatterCallback : null;
+    let tooltipTextFormatterCallback = opts && 'tooltipTextFormatterCallback' in opts ? opts.tooltipTextFormatterCallback : null;
+    let semanticFormatterCallback = opts && 'semanticFormatterCallback' in opts ? opts.semanticFormatterCallback : null;
+    let trackShape = opts && 'trackShape' in opts ? opts.trackShape : C[2] || CT.C2;
+    if (trackShape == null) dart.nullFailed(I[0], 148, 12, "trackShape");
+    let dividerShape = opts && 'dividerShape' in opts ? opts.dividerShape : C[3] || CT.C3;
+    if (dividerShape == null) dart.nullFailed(I[0], 149, 12, "dividerShape");
+    let overlayShape = opts && 'overlayShape' in opts ? opts.overlayShape : C[4] || CT.C4;
+    if (overlayShape == null) dart.nullFailed(I[0], 150, 12, "overlayShape");
+    let thumbShape = opts && 'thumbShape' in opts ? opts.thumbShape : C[5] || CT.C5;
+    if (thumbShape == null) dart.nullFailed(I[0], 151, 12, "thumbShape");
+    let tickShape = opts && 'tickShape' in opts ? opts.tickShape : C[6] || CT.C6;
+    if (tickShape == null) dart.nullFailed(I[0], 152, 12, "tickShape");
+    let minorTickShape = opts && 'minorTickShape' in opts ? opts.minorTickShape : C[7] || CT.C7;
+    if (minorTickShape == null) dart.nullFailed(I[0], 153, 12, "minorTickShape");
+    let tooltipShape = opts && 'tooltipShape' in opts ? opts.tooltipShape : C[8] || CT.C8;
+    if (tooltipShape == null) dart.nullFailed(I[0], 154, 12, "tooltipShape");
+    let startThumbIcon = opts && 'startThumbIcon' in opts ? opts.startThumbIcon : null;
+    let endThumbIcon = opts && 'endThumbIcon' in opts ? opts.endThumbIcon : null;
+    let child = opts && 'child' in opts ? opts.child : null;
+    if (child == null) dart.nullFailed(I[0], 157, 21, "child");
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[min$] = min;
+    this[max$] = max;
+    this[initialValues$] = initialValues;
+    this[onChanged$] = onChanged;
+    this[controller$] = controller;
+    this[enabled$] = enabled;
+    this[interval$] = interval;
+    this[stepSize$] = stepSize;
+    this[stepDuration$] = stepDuration;
+    this[deferredUpdateDelay$] = deferredUpdateDelay;
+    this[minorTicksPerInterval$] = minorTicksPerInterval;
+    this[showTicks$] = showTicks;
+    this[showLabels$] = showLabels;
+    this[showDividers$] = showDividers;
+    this[enableTooltip$] = enableTooltip;
+    this[enableIntervalSelection$] = enableIntervalSelection;
+    this[enableDeferredUpdate$] = enableDeferredUpdate;
+    this[dragMode$] = dragMode;
+    this[inactiveColor$] = inactiveColor;
+    this[activeColor$] = activeColor;
+    this[labelPlacement$] = labelPlacement;
+    this[numberFormat$] = numberFormat;
+    this[dateFormat$] = dateFormat;
+    this[dateIntervalType$] = dateIntervalType;
+    this[labelFormatterCallback$] = labelFormatterCallback;
+    this[tooltipTextFormatterCallback$] = tooltipTextFormatterCallback;
+    this[semanticFormatterCallback$] = semanticFormatterCallback;
+    this[trackShape$] = trackShape;
+    this[dividerShape$] = dividerShape;
+    this[overlayShape$] = overlayShape;
+    this[thumbShape$] = thumbShape;
+    this[tickShape$] = tickShape;
+    this[minorTickShape$] = minorTickShape;
+    this[tooltipShape$] = tooltipShape;
+    this[startThumbIcon$] = startThumbIcon;
+    this[endThumbIcon$] = endThumbIcon;
+    this[child$] = child;
+    if (!!dart.equals(min, max)) dart.assertFailed(null, I[0], 158, 16, "min != max");
+    if (!(interval == null || dart.notNull(interval) > 0)) dart.assertFailed(null, I[0], 159, 16, "interval == null || interval > 0");
+    if (!(stepSize == null || dart.notNull(stepSize) > 0)) dart.assertFailed(null, I[0], 160, 16, "stepSize == null || stepSize > 0");
+    if (!(controller != null || initialValues != null)) dart.assertFailed(null, I[0], 161, 16, "controller != null || initialValues != null");
+    range_selector.SfRangeSelector.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = range_selector.SfRangeSelector.prototype;
+  dart.addTypeTests(range_selector.SfRangeSelector);
+  dart.addTypeCaches(range_selector.SfRangeSelector);
+  dart.setMethodSignature(range_selector.SfRangeSelector, () => ({
+    __proto__: dart.getMethods(range_selector.SfRangeSelector.__proto__),
+    createState: dart.fnType(range_selector._SfRangeSelectorState, [])
+  }));
+  dart.setLibraryUri(range_selector.SfRangeSelector, I[1]);
+  dart.setFieldSignature(range_selector.SfRangeSelector, () => ({
+    __proto__: dart.getFields(range_selector.SfRangeSelector.__proto__),
+    min: dart.finalFieldType(dart.dynamic),
+    max: dart.finalFieldType(dart.dynamic),
+    initialValues: dart.finalFieldType(dart.nullable(common.SfRangeValues)),
+    onChanged: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, [common.SfRangeValues]))),
+    controller: dart.finalFieldType(dart.nullable(slider_controller.RangeController)),
+    enabled: dart.finalFieldType(core.bool),
+    interval: dart.finalFieldType(dart.nullable(core.double)),
+    stepSize: dart.finalFieldType(dart.nullable(core.double)),
+    stepDuration: dart.finalFieldType(dart.nullable(common.SliderStepDuration)),
+    deferredUpdateDelay: dart.finalFieldType(core.int),
+    minorTicksPerInterval: dart.finalFieldType(core.int),
+    showTicks: dart.finalFieldType(core.bool),
+    showLabels: dart.finalFieldType(core.bool),
+    showDividers: dart.finalFieldType(core.bool),
+    enableTooltip: dart.finalFieldType(core.bool),
+    enableIntervalSelection: dart.finalFieldType(core.bool),
+    enableDeferredUpdate: dart.finalFieldType(core.bool),
+    dragMode: dart.finalFieldType(common.SliderDragMode),
+    inactiveColor: dart.finalFieldType(dart.nullable(ui.Color)),
+    activeColor: dart.finalFieldType(dart.nullable(ui.Color)),
+    labelPlacement: dart.finalFieldType(common.LabelPlacement),
+    numberFormat: dart.finalFieldType(dart.nullable(number_format.NumberFormat)),
+    dateFormat: dart.finalFieldType(dart.nullable(date_format.DateFormat)),
+    dateIntervalType: dart.finalFieldType(dart.nullable(common.DateIntervalType)),
+    labelFormatterCallback: dart.finalFieldType(dart.nullable(dart.fnType(core.String, [dart.dynamic, core.String]))),
+    tooltipTextFormatterCallback: dart.finalFieldType(dart.nullable(dart.fnType(core.String, [dart.dynamic, core.String]))),
+    semanticFormatterCallback: dart.finalFieldType(dart.nullable(dart.fnType(core.String, [dart.dynamic, common.SfThumb]))),
+    trackShape: dart.finalFieldType(slider_shapes.SfTrackShape),
+    dividerShape: dart.finalFieldType(slider_shapes.SfDividerShape),
+    overlayShape: dart.finalFieldType(slider_shapes.SfOverlayShape),
+    thumbShape: dart.finalFieldType(slider_shapes.SfThumbShape),
+    tickShape: dart.finalFieldType(slider_shapes.SfTickShape),
+    minorTickShape: dart.finalFieldType(slider_shapes.SfTickShape),
+    tooltipShape: dart.finalFieldType(slider_shapes.SfTooltipShape),
+    child: dart.finalFieldType(framework.Widget),
+    startThumbIcon: dart.finalFieldType(dart.nullable(framework.Widget)),
+    endThumbIcon: dart.finalFieldType(dart.nullable(framework.Widget))
+  }));
+  var ___SfRangeSelectorState_overlayStartController = dart.privateName(range_selector, "_#_SfRangeSelectorState#overlayStartController");
+  var ___SfRangeSelectorState_overlayStartController_isSet = dart.privateName(range_selector, "_#_SfRangeSelectorState#overlayStartController#isSet");
+  var ___SfRangeSelectorState_overlayEndController = dart.privateName(range_selector, "_#_SfRangeSelectorState#overlayEndController");
+  var ___SfRangeSelectorState_overlayEndController_isSet = dart.privateName(range_selector, "_#_SfRangeSelectorState#overlayEndController#isSet");
+  var ___SfRangeSelectorState_startPositionController = dart.privateName(range_selector, "_#_SfRangeSelectorState#startPositionController");
+  var ___SfRangeSelectorState_startPositionController_isSet = dart.privateName(range_selector, "_#_SfRangeSelectorState#startPositionController#isSet");
+  var ___SfRangeSelectorState_endPositionController = dart.privateName(range_selector, "_#_SfRangeSelectorState#endPositionController");
+  var ___SfRangeSelectorState_endPositionController_isSet = dart.privateName(range_selector, "_#_SfRangeSelectorState#endPositionController#isSet");
+  var ___SfRangeSelectorState_stateController = dart.privateName(range_selector, "_#_SfRangeSelectorState#stateController");
+  var ___SfRangeSelectorState_stateController_isSet = dart.privateName(range_selector, "_#_SfRangeSelectorState#stateController#isSet");
+  var ___SfRangeSelectorState_tooltipAnimationStartController = dart.privateName(range_selector, "_#_SfRangeSelectorState#tooltipAnimationStartController");
+  var ___SfRangeSelectorState_tooltipAnimationStartController_isSet = dart.privateName(range_selector, "_#_SfRangeSelectorState#tooltipAnimationStartController#isSet");
+  var ___SfRangeSelectorState_tooltipAnimationEndController = dart.privateName(range_selector, "_#_SfRangeSelectorState#tooltipAnimationEndController");
+  var ___SfRangeSelectorState_tooltipAnimationEndController_isSet = dart.privateName(range_selector, "_#_SfRangeSelectorState#tooltipAnimationEndController#isSet");
+  var Duration__duration = dart.privateName(core, "Duration._duration");
+  var _values = dart.privateName(range_selector, "_values");
+  var _getFormattedLabelText = dart.privateName(range_selector, "_getFormattedLabelText");
+  var _getFormattedTooltipText = dart.privateName(range_selector, "_getFormattedTooltipText");
+  var OffsetBase__dy = dart.privateName(ui, "OffsetBase._dy");
+  var OffsetBase__dx = dart.privateName(ui, "OffsetBase._dx");
+  var Color_value = dart.privateName(ui, "Color.value");
+  var _getRangeSelectorThemeData = dart.privateName(range_selector, "_getRangeSelectorThemeData");
+  var _Location_parameterLocations = dart.privateName(widget_inspector, "_Location.parameterLocations");
+  var _Location_name = dart.privateName(widget_inspector, "_Location.name");
+  var _Location_column = dart.privateName(widget_inspector, "_Location.column");
+  var _Location_line = dart.privateName(widget_inspector, "_Location.line");
+  var _Location_file = dart.privateName(widget_inspector, "_Location.file");
+  const State_TickerProviderStateMixin$36 = class State_TickerProviderStateMixin extends framework.State$(range_selector.SfRangeSelector) {};
+  (State_TickerProviderStateMixin$36.new = function() {
+    ticker_provider.TickerProviderStateMixin$(range_selector.SfRangeSelector)[dart.mixinNew].call(this);
+    State_TickerProviderStateMixin$36.__proto__.new.call(this);
+  }).prototype = State_TickerProviderStateMixin$36.prototype;
+  dart.applyMixin(State_TickerProviderStateMixin$36, ticker_provider.TickerProviderStateMixin$(range_selector.SfRangeSelector));
+  range_selector._SfRangeSelectorState = class _SfRangeSelectorState extends State_TickerProviderStateMixin$36 {
+    get overlayStartController() {
+      let t0;
+      return dart.test(this[___SfRangeSelectorState_overlayStartController_isSet]) ? (t0 = this[___SfRangeSelectorState_overlayStartController], t0) : dart.throw(new _internal.LateError.fieldNI("overlayStartController"));
+    }
+    set overlayStartController(t0) {
+      if (t0 == null) dart.nullFailed(I[0], 1383, 28, "null");
+      this[___SfRangeSelectorState_overlayStartController_isSet] = true;
+      this[___SfRangeSelectorState_overlayStartController] = t0;
+    }
+    get overlayEndController() {
+      let t1;
+      return dart.test(this[___SfRangeSelectorState_overlayEndController_isSet]) ? (t1 = this[___SfRangeSelectorState_overlayEndController], t1) : dart.throw(new _internal.LateError.fieldNI("overlayEndController"));
+    }
+    set overlayEndController(t1) {
+      if (t1 == null) dart.nullFailed(I[0], 1384, 28, "null");
+      this[___SfRangeSelectorState_overlayEndController_isSet] = true;
+      this[___SfRangeSelectorState_overlayEndController] = t1;
+    }
+    get startPositionController() {
+      let t2;
+      return dart.test(this[___SfRangeSelectorState_startPositionController_isSet]) ? (t2 = this[___SfRangeSelectorState_startPositionController], t2) : dart.throw(new _internal.LateError.fieldNI("startPositionController"));
+    }
+    set startPositionController(t2) {
+      if (t2 == null) dart.nullFailed(I[0], 1385, 28, "null");
+      this[___SfRangeSelectorState_startPositionController_isSet] = true;
+      this[___SfRangeSelectorState_startPositionController] = t2;
+    }
+    get endPositionController() {
+      let t3;
+      return dart.test(this[___SfRangeSelectorState_endPositionController_isSet]) ? (t3 = this[___SfRangeSelectorState_endPositionController], t3) : dart.throw(new _internal.LateError.fieldNI("endPositionController"));
+    }
+    set endPositionController(t3) {
+      if (t3 == null) dart.nullFailed(I[0], 1386, 28, "null");
+      this[___SfRangeSelectorState_endPositionController_isSet] = true;
+      this[___SfRangeSelectorState_endPositionController] = t3;
+    }
+    get stateController() {
+      let t4;
+      return dart.test(this[___SfRangeSelectorState_stateController_isSet]) ? (t4 = this[___SfRangeSelectorState_stateController], t4) : dart.throw(new _internal.LateError.fieldNI("stateController"));
+    }
+    set stateController(t4) {
+      if (t4 == null) dart.nullFailed(I[0], 1387, 28, "null");
+      this[___SfRangeSelectorState_stateController_isSet] = true;
+      this[___SfRangeSelectorState_stateController] = t4;
+    }
+    get tooltipAnimationStartController() {
+      let t5;
+      return dart.test(this[___SfRangeSelectorState_tooltipAnimationStartController_isSet]) ? (t5 = this[___SfRangeSelectorState_tooltipAnimationStartController], t5) : dart.throw(new _internal.LateError.fieldNI("tooltipAnimationStartController"));
+    }
+    set tooltipAnimationStartController(t5) {
+      if (t5 == null) dart.nullFailed(I[0], 1388, 28, "null");
+      this[___SfRangeSelectorState_tooltipAnimationStartController_isSet] = true;
+      this[___SfRangeSelectorState_tooltipAnimationStartController] = t5;
+    }
+    get tooltipAnimationEndController() {
+      let t6;
+      return dart.test(this[___SfRangeSelectorState_tooltipAnimationEndController_isSet]) ? (t6 = this[___SfRangeSelectorState_tooltipAnimationEndController], t6) : dart.throw(new _internal.LateError.fieldNI("tooltipAnimationEndController"));
+    }
+    set tooltipAnimationEndController(t6) {
+      if (t6 == null) dart.nullFailed(I[0], 1389, 28, "null");
+      this[___SfRangeSelectorState_tooltipAnimationEndController_isSet] = true;
+      this[___SfRangeSelectorState_tooltipAnimationEndController] = t6;
+    }
+    [_getFormattedLabelText](actualText, formattedText) {
+      if (formattedText == null) dart.nullFailed(I[0], 1393, 60, "formattedText");
+      return formattedText;
+    }
+    [_getFormattedTooltipText](actualText, formattedText) {
+      if (formattedText == null) dart.nullFailed(I[0], 1397, 62, "formattedText");
+      return formattedText;
+    }
+    [_getRangeSelectorThemeData](themeData) {
+      let t7, t7$, t7$0, t7$1, t7$2, t7$3, t7$4, t7$5, t7$6, t7$7, t7$8, t7$9, t7$10, t7$11, t7$12, t7$13, t7$14, t7$15, t7$16, t7$17, t7$18, t7$19, t7$20, t7$21, t7$22, t7$23, t7$24, t7$25;
+      if (themeData == null) dart.nullFailed(I[0], 1401, 65, "themeData");
+      let rangeSelectorThemeData = dart.nullCheck(range_selector_theme.SfRangeSelectorTheme.of(this.context));
+      let minTrackHeight = math.min(core.double, rangeSelectorThemeData.activeTrackHeight, rangeSelectorThemeData.inactiveTrackHeight);
+      let maxTrackHeight = math.max(core.double, rangeSelectorThemeData.activeTrackHeight, rangeSelectorThemeData.inactiveTrackHeight);
+      rangeSelectorThemeData = rangeSelectorThemeData.copyWith({activeTrackHeight: rangeSelectorThemeData.activeTrackHeight, inactiveTrackHeight: rangeSelectorThemeData.inactiveTrackHeight, tickSize: rangeSelectorThemeData.tickSize, minorTickSize: rangeSelectorThemeData.minorTickSize, tickOffset: rangeSelectorThemeData.tickOffset, labelOffset: (t7 = rangeSelectorThemeData.labelOffset, t7 == null ? dart.test(this.widget.showTicks) ? C[10] || CT.C10 : C[11] || CT.C11 : t7), inactiveLabelStyle: (t7$ = rangeSelectorThemeData.inactiveLabelStyle, t7$ == null ? dart.nullCheck(themeData.textTheme.bodyText1).copyWith({color: dart.test(this.widget.enabled) ? dart.nullCheck(dart.nullCheck(themeData.textTheme.bodyText1).color).withOpacity(0.87) : themeData.colorScheme.onSurface.withOpacity(0.32)}) : t7$), activeLabelStyle: (t7$0 = rangeSelectorThemeData.activeLabelStyle, t7$0 == null ? dart.nullCheck(themeData.textTheme.bodyText1).copyWith({color: dart.test(this.widget.enabled) ? dart.nullCheck(dart.nullCheck(themeData.textTheme.bodyText1).color).withOpacity(0.87) : themeData.colorScheme.onSurface.withOpacity(0.32)}) : t7$0), tooltipTextStyle: (t7$1 = rangeSelectorThemeData.tooltipTextStyle, t7$1 == null ? dart.nullCheck(themeData.textTheme.bodyText1).copyWith({color: rangeSelectorThemeData.brightness == ui.Brightness.light ? C[12] || CT.C12 : C[13] || CT.C13}) : t7$1), inactiveTrackColor: (t7$3 = (t7$2 = this.widget.inactiveColor, t7$2 == null ? rangeSelectorThemeData.inactiveTrackColor : t7$2), t7$3 == null ? themeData.primaryColor.withOpacity(0.24) : t7$3), activeTrackColor: (t7$5 = (t7$4 = this.widget.activeColor, t7$4 == null ? rangeSelectorThemeData.activeTrackColor : t7$4), t7$5 == null ? themeData.primaryColor : t7$5), thumbColor: (t7$7 = (t7$6 = this.widget.activeColor, t7$6 == null ? rangeSelectorThemeData.thumbColor : t7$6), t7$7 == null ? themeData.primaryColor : t7$7), activeTickColor: rangeSelectorThemeData.activeTickColor, inactiveTickColor: rangeSelectorThemeData.inactiveTickColor, disabledActiveTickColor: rangeSelectorThemeData.disabledActiveTickColor, disabledInactiveTickColor: rangeSelectorThemeData.disabledInactiveTickColor, activeMinorTickColor: rangeSelectorThemeData.activeMinorTickColor, inactiveMinorTickColor: rangeSelectorThemeData.inactiveMinorTickColor, disabledActiveMinorTickColor: rangeSelectorThemeData.disabledActiveMinorTickColor, disabledInactiveMinorTickColor: rangeSelectorThemeData.disabledInactiveMinorTickColor, overlayColor: (t7$10 = (t7$9 = (t7$8 = this.widget.activeColor, t7$8 == null ? null : t7$8.withOpacity(0.12)), t7$9 == null ? rangeSelectorThemeData.overlayColor : t7$9), t7$10 == null ? themeData.primaryColor.withOpacity(0.12) : t7$10), inactiveDividerColor: (t7$12 = (t7$11 = this.widget.activeColor, t7$11 == null ? rangeSelectorThemeData.inactiveDividerColor : t7$11), t7$12 == null ? themeData.colorScheme.primary.withOpacity(0.54) : t7$12), activeDividerColor: (t7$14 = (t7$13 = this.widget.inactiveColor, t7$13 == null ? rangeSelectorThemeData.activeDividerColor : t7$13), t7$14 == null ? themeData.colorScheme.onPrimary.withOpacity(0.54) : t7$14), disabledInactiveDividerColor: (t7$15 = rangeSelectorThemeData.disabledInactiveDividerColor, t7$15 == null ? themeData.colorScheme.onSurface.withOpacity(0.12) : t7$15), disabledActiveDividerColor: (t7$16 = rangeSelectorThemeData.disabledActiveDividerColor, t7$16 == null ? themeData.colorScheme.onPrimary.withOpacity(0.12) : t7$16), disabledActiveTrackColor: (t7$17 = rangeSelectorThemeData.disabledActiveTrackColor, t7$17 == null ? themeData.colorScheme.onSurface.withOpacity(0.32) : t7$17), disabledInactiveTrackColor: (t7$18 = rangeSelectorThemeData.disabledInactiveTrackColor, t7$18 == null ? themeData.colorScheme.onSurface.withOpacity(0.12) : t7$18), disabledThumbColor: rangeSelectorThemeData.disabledThumbColor, thumbStrokeColor: rangeSelectorThemeData.thumbStrokeColor, overlappingThumbStrokeColor: (t7$19 = rangeSelectorThemeData.overlappingThumbStrokeColor, t7$19 == null ? themeData.colorScheme.surface : t7$19), activeDividerStrokeColor: rangeSelectorThemeData.activeDividerStrokeColor, inactiveDividerStrokeColor: rangeSelectorThemeData.inactiveDividerStrokeColor, overlappingTooltipStrokeColor: (t7$20 = rangeSelectorThemeData.overlappingTooltipStrokeColor, t7$20 == null ? themeData.colorScheme.surface : t7$20), activeRegionColor: rangeSelectorThemeData.activeRegionColor, inactiveRegionColor: (t7$21 = this.widget.inactiveColor, t7$21 == null ? rangeSelectorThemeData.inactiveRegionColor : t7$21), tooltipBackgroundColor: (t7$22 = rangeSelectorThemeData.tooltipBackgroundColor, t7$22 == null ? slider_shapes.SfPaddleTooltipShape.is(this.widget.tooltipShape) ? themeData.primaryColor : rangeSelectorThemeData.brightness == ui.Brightness.light ? C[14] || CT.C14 : C[15] || CT.C15 : t7$22), trackCornerRadius: (t7$23 = rangeSelectorThemeData.trackCornerRadius, t7$23 == null ? maxTrackHeight / 2 : t7$23), thumbRadius: rangeSelectorThemeData.thumbRadius, overlayRadius: rangeSelectorThemeData.overlayRadius, activeDividerRadius: (t7$24 = rangeSelectorThemeData.activeDividerRadius, t7$24 == null ? minTrackHeight / 4 : t7$24), inactiveDividerRadius: (t7$25 = rangeSelectorThemeData.inactiveDividerRadius, t7$25 == null ? minTrackHeight / 4 : t7$25), thumbStrokeWidth: rangeSelectorThemeData.thumbStrokeWidth, activeDividerStrokeWidth: rangeSelectorThemeData.activeDividerStrokeWidth, inactiveDividerStrokeWidth: rangeSelectorThemeData.inactiveDividerStrokeWidth});
+      return rangeSelectorThemeData;
+    }
+    initState() {
+      if (this.widget.controller != null) {
+        if (!(dart.nullCheck(this.widget.controller).start != null)) dart.assertFailed(null, I[0], 1515, 14, "widget.controller!.start != null");
+        if (!(dart.nullCheck(this.widget.controller).end != null)) dart.assertFailed(null, I[0], 1516, 14, "widget.controller!.end != null");
+        this[_values] = new common.SfRangeValues.new(dart.nullCheck(this.widget.controller).start, dart.nullCheck(this.widget.controller).end);
+      }
+      this.overlayStartController = new animation_controller.AnimationController.new({vsync: this, duration: this.duration});
+      this.overlayEndController = new animation_controller.AnimationController.new({vsync: this, duration: this.duration});
+      this.stateController = new animation_controller.AnimationController.new({vsync: this, duration: this.duration});
+      this.startPositionController = new animation_controller.AnimationController.new({duration: core.Duration.zero, vsync: this});
+      this.endPositionController = new animation_controller.AnimationController.new({duration: core.Duration.zero, vsync: this});
+      this.tooltipAnimationStartController = new animation_controller.AnimationController.new({vsync: this, duration: this.duration});
+      this.tooltipAnimationEndController = new animation_controller.AnimationController.new({vsync: this, duration: this.duration});
+      this.stateController.value = dart.test(this.widget.enabled) && !dart.equals(this.widget.min, this.widget.max) ? 1.0 : 0.0;
+      super.initState();
+    }
+    dispose() {
+      this.overlayStartController.dispose();
+      this.overlayEndController.dispose();
+      this.startPositionController.dispose();
+      this.endPositionController.dispose();
+      this.tooltipAnimationStartController.dispose();
+      this.tooltipAnimationEndController.dispose();
+      this.stateController.dispose();
+      super.dispose();
+    }
+    build(context) {
+      let t7, t7$, t7$0, t7$1, t7$2, t7$3;
+      if (context == null) dart.nullFailed(I[0], 1551, 29, "context");
+      let themeData = theme.Theme.of(context);
+      return new range_selector._RangeSelectorRenderObjectWidget.new({key: this.widget.key, min: this.widget.min, max: this.widget.max, values: (t7 = this[_values], t7 == null ? this.widget.initialValues : t7), enabled: dart.test(this.widget.enabled) && !dart.equals(this.widget.min, this.widget.max), interval: this.widget.interval, stepSize: this.widget.stepSize, stepDuration: this.widget.stepDuration, deferUpdateDelay: this.widget.deferredUpdateDelay, minorTicksPerInterval: this.widget.minorTicksPerInterval, showTicks: this.widget.showTicks, showLabels: this.widget.showLabels, showDividers: this.widget.showDividers, enableTooltip: this.widget.enableTooltip, enableIntervalSelection: this.widget.enableIntervalSelection, deferUpdate: this.widget.enableDeferredUpdate, dragMode: this.widget.dragMode, inactiveColor: (t7$ = this.widget.inactiveColor, t7$ == null ? themeData.primaryColor.withOpacity(0.24) : t7$), activeColor: (t7$0 = this.widget.activeColor, t7$0 == null ? themeData.primaryColor : t7$0), labelPlacement: this.widget.labelPlacement, numberFormat: (t7$1 = this.widget.numberFormat, t7$1 == null ? number_format.NumberFormat.new("#.##") : t7$1), dateFormat: this.widget.dateFormat, dateIntervalType: this.widget.dateIntervalType, labelFormatterCallback: (t7$2 = this.widget.labelFormatterCallback, t7$2 == null ? dart.bind(this, _getFormattedLabelText) : t7$2), tooltipTextFormatterCallback: (t7$3 = this.widget.tooltipTextFormatterCallback, t7$3 == null ? dart.bind(this, _getFormattedTooltipText) : t7$3), semanticFormatterCallback: this.widget.semanticFormatterCallback, trackShape: this.widget.trackShape, dividerShape: this.widget.dividerShape, overlayShape: this.widget.overlayShape, thumbShape: this.widget.thumbShape, tickShape: this.widget.tickShape, minorTickShape: this.widget.minorTickShape, tooltipShape: this.widget.tooltipShape, child: this.widget.child, rangeSelectorThemeData: this[_getRangeSelectorThemeData](themeData), startThumbIcon: this.widget.startThumbIcon, endThumbIcon: this.widget.endThumbIcon, state: this, $creationLocationd_0dea112b090073317d4: C[16] || CT.C16});
+    }
+  };
+  (range_selector._SfRangeSelectorState.new = function() {
+    this[___SfRangeSelectorState_overlayStartController] = null;
+    this[___SfRangeSelectorState_overlayStartController_isSet] = false;
+    this[___SfRangeSelectorState_overlayEndController] = null;
+    this[___SfRangeSelectorState_overlayEndController_isSet] = false;
+    this[___SfRangeSelectorState_startPositionController] = null;
+    this[___SfRangeSelectorState_startPositionController_isSet] = false;
+    this[___SfRangeSelectorState_endPositionController] = null;
+    this[___SfRangeSelectorState_endPositionController_isSet] = false;
+    this[___SfRangeSelectorState_stateController] = null;
+    this[___SfRangeSelectorState_stateController_isSet] = false;
+    this[___SfRangeSelectorState_tooltipAnimationStartController] = null;
+    this[___SfRangeSelectorState_tooltipAnimationStartController_isSet] = false;
+    this[___SfRangeSelectorState_tooltipAnimationEndController] = null;
+    this[___SfRangeSelectorState_tooltipAnimationEndController_isSet] = false;
+    this.duration = C[9] || CT.C9;
+    this[_values] = null;
+    range_selector._SfRangeSelectorState.__proto__.new.call(this);
+    ;
+  }).prototype = range_selector._SfRangeSelectorState.prototype;
+  dart.addTypeTests(range_selector._SfRangeSelectorState);
+  dart.addTypeCaches(range_selector._SfRangeSelectorState);
+  dart.setMethodSignature(range_selector._SfRangeSelectorState, () => ({
+    __proto__: dart.getMethods(range_selector._SfRangeSelectorState.__proto__),
+    [_getFormattedLabelText]: dart.fnType(core.String, [dart.dynamic, core.String]),
+    [_getFormattedTooltipText]: dart.fnType(core.String, [dart.dynamic, core.String]),
+    [_getRangeSelectorThemeData]: dart.fnType(range_selector_theme.SfRangeSelectorThemeData, [theme_data.ThemeData]),
+    build: dart.fnType(framework.Widget, [framework.BuildContext])
+  }));
+  dart.setGetterSignature(range_selector._SfRangeSelectorState, () => ({
+    __proto__: dart.getGetters(range_selector._SfRangeSelectorState.__proto__),
+    overlayStartController: animation_controller.AnimationController,
+    overlayEndController: animation_controller.AnimationController,
+    startPositionController: animation_controller.AnimationController,
+    endPositionController: animation_controller.AnimationController,
+    stateController: animation_controller.AnimationController,
+    tooltipAnimationStartController: animation_controller.AnimationController,
+    tooltipAnimationEndController: animation_controller.AnimationController
+  }));
+  dart.setSetterSignature(range_selector._SfRangeSelectorState, () => ({
+    __proto__: dart.getSetters(range_selector._SfRangeSelectorState.__proto__),
+    overlayStartController: animation_controller.AnimationController,
+    overlayEndController: animation_controller.AnimationController,
+    startPositionController: animation_controller.AnimationController,
+    endPositionController: animation_controller.AnimationController,
+    stateController: animation_controller.AnimationController,
+    tooltipAnimationStartController: animation_controller.AnimationController,
+    tooltipAnimationEndController: animation_controller.AnimationController
+  }));
+  dart.setLibraryUri(range_selector._SfRangeSelectorState, I[1]);
+  dart.setFieldSignature(range_selector._SfRangeSelectorState, () => ({
+    __proto__: dart.getFields(range_selector._SfRangeSelectorState.__proto__),
+    [___SfRangeSelectorState_overlayStartController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___SfRangeSelectorState_overlayStartController_isSet]: dart.fieldType(core.bool),
+    [___SfRangeSelectorState_overlayEndController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___SfRangeSelectorState_overlayEndController_isSet]: dart.fieldType(core.bool),
+    [___SfRangeSelectorState_startPositionController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___SfRangeSelectorState_startPositionController_isSet]: dart.fieldType(core.bool),
+    [___SfRangeSelectorState_endPositionController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___SfRangeSelectorState_endPositionController_isSet]: dart.fieldType(core.bool),
+    [___SfRangeSelectorState_stateController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___SfRangeSelectorState_stateController_isSet]: dart.fieldType(core.bool),
+    [___SfRangeSelectorState_tooltipAnimationStartController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___SfRangeSelectorState_tooltipAnimationStartController_isSet]: dart.fieldType(core.bool),
+    [___SfRangeSelectorState_tooltipAnimationEndController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___SfRangeSelectorState_tooltipAnimationEndController_isSet]: dart.fieldType(core.bool),
+    duration: dart.finalFieldType(core.Duration),
+    [_values]: dart.fieldType(dart.nullable(common.SfRangeValues))
+  }));
+  var min$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.min");
+  var max$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.max");
+  var values$ = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.values");
+  var enabled$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.enabled");
+  var interval$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.interval");
+  var stepSize$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.stepSize");
+  var stepDuration$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.stepDuration");
+  var deferUpdateDelay$ = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.deferUpdateDelay");
+  var minorTicksPerInterval$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.minorTicksPerInterval");
+  var showTicks$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.showTicks");
+  var showLabels$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.showLabels");
+  var showDividers$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.showDividers");
+  var enableTooltip$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.enableTooltip");
+  var enableIntervalSelection$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.enableIntervalSelection");
+  var deferUpdate$ = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.deferUpdate");
+  var dragMode$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.dragMode");
+  var inactiveColor$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.inactiveColor");
+  var activeColor$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.activeColor");
+  var labelPlacement$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.labelPlacement");
+  var numberFormat$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.numberFormat");
+  var dateFormat$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.dateFormat");
+  var dateIntervalType$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.dateIntervalType");
+  var rangeSelectorThemeData$ = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.rangeSelectorThemeData");
+  var labelFormatterCallback$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.labelFormatterCallback");
+  var tooltipTextFormatterCallback$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.tooltipTextFormatterCallback");
+  var semanticFormatterCallback$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.semanticFormatterCallback");
+  var trackShape$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.trackShape");
+  var dividerShape$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.dividerShape");
+  var overlayShape$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.overlayShape");
+  var thumbShape$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.thumbShape");
+  var tickShape$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.tickShape");
+  var minorTickShape$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.minorTickShape");
+  var tooltipShape$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.tooltipShape");
+  var child$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.child");
+  var startThumbIcon$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.startThumbIcon");
+  var endThumbIcon$0 = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.endThumbIcon");
+  var state$ = dart.privateName(range_selector, "_RangeSelectorRenderObjectWidget.state");
+  range_selector._RangeSelectorRenderObjectWidget = class _RangeSelectorRenderObjectWidget extends framework.RenderObjectWidget {
+    get min() {
+      return this[min$0];
+    }
+    set min(value) {
+      super.min = value;
+    }
+    get max() {
+      return this[max$0];
+    }
+    set max(value) {
+      super.max = value;
+    }
+    get values() {
+      return this[values$];
+    }
+    set values(value) {
+      super.values = value;
+    }
+    get enabled() {
+      return this[enabled$0];
+    }
+    set enabled(value) {
+      super.enabled = value;
+    }
+    get interval() {
+      return this[interval$0];
+    }
+    set interval(value) {
+      super.interval = value;
+    }
+    get stepSize() {
+      return this[stepSize$0];
+    }
+    set stepSize(value) {
+      super.stepSize = value;
+    }
+    get stepDuration() {
+      return this[stepDuration$0];
+    }
+    set stepDuration(value) {
+      super.stepDuration = value;
+    }
+    get deferUpdateDelay() {
+      return this[deferUpdateDelay$];
+    }
+    set deferUpdateDelay(value) {
+      super.deferUpdateDelay = value;
+    }
+    get minorTicksPerInterval() {
+      return this[minorTicksPerInterval$0];
+    }
+    set minorTicksPerInterval(value) {
+      super.minorTicksPerInterval = value;
+    }
+    get showTicks() {
+      return this[showTicks$0];
+    }
+    set showTicks(value) {
+      super.showTicks = value;
+    }
+    get showLabels() {
+      return this[showLabels$0];
+    }
+    set showLabels(value) {
+      super.showLabels = value;
+    }
+    get showDividers() {
+      return this[showDividers$0];
+    }
+    set showDividers(value) {
+      super.showDividers = value;
+    }
+    get enableTooltip() {
+      return this[enableTooltip$0];
+    }
+    set enableTooltip(value) {
+      super.enableTooltip = value;
+    }
+    get enableIntervalSelection() {
+      return this[enableIntervalSelection$0];
+    }
+    set enableIntervalSelection(value) {
+      super.enableIntervalSelection = value;
+    }
+    get deferUpdate() {
+      return this[deferUpdate$];
+    }
+    set deferUpdate(value) {
+      super.deferUpdate = value;
+    }
+    get dragMode() {
+      return this[dragMode$0];
+    }
+    set dragMode(value) {
+      super.dragMode = value;
+    }
+    get inactiveColor() {
+      return this[inactiveColor$0];
+    }
+    set inactiveColor(value) {
+      super.inactiveColor = value;
+    }
+    get activeColor() {
+      return this[activeColor$0];
+    }
+    set activeColor(value) {
+      super.activeColor = value;
+    }
+    get labelPlacement() {
+      return this[labelPlacement$0];
+    }
+    set labelPlacement(value) {
+      super.labelPlacement = value;
+    }
+    get numberFormat() {
+      return this[numberFormat$0];
+    }
+    set numberFormat(value) {
+      super.numberFormat = value;
+    }
+    get dateFormat() {
+      return this[dateFormat$0];
+    }
+    set dateFormat(value) {
+      super.dateFormat = value;
+    }
+    get dateIntervalType() {
+      return this[dateIntervalType$0];
+    }
+    set dateIntervalType(value) {
+      super.dateIntervalType = value;
+    }
+    get rangeSelectorThemeData() {
+      return this[rangeSelectorThemeData$];
+    }
+    set rangeSelectorThemeData(value) {
+      super.rangeSelectorThemeData = value;
+    }
+    get labelFormatterCallback() {
+      return this[labelFormatterCallback$0];
+    }
+    set labelFormatterCallback(value) {
+      super.labelFormatterCallback = value;
+    }
+    get tooltipTextFormatterCallback() {
+      return this[tooltipTextFormatterCallback$0];
+    }
+    set tooltipTextFormatterCallback(value) {
+      super.tooltipTextFormatterCallback = value;
+    }
+    get semanticFormatterCallback() {
+      return this[semanticFormatterCallback$0];
+    }
+    set semanticFormatterCallback(value) {
+      super.semanticFormatterCallback = value;
+    }
+    get trackShape() {
+      return this[trackShape$0];
+    }
+    set trackShape(value) {
+      super.trackShape = value;
+    }
+    get dividerShape() {
+      return this[dividerShape$0];
+    }
+    set dividerShape(value) {
+      super.dividerShape = value;
+    }
+    get overlayShape() {
+      return this[overlayShape$0];
+    }
+    set overlayShape(value) {
+      super.overlayShape = value;
+    }
+    get thumbShape() {
+      return this[thumbShape$0];
+    }
+    set thumbShape(value) {
+      super.thumbShape = value;
+    }
+    get tickShape() {
+      return this[tickShape$0];
+    }
+    set tickShape(value) {
+      super.tickShape = value;
+    }
+    get minorTickShape() {
+      return this[minorTickShape$0];
+    }
+    set minorTickShape(value) {
+      super.minorTickShape = value;
+    }
+    get tooltipShape() {
+      return this[tooltipShape$0];
+    }
+    set tooltipShape(value) {
+      super.tooltipShape = value;
+    }
+    get child() {
+      return this[child$0];
+    }
+    set child(value) {
+      super.child = value;
+    }
+    get startThumbIcon() {
+      return this[startThumbIcon$0];
+    }
+    set startThumbIcon(value) {
+      super.startThumbIcon = value;
+    }
+    get endThumbIcon() {
+      return this[endThumbIcon$0];
+    }
+    set endThumbIcon(value) {
+      super.endThumbIcon = value;
+    }
+    get state() {
+      return this[state$];
+    }
+    set state(value) {
+      super.state = value;
+    }
+    createElement() {
+      return new range_selector._RenderRangeSelectorElement.new(this);
+    }
+    createRenderObject(context) {
+      if (context == null) dart.nullFailed(I[0], 1688, 48, "context");
+      return new range_selector._RenderRangeSelector.new({min: this.min, max: this.max, values: this.values, enabled: this.enabled, interval: this.interval, stepSize: this.stepSize, stepDuration: this.stepDuration, deferUpdateDelay: this.deferUpdateDelay, minorTicksPerInterval: this.minorTicksPerInterval, showTicks: this.showTicks, showLabels: this.showLabels, showDividers: this.showDividers, enableTooltip: this.enableTooltip, enableIntervalSelection: this.enableIntervalSelection, deferUpdate: this.deferUpdate, dragMode: this.dragMode, labelPlacement: this.labelPlacement, numberFormat: this.numberFormat, dateFormat: this.dateFormat, dateIntervalType: this.dateIntervalType, labelFormatterCallback: this.labelFormatterCallback, tooltipTextFormatterCallback: this.tooltipTextFormatterCallback, semanticFormatterCallback: this.semanticFormatterCallback, trackShape: this.trackShape, dividerShape: this.dividerShape, overlayShape: this.overlayShape, thumbShape: this.thumbShape, tickShape: this.tickShape, minorTickShape: this.minorTickShape, tooltipShape: this.tooltipShape, rangeSelectorThemeData: this.rangeSelectorThemeData, textDirection: basic.Directionality.of(context), mediaQueryData: media_query.MediaQuery.of(context), state: this.state});
+    }
+    updateRenderObject(context, renderObject) {
+      let t7;
+      if (context == null) dart.nullFailed(I[0], 1729, 20, "context");
+      range_selector._RenderRangeSelector.as(renderObject);
+      if (renderObject == null) dart.nullFailed(I[0], 1729, 50, "renderObject");
+      t7 = renderObject;
+      (() => {
+        t7.min = this.min;
+        t7.max = this.max;
+        t7.isEnabled = this.enabled;
+        t7.interval = this.interval;
+        t7.stepSize = this.stepSize;
+        t7.stepDuration = this.stepDuration;
+        t7.deferUpdateDelay = this.deferUpdateDelay;
+        t7.minorTicksPerInterval = this.minorTicksPerInterval;
+        t7.showTicks = this.showTicks;
+        t7.showLabels = this.showLabels;
+        t7.showDividers = this.showDividers;
+        t7.enableTooltip = this.enableTooltip;
+        t7.enableIntervalSelection = this.enableIntervalSelection;
+        t7.deferUpdate = this.deferUpdate;
+        t7.dragMode = this.dragMode;
+        t7.labelPlacement = this.labelPlacement;
+        t7.numberFormat = this.numberFormat;
+        t7.dateFormat = this.dateFormat;
+        t7.dateIntervalType = this.dateIntervalType;
+        t7.labelFormatterCallback = this.labelFormatterCallback;
+        t7.tooltipTextFormatterCallback = this.tooltipTextFormatterCallback;
+        t7.semanticFormatterCallback = this.semanticFormatterCallback;
+        t7.trackShape = this.trackShape;
+        t7.dividerShape = this.dividerShape;
+        t7.overlayShape = this.overlayShape;
+        t7.thumbShape = this.thumbShape;
+        t7.tickShape = this.tickShape;
+        t7.minorTickShape = this.minorTickShape;
+        t7.tooltipShape = this.tooltipShape;
+        t7.sliderThemeData = this.rangeSelectorThemeData;
+        t7.textDirection = basic.Directionality.of(context);
+        t7.mediaQueryData = media_query.MediaQuery.of(context);
+        return t7;
+      })();
+    }
+  };
+  (range_selector._RangeSelectorRenderObjectWidget.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let min = opts && 'min' in opts ? opts.min : null;
+    let max = opts && 'max' in opts ? opts.max : null;
+    let values = opts && 'values' in opts ? opts.values : null;
+    let enabled = opts && 'enabled' in opts ? opts.enabled : null;
+    if (enabled == null) dart.nullFailed(I[0], 1606, 19, "enabled");
+    let interval = opts && 'interval' in opts ? opts.interval : null;
+    let stepSize = opts && 'stepSize' in opts ? opts.stepSize : null;
+    let stepDuration = opts && 'stepDuration' in opts ? opts.stepDuration : null;
+    let deferUpdateDelay = opts && 'deferUpdateDelay' in opts ? opts.deferUpdateDelay : null;
+    if (deferUpdateDelay == null) dart.nullFailed(I[0], 1610, 19, "deferUpdateDelay");
+    let minorTicksPerInterval = opts && 'minorTicksPerInterval' in opts ? opts.minorTicksPerInterval : null;
+    if (minorTicksPerInterval == null) dart.nullFailed(I[0], 1611, 19, "minorTicksPerInterval");
+    let showTicks = opts && 'showTicks' in opts ? opts.showTicks : null;
+    if (showTicks == null) dart.nullFailed(I[0], 1612, 19, "showTicks");
+    let showLabels = opts && 'showLabels' in opts ? opts.showLabels : null;
+    if (showLabels == null) dart.nullFailed(I[0], 1613, 19, "showLabels");
+    let showDividers = opts && 'showDividers' in opts ? opts.showDividers : null;
+    if (showDividers == null) dart.nullFailed(I[0], 1614, 19, "showDividers");
+    let enableTooltip = opts && 'enableTooltip' in opts ? opts.enableTooltip : null;
+    if (enableTooltip == null) dart.nullFailed(I[0], 1615, 19, "enableTooltip");
+    let enableIntervalSelection = opts && 'enableIntervalSelection' in opts ? opts.enableIntervalSelection : null;
+    if (enableIntervalSelection == null) dart.nullFailed(I[0], 1616, 19, "enableIntervalSelection");
+    let deferUpdate = opts && 'deferUpdate' in opts ? opts.deferUpdate : null;
+    if (deferUpdate == null) dart.nullFailed(I[0], 1617, 19, "deferUpdate");
+    let dragMode = opts && 'dragMode' in opts ? opts.dragMode : null;
+    if (dragMode == null) dart.nullFailed(I[0], 1618, 19, "dragMode");
+    let inactiveColor = opts && 'inactiveColor' in opts ? opts.inactiveColor : null;
+    if (inactiveColor == null) dart.nullFailed(I[0], 1619, 19, "inactiveColor");
+    let activeColor = opts && 'activeColor' in opts ? opts.activeColor : null;
+    if (activeColor == null) dart.nullFailed(I[0], 1620, 19, "activeColor");
+    let labelPlacement = opts && 'labelPlacement' in opts ? opts.labelPlacement : null;
+    if (labelPlacement == null) dart.nullFailed(I[0], 1621, 19, "labelPlacement");
+    let numberFormat = opts && 'numberFormat' in opts ? opts.numberFormat : null;
+    if (numberFormat == null) dart.nullFailed(I[0], 1622, 19, "numberFormat");
+    let dateFormat = opts && 'dateFormat' in opts ? opts.dateFormat : null;
+    let dateIntervalType = opts && 'dateIntervalType' in opts ? opts.dateIntervalType : null;
+    let labelFormatterCallback = opts && 'labelFormatterCallback' in opts ? opts.labelFormatterCallback : null;
+    if (labelFormatterCallback == null) dart.nullFailed(I[0], 1625, 19, "labelFormatterCallback");
+    let tooltipTextFormatterCallback = opts && 'tooltipTextFormatterCallback' in opts ? opts.tooltipTextFormatterCallback : null;
+    if (tooltipTextFormatterCallback == null) dart.nullFailed(I[0], 1626, 19, "tooltipTextFormatterCallback");
+    let semanticFormatterCallback = opts && 'semanticFormatterCallback' in opts ? opts.semanticFormatterCallback : null;
+    let trackShape = opts && 'trackShape' in opts ? opts.trackShape : null;
+    if (trackShape == null) dart.nullFailed(I[0], 1628, 19, "trackShape");
+    let dividerShape = opts && 'dividerShape' in opts ? opts.dividerShape : null;
+    if (dividerShape == null) dart.nullFailed(I[0], 1629, 19, "dividerShape");
+    let overlayShape = opts && 'overlayShape' in opts ? opts.overlayShape : null;
+    if (overlayShape == null) dart.nullFailed(I[0], 1630, 19, "overlayShape");
+    let thumbShape = opts && 'thumbShape' in opts ? opts.thumbShape : null;
+    if (thumbShape == null) dart.nullFailed(I[0], 1631, 19, "thumbShape");
+    let tickShape = opts && 'tickShape' in opts ? opts.tickShape : null;
+    if (tickShape == null) dart.nullFailed(I[0], 1632, 19, "tickShape");
+    let minorTickShape = opts && 'minorTickShape' in opts ? opts.minorTickShape : null;
+    if (minorTickShape == null) dart.nullFailed(I[0], 1633, 19, "minorTickShape");
+    let tooltipShape = opts && 'tooltipShape' in opts ? opts.tooltipShape : null;
+    if (tooltipShape == null) dart.nullFailed(I[0], 1634, 19, "tooltipShape");
+    let child = opts && 'child' in opts ? opts.child : null;
+    if (child == null) dart.nullFailed(I[0], 1635, 19, "child");
+    let rangeSelectorThemeData = opts && 'rangeSelectorThemeData' in opts ? opts.rangeSelectorThemeData : null;
+    if (rangeSelectorThemeData == null) dart.nullFailed(I[0], 1636, 19, "rangeSelectorThemeData");
+    let startThumbIcon = opts && 'startThumbIcon' in opts ? opts.startThumbIcon : null;
+    let endThumbIcon = opts && 'endThumbIcon' in opts ? opts.endThumbIcon : null;
+    let state = opts && 'state' in opts ? opts.state : null;
+    if (state == null) dart.nullFailed(I[0], 1639, 19, "state");
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[min$0] = min;
+    this[max$0] = max;
+    this[values$] = values;
+    this[enabled$0] = enabled;
+    this[interval$0] = interval;
+    this[stepSize$0] = stepSize;
+    this[stepDuration$0] = stepDuration;
+    this[deferUpdateDelay$] = deferUpdateDelay;
+    this[minorTicksPerInterval$0] = minorTicksPerInterval;
+    this[showTicks$0] = showTicks;
+    this[showLabels$0] = showLabels;
+    this[showDividers$0] = showDividers;
+    this[enableTooltip$0] = enableTooltip;
+    this[enableIntervalSelection$0] = enableIntervalSelection;
+    this[deferUpdate$] = deferUpdate;
+    this[dragMode$0] = dragMode;
+    this[inactiveColor$0] = inactiveColor;
+    this[activeColor$0] = activeColor;
+    this[labelPlacement$0] = labelPlacement;
+    this[numberFormat$0] = numberFormat;
+    this[dateFormat$0] = dateFormat;
+    this[dateIntervalType$0] = dateIntervalType;
+    this[labelFormatterCallback$0] = labelFormatterCallback;
+    this[tooltipTextFormatterCallback$0] = tooltipTextFormatterCallback;
+    this[semanticFormatterCallback$0] = semanticFormatterCallback;
+    this[trackShape$0] = trackShape;
+    this[dividerShape$0] = dividerShape;
+    this[overlayShape$0] = overlayShape;
+    this[thumbShape$0] = thumbShape;
+    this[tickShape$0] = tickShape;
+    this[minorTickShape$0] = minorTickShape;
+    this[tooltipShape$0] = tooltipShape;
+    this[child$0] = child;
+    this[rangeSelectorThemeData$] = rangeSelectorThemeData;
+    this[startThumbIcon$0] = startThumbIcon;
+    this[endThumbIcon$0] = endThumbIcon;
+    this[state$] = state;
+    range_selector._RangeSelectorRenderObjectWidget.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = range_selector._RangeSelectorRenderObjectWidget.prototype;
+  dart.addTypeTests(range_selector._RangeSelectorRenderObjectWidget);
+  dart.addTypeCaches(range_selector._RangeSelectorRenderObjectWidget);
+  dart.setMethodSignature(range_selector._RangeSelectorRenderObjectWidget, () => ({
+    __proto__: dart.getMethods(range_selector._RangeSelectorRenderObjectWidget.__proto__),
+    createElement: dart.fnType(range_selector._RenderRangeSelectorElement, []),
+    createRenderObject: dart.fnType(object.RenderObject, [framework.BuildContext])
+  }));
+  dart.setLibraryUri(range_selector._RangeSelectorRenderObjectWidget, I[1]);
+  dart.setFieldSignature(range_selector._RangeSelectorRenderObjectWidget, () => ({
+    __proto__: dart.getFields(range_selector._RangeSelectorRenderObjectWidget.__proto__),
+    min: dart.finalFieldType(dart.dynamic),
+    max: dart.finalFieldType(dart.dynamic),
+    values: dart.finalFieldType(dart.nullable(common.SfRangeValues)),
+    enabled: dart.finalFieldType(core.bool),
+    interval: dart.finalFieldType(dart.nullable(core.double)),
+    stepSize: dart.finalFieldType(dart.nullable(core.double)),
+    stepDuration: dart.finalFieldType(dart.nullable(common.SliderStepDuration)),
+    deferUpdateDelay: dart.finalFieldType(core.int),
+    minorTicksPerInterval: dart.finalFieldType(core.int),
+    showTicks: dart.finalFieldType(core.bool),
+    showLabels: dart.finalFieldType(core.bool),
+    showDividers: dart.finalFieldType(core.bool),
+    enableTooltip: dart.finalFieldType(core.bool),
+    enableIntervalSelection: dart.finalFieldType(core.bool),
+    deferUpdate: dart.finalFieldType(core.bool),
+    dragMode: dart.finalFieldType(common.SliderDragMode),
+    inactiveColor: dart.finalFieldType(ui.Color),
+    activeColor: dart.finalFieldType(ui.Color),
+    labelPlacement: dart.finalFieldType(common.LabelPlacement),
+    numberFormat: dart.finalFieldType(number_format.NumberFormat),
+    dateFormat: dart.finalFieldType(dart.nullable(date_format.DateFormat)),
+    dateIntervalType: dart.finalFieldType(dart.nullable(common.DateIntervalType)),
+    rangeSelectorThemeData: dart.finalFieldType(range_selector_theme.SfRangeSelectorThemeData),
+    labelFormatterCallback: dart.finalFieldType(dart.fnType(core.String, [dart.dynamic, core.String])),
+    tooltipTextFormatterCallback: dart.finalFieldType(dart.fnType(core.String, [dart.dynamic, core.String])),
+    semanticFormatterCallback: dart.finalFieldType(dart.nullable(dart.fnType(core.String, [dart.dynamic, common.SfThumb]))),
+    trackShape: dart.finalFieldType(slider_shapes.SfTrackShape),
+    dividerShape: dart.finalFieldType(slider_shapes.SfDividerShape),
+    overlayShape: dart.finalFieldType(slider_shapes.SfOverlayShape),
+    thumbShape: dart.finalFieldType(slider_shapes.SfThumbShape),
+    tickShape: dart.finalFieldType(slider_shapes.SfTickShape),
+    minorTickShape: dart.finalFieldType(slider_shapes.SfTickShape),
+    tooltipShape: dart.finalFieldType(slider_shapes.SfTooltipShape),
+    child: dart.finalFieldType(framework.Widget),
+    startThumbIcon: dart.finalFieldType(dart.nullable(framework.Widget)),
+    endThumbIcon: dart.finalFieldType(dart.nullable(framework.Widget)),
+    state: dart.finalFieldType(range_selector._SfRangeSelectorState)
+  }));
+  var _slotToChild = dart.privateName(range_selector, "_slotToChild");
+  var _childToSlot = dart.privateName(range_selector, "_childToSlot");
+  var _updateChild = dart.privateName(range_selector, "_updateChild");
+  var _name$ = dart.privateName(constants, "_name");
+  var _updateRenderObject = dart.privateName(range_selector, "_updateRenderObject");
+  range_selector._RenderRangeSelectorElement = class _RenderRangeSelectorElement extends framework.RenderObjectElement {
+    get widget() {
+      return range_selector._RangeSelectorRenderObjectWidget.as(super.widget);
+    }
+    get renderObject() {
+      return range_selector._RenderRangeSelector.as(super.renderObject);
+    }
+    [_updateChild](widget, slot) {
+      if (slot == null) dart.nullFailed(I[0], 1783, 51, "slot");
+      let oldChild = this[_slotToChild][$_get](slot);
+      let newChild = this.updateChild(oldChild, widget, slot);
+      if (oldChild != null) {
+        this[_childToSlot][$remove](oldChild);
+        this[_slotToChild][$remove](slot);
+      }
+      if (newChild != null) {
+        this[_slotToChild][$_set](slot, newChild);
+        this[_childToSlot][$_set](newChild, slot);
+      }
+    }
+    [_updateRenderObject](child, slot) {
+      if (slot == null) dart.nullFailed(I[0], 1796, 63, "slot");
+      switch (slot) {
+        case C[56] || CT.C56:
+        {
+          this.renderObject.startThumbIcon = T.RenderBoxN().as(child);
+          break;
+        }
+        case C[57] || CT.C57:
+        {
+          this.renderObject.endThumbIcon = T.RenderBoxN().as(child);
+          break;
+        }
+        case C[58] || CT.C58:
+        {
+          this.renderObject.child = T.RenderBoxN().as(child);
+          break;
+        }
+        default:
+        {
+          dart.throw(new _internal.ReachabilityError.new("`null` encountered as case in a switch expression with a non-nullable enum type."));
+        }
+      }
+    }
+    visitChildren(visitor) {
+      if (visitor == null) dart.nullFailed(I[0], 1814, 37, "visitor");
+      this[_slotToChild][$values][$forEach](visitor);
+    }
+    mount(parent, newSlot) {
+      super.mount(parent, newSlot);
+      this[_updateChild](this.widget.startThumbIcon, constants.ChildElements.startThumbIcon);
+      this[_updateChild](this.widget.endThumbIcon, constants.ChildElements.endThumbIcon);
+      this[_updateChild](this.widget.child, constants.ChildElements.child);
+    }
+    update(newWidget) {
+      range_selector._RangeSelectorRenderObjectWidget.as(newWidget);
+      if (newWidget == null) dart.nullFailed(I[0], 1827, 48, "newWidget");
+      super.update(newWidget);
+      if (!dart.equals(this.widget, newWidget)) dart.assertFailed(null, I[0], 1829, 12, "widget == newWidget");
+      this[_updateChild](this.widget.startThumbIcon, constants.ChildElements.startThumbIcon);
+      this[_updateChild](this.widget.endThumbIcon, constants.ChildElements.endThumbIcon);
+      this[_updateChild](this.widget.child, constants.ChildElements.child);
+    }
+    insertRenderObjectChild(child, slotValue) {
+      object.RenderObject.as(child);
+      if (child == null) dart.nullFailed(I[0], 1836, 45, "child");
+      if (!box.RenderBox.is(child)) dart.assertFailed(null, I[0], 1837, 12, "child is RenderBox");
+      if (!constants.ChildElements.is(slotValue)) dart.assertFailed(null, I[0], 1838, 12, "slotValue is ChildElements");
+      let slot = constants.ChildElements.as(slotValue);
+      this[_updateRenderObject](child, slot);
+      if (!dart.test(this.renderObject.childToSlot[$keys][$contains](child))) dart.assertFailed(null, I[0], 1842, 12, "renderObject.childToSlot.keys.contains(child)");
+      if (!dart.test(this.renderObject.slotToChild[$keys][$contains](slot))) dart.assertFailed(null, I[0], 1843, 12, "renderObject.slotToChild.keys.contains(slot)");
+    }
+    removeRenderObjectChild(child, slot) {
+      object.RenderObject.as(child);
+      if (child == null) dart.nullFailed(I[0], 1847, 45, "child");
+      constants.ChildElements.as(slot);
+      if (slot == null) dart.nullFailed(I[0], 1847, 66, "slot");
+      if (!box.RenderBox.is(child)) dart.assertFailed(null, I[0], 1848, 12, "child is RenderBox");
+      if (!dart.test(this.renderObject.childToSlot[$keys][$contains](child))) dart.assertFailed(null, I[0], 1849, 12, "renderObject.childToSlot.keys.contains(child)");
+      this[_updateRenderObject](null, dart.nullCheck(this.renderObject.childToSlot[$_get](child)));
+      if (!!dart.test(this.renderObject.childToSlot[$keys][$contains](child))) dart.assertFailed(null, I[0], 1851, 12, "!renderObject.childToSlot.keys.contains(child)");
+      if (!!dart.test(this.renderObject.slotToChild[$keys][$contains](slot))) dart.assertFailed(null, I[0], 1852, 12, "!renderObject.slotToChild.keys.contains(slot)");
+    }
+    moveRenderObjectChild(child, oldSlot, newSlot) {
+      object.RenderObject.as(child);
+      if (child == null) dart.nullFailed(I[0], 1857, 20, "child");
+      if (!false) dart.assertFailed("not reachable", I[0], 1858, 12, "false");
+    }
+  };
+  (range_selector._RenderRangeSelectorElement.new = function(rangeSelector) {
+    if (rangeSelector == null) dart.nullFailed(I[0], 1767, 64, "rangeSelector");
+    this[_slotToChild] = new (T.LinkedMapOfChildElements$Element()).new();
+    this[_childToSlot] = new (T.LinkedMapOfElement$ChildElements()).new();
+    range_selector._RenderRangeSelectorElement.__proto__.new.call(this, rangeSelector);
+    ;
+  }).prototype = range_selector._RenderRangeSelectorElement.prototype;
+  dart.addTypeTests(range_selector._RenderRangeSelectorElement);
+  dart.addTypeCaches(range_selector._RenderRangeSelectorElement);
+  dart.setMethodSignature(range_selector._RenderRangeSelectorElement, () => ({
+    __proto__: dart.getMethods(range_selector._RenderRangeSelectorElement.__proto__),
+    [_updateChild]: dart.fnType(dart.void, [dart.nullable(framework.Widget), constants.ChildElements]),
+    [_updateRenderObject]: dart.fnType(dart.void, [dart.nullable(object.RenderObject), constants.ChildElements]),
+    mount: dart.fnType(dart.void, [dart.nullable(framework.Element), dart.dynamic])
+  }));
+  dart.setGetterSignature(range_selector._RenderRangeSelectorElement, () => ({
+    __proto__: dart.getGetters(range_selector._RenderRangeSelectorElement.__proto__),
+    widget: range_selector._RangeSelectorRenderObjectWidget,
+    renderObject: range_selector._RenderRangeSelector
+  }));
+  dart.setLibraryUri(range_selector._RenderRangeSelectorElement, I[1]);
+  dart.setFieldSignature(range_selector._RenderRangeSelectorElement, () => ({
+    __proto__: dart.getFields(range_selector._RenderRangeSelectorElement.__proto__),
+    [_slotToChild]: dart.finalFieldType(core.Map$(constants.ChildElements, framework.Element)),
+    [_childToSlot]: dart.finalFieldType(core.Map$(framework.Element, constants.ChildElements))
+  }));
+  var ___RenderRangeSelector__inactiveRegionColor = dart.privateName(range_selector, "_#_RenderRangeSelector#_inactiveRegionColor");
+  var ___RenderRangeSelector__inactiveRegionColor_isSet = dart.privateName(range_selector, "_#_RenderRangeSelector#_inactiveRegionColor#isSet");
+  var ___RenderRangeSelector__activeRegionColor = dart.privateName(range_selector, "_#_RenderRangeSelector#_activeRegionColor");
+  var ___RenderRangeSelector__activeRegionColor_isSet = dart.privateName(range_selector, "_#_RenderRangeSelector#_activeRegionColor#isSet");
+  var _deferUpdateTimer = dart.privateName(range_selector, "_deferUpdateTimer");
+  var ___RenderRangeSelector__deferUpdate = dart.privateName(range_selector, "_#_RenderRangeSelector#_deferUpdate");
+  var ___RenderRangeSelector__deferUpdate_isSet = dart.privateName(range_selector, "_#_RenderRangeSelector#_deferUpdate#isSet");
+  var _child = dart.privateName(range_selector, "_child");
+  var _state = dart.privateName(range_selector, "_state");
+  var _isEnabled = dart.privateName(range_selector, "_isEnabled");
+  var _deferUpdateDelay = dart.privateName(range_selector, "_deferUpdateDelay");
+  var _semanticFormatterCallback = dart.privateName(range_selector, "_semanticFormatterCallback");
+  var _inactiveRegionColor = dart.privateName(range_selector, "_inactiveRegionColor");
+  var _activeRegionColor = dart.privateName(range_selector, "_activeRegionColor");
+  var _deferUpdate = dart.privateName(range_selector, "_deferUpdate");
+  var _updateNewValues = dart.privateName(range_selector, "_updateNewValues");
+  var _handleRangeControllerChange = dart.privateName(range_selector, "_handleRangeControllerChange");
+  var _drawRegions = dart.privateName(range_selector, "_drawRegions");
+  var _increaseStartAction = dart.privateName(range_selector, "_increaseStartAction");
+  var _decreaseStartAction = dart.privateName(range_selector, "_decreaseStartAction");
+  var _increaseEndAction = dart.privateName(range_selector, "_increaseEndAction");
+  var _decreaseEndAction = dart.privateName(range_selector, "_decreaseEndAction");
+  var _createSemanticsConfiguration = dart.privateName(range_selector, "_createSemanticsConfiguration");
+  var _name$0 = dart.privateName(ui, "_name");
+  range_selector._RenderRangeSelector = class _RenderRangeSelector extends range_slider_base.RenderBaseRangeSlider {
+    set [_inactiveRegionColor](t7) {
+      if (t7 == null) dart.nullFailed(I[0], 1940, 14, "null");
+      this[___RenderRangeSelector__inactiveRegionColor_isSet] = true;
+      this[___RenderRangeSelector__inactiveRegionColor] = t7;
+    }
+    get [_inactiveRegionColor]() {
+      let t8;
+      return dart.test(this[___RenderRangeSelector__inactiveRegionColor_isSet]) ? (t8 = this[___RenderRangeSelector__inactiveRegionColor], t8) : dart.throw(new _internal.LateError.fieldNI("_inactiveRegionColor"));
+    }
+    get [_activeRegionColor]() {
+      let t8;
+      return dart.test(this[___RenderRangeSelector__activeRegionColor_isSet]) ? (t8 = this[___RenderRangeSelector__activeRegionColor], t8) : dart.throw(new _internal.LateError.fieldNI("_activeRegionColor"));
+    }
+    set [_activeRegionColor](t8) {
+      if (t8 == null) dart.nullFailed(I[0], 1941, 14, "null");
+      this[___RenderRangeSelector__activeRegionColor_isSet] = true;
+      this[___RenderRangeSelector__activeRegionColor] = t8;
+    }
+    get isEnabled() {
+      return this[_isEnabled];
+    }
+    set isEnabled(value) {
+      if (value == null) dart.nullFailed(I[0], 1946, 22, "value");
+      if (this[_isEnabled] == value) {
+        return;
+      }
+      let wasEnabled = this.isEnabled;
+      this[_isEnabled] = value;
+      if (wasEnabled != this.isEnabled) {
+        if (dart.test(this.isEnabled)) {
+          this[_state].stateController.forward();
+        } else {
+          this[_state].stateController.reverse();
+        }
+      }
+      this.markNeedsLayout();
+    }
+    get deferUpdateDelay() {
+      return this[_deferUpdateDelay];
+    }
+    set deferUpdateDelay(value) {
+      if (value == null) dart.nullFailed(I[0], 1964, 28, "value");
+      if (this[_deferUpdateDelay] == value) {
+        return;
+      }
+      this[_deferUpdateDelay] = value;
+    }
+    get deferUpdate() {
+      return this[_deferUpdate];
+    }
+    get [_deferUpdate]() {
+      let t9;
+      return dart.test(this[___RenderRangeSelector__deferUpdate_isSet]) ? (t9 = this[___RenderRangeSelector__deferUpdate], t9) : dart.throw(new _internal.LateError.fieldNI("_deferUpdate"));
+    }
+    set [_deferUpdate](t9) {
+      if (t9 == null) dart.nullFailed(I[0], 1972, 13, "null");
+      this[___RenderRangeSelector__deferUpdate_isSet] = true;
+      this[___RenderRangeSelector__deferUpdate] = t9;
+    }
+    set deferUpdate(value) {
+      if (value == null) dart.nullFailed(I[0], 1973, 24, "value");
+      if (this[_deferUpdate] == value) {
+        return;
+      }
+      this[_deferUpdate] = value;
+    }
+    get semanticFormatterCallback() {
+      return this[_semanticFormatterCallback];
+    }
+    set semanticFormatterCallback(value) {
+      if (dart.equals(this[_semanticFormatterCallback], value)) {
+        return;
+      }
+      this[_semanticFormatterCallback] = value;
+      this.markNeedsSemanticsUpdate();
+    }
+    set sliderThemeData(value) {
+      if (value == null) dart.nullFailed(I[0], 1992, 41, "value");
+      if (dart.equals(super.sliderThemeData, value)) {
+        return;
+      }
+      super.sliderThemeData = value;
+      this.maxTrackHeight = this.getMaxTrackHeight();
+      if (range_selector_theme.SfRangeSelectorThemeData.is(value)) {
+        this[_inactiveRegionColor] = value.inactiveRegionColor;
+        this[_activeRegionColor] = value.activeRegionColor;
+      }
+      this.markNeedsPaint();
+    }
+    get sliderThemeData() {
+      return super.sliderThemeData;
+    }
+    get mounted() {
+      return this[_state].mounted;
+    }
+    set mounted(value) {
+      super.mounted = value;
+    }
+    get overlayStartController() {
+      return this[_state].overlayStartController;
+    }
+    set overlayStartController(value) {
+      super.overlayStartController = value;
+    }
+    get overlayEndController() {
+      return this[_state].overlayEndController;
+    }
+    set overlayEndController(value) {
+      super.overlayEndController = value;
+    }
+    get stateController() {
+      return this[_state].stateController;
+    }
+    set stateController(value) {
+      super.stateController = value;
+    }
+    get startPositionController() {
+      return this[_state].startPositionController;
+    }
+    set startPositionController(value) {
+      super.startPositionController = value;
+    }
+    get endPositionController() {
+      return this[_state].endPositionController;
+    }
+    set endPositionController(value) {
+      super.endPositionController = value;
+    }
+    get tooltipAnimationStartController() {
+      return this[_state].tooltipAnimationStartController;
+    }
+    set tooltipAnimationStartController(value) {
+      super.tooltipAnimationStartController = value;
+    }
+    get tooltipAnimationEndController() {
+      return this[_state].tooltipAnimationEndController;
+    }
+    set tooltipAnimationEndController(value) {
+      super.tooltipAnimationEndController = value;
+    }
+    get child() {
+      return this[_child];
+    }
+    set child(value) {
+      T.RenderBoxN().as(value);
+      this[_child] = this.updateChild(this[_child], value, constants.ChildElements.child);
+    }
+    get children() {
+      return new (T.SyncIterableOfRenderBox()).new((function* children() {
+        if (this.startThumbIcon != null) {
+          yield dart.nullCheck(this.startThumbIcon);
+        }
+        if (this.endThumbIcon != null) {
+          yield dart.nullCheck(this.endThumbIcon);
+        }
+        if (this.child != null) {
+          yield dart.nullCheck(this.child);
+        }
+      }).bind(this));
+    }
+    get elementsActualHeight() {
+      return math.max(core.double, 2 * dart.notNull(this.trackOffset.dy), dart.notNull(this.trackOffset.dy) + dart.notNull(this.maxTrackHeight) / 2 + math.max(core.num, this.actualTickHeight, this.actualMinorTickHeight) + dart.notNull(this.actualLabelHeight));
+    }
+    get adjustTrackY() {
+      return dart.notNull(this.sliderThemeData.activeTrackHeight) > dart.notNull(this.sliderThemeData.inactiveTrackHeight) ? dart.notNull(this.sliderThemeData.activeTrackHeight) - dart.notNull(this.sliderThemeData.inactiveTrackHeight) : dart.notNull(this.sliderThemeData.inactiveTrackHeight) - dart.notNull(this.sliderThemeData.activeTrackHeight);
+    }
+    [_updateNewValues](newValues) {
+      if (newValues == null) dart.nullFailed(I[0], 2070, 39, "newValues");
+      if (this[_state].widget.onChanged != null) {
+        dart.nullCheck(this[_state].widget.onChanged)(newValues);
+      }
+      if (this[_state].widget.controller != null) {
+        dart.nullCheck(this[_state].widget.controller).start = newValues.start;
+        dart.nullCheck(this[_state].widget.controller).end = newValues.end;
+      } else if (!dart.test(this[_deferUpdate])) {
+        this.values = newValues;
+        this.markNeedsPaint();
+      }
+    }
+    [_handleRangeControllerChange]() {
+      if (dart.test(this[_state].mounted) && this[_state].widget.controller != null && (!dart.equals(this.values.start, dart.nullCheck(this[_state].widget.controller).start) || !dart.equals(this.values.end, dart.nullCheck(this[_state].widget.controller).end))) {
+        this.values = new common.SfRangeValues.new(this.getActualValue({value: dart.nullCheck(this[_state].widget.controller).start}), this.getActualValue({value: dart.nullCheck(this[_state].widget.controller).end}));
+        this.markNeedsPaint();
+      }
+    }
+    updateValues(newValues) {
+      let t10;
+      if (newValues == null) dart.nullFailed(I[0], 2097, 35, "newValues");
+      if (dart.test(this[_isEnabled]) && !dart.test(this.isIntervalTapped)) {
+        if (!dart.equals(newValues.start, this.values.start) || !dart.equals(newValues.end, this.values.end)) {
+          if (dart.test(this[_deferUpdate])) {
+            t10 = this[_deferUpdateTimer];
+            t10 == null ? null : t10.cancel();
+            this[_deferUpdateTimer] = async.Timer.new(new core.Duration.new({milliseconds: this[_deferUpdateDelay]}), dart.fn(() => {
+              this[_updateNewValues](newValues);
+            }, T.VoidTovoid()));
+            this.values = newValues;
+            this.markNeedsPaint();
+          } else {
+            this[_updateNewValues](newValues);
+          }
+        }
+      }
+      super.updateValues(newValues);
+    }
+    updateIntervalTappedAndDeferredUpdateValues(newValues) {
+      let t10;
+      if (newValues == null) dart.nullFailed(I[0], 2117, 66, "newValues");
+      if (dart.test(this.isIntervalTapped)) {
+        this[_updateNewValues](newValues);
+      }
+      if (dart.test(this[_deferUpdate])) {
+        t10 = this[_deferUpdateTimer];
+        t10 == null ? null : t10.cancel();
+        this[_updateNewValues](newValues);
+      }
+    }
+    [_drawRegions](context, trackRect, offset, startThumbCenter, endThumbCenter) {
+      let t10;
+      if (context == null) dart.nullFailed(I[0], 2133, 37, "context");
+      if (trackRect == null) dart.nullFailed(I[0], 2133, 51, "trackRect");
+      if (offset == null) dart.nullFailed(I[0], 2133, 69, "offset");
+      if (startThumbCenter == null) dart.nullFailed(I[0], 2134, 14, "startThumbCenter");
+      if (endThumbCenter == null) dart.nullFailed(I[0], 2134, 39, "endThumbCenter");
+      let paint = (t10 = ui.Paint.new(), (() => {
+        t10.isAntiAlias = true;
+        t10.color = this[_inactiveRegionColor];
+        return t10;
+      })());
+      if (this.child != null && dart.notNull(dart.nullCheck(this.child).size.height) > 1 && dart.notNull(dart.nullCheck(this.child).size.width) > 1) {
+        let halfActiveTrackHeight = dart.notNull(this.sliderThemeData.activeTrackHeight) / 2;
+        let halfInactiveTrackHeight = dart.notNull(this.sliderThemeData.inactiveTrackHeight) / 2;
+        let isMaxActive = dart.notNull(this.sliderThemeData.activeTrackHeight) > dart.notNull(this.sliderThemeData.inactiveTrackHeight);
+        let leftThumbCenter = null;
+        let rightThumbCenter = null;
+        if (this.textDirection == ui.TextDirection.rtl) {
+          leftThumbCenter = endThumbCenter;
+          rightThumbCenter = startThumbCenter;
+        } else {
+          leftThumbCenter = startThumbCenter;
+          rightThumbCenter = endThumbCenter;
+        }
+        let inactiveRegionAdj = isMaxActive ? halfActiveTrackHeight - halfInactiveTrackHeight : 0.0;
+        let activeRegionAdj = !isMaxActive ? halfInactiveTrackHeight - halfActiveTrackHeight : 0.0;
+        context.canvas.drawRect(new ui.Rect.fromLTRB(trackRect.left, offset.dy, leftThumbCenter.dx, dart.notNull(trackRect.top) + inactiveRegionAdj), paint);
+        paint.color = this[_activeRegionColor];
+        context.canvas.drawRect(new ui.Rect.fromLTRB(leftThumbCenter.dx, offset.dy, rightThumbCenter.dx, dart.notNull(trackRect.top) + activeRegionAdj), paint);
+        paint.color = this[_inactiveRegionColor];
+        context.canvas.drawRect(new ui.Rect.fromLTRB(rightThumbCenter.dx, offset.dy, trackRect.right, dart.notNull(trackRect.top) + inactiveRegionAdj), paint);
+      }
+    }
+    [_increaseStartAction]() {
+      if (dart.test(this.isEnabled)) {
+        let newValues = new common.SfRangeValues.new(this.increasedStartValue, this.values.end);
+        if (dart.notNull(this.getNumerizedValue(newValues.start)) <= dart.notNull(this.getNumerizedValue(newValues.end))) {
+          this[_updateNewValues](newValues);
+        }
+      }
+    }
+    [_decreaseStartAction]() {
+      if (dart.test(this.isEnabled)) {
+        this[_updateNewValues](new common.SfRangeValues.new(this.decreasedStartValue, this.values.end));
+      }
+    }
+    [_increaseEndAction]() {
+      if (dart.test(this.isEnabled)) {
+        this[_updateNewValues](new common.SfRangeValues.new(this.values.start, this.increasedEndValue));
+      }
+    }
+    [_decreaseEndAction]() {
+      if (dart.test(this.isEnabled)) {
+        let newValues = new common.SfRangeValues.new(this.values.start, this.decreasedEndValue);
+        if (dart.notNull(this.getNumerizedValue(newValues.start)) <= dart.notNull(this.getNumerizedValue(newValues.end))) {
+          this[_updateNewValues](newValues);
+        }
+      }
+    }
+    hitTestSelf(position) {
+      if (position == null) dart.nullFailed(I[0], 2212, 27, "position");
+      return this.isEnabled;
+    }
+    hitTestChildren(result, opts) {
+      if (result == null) dart.nullFailed(I[0], 2215, 41, "result");
+      let position = opts && 'position' in opts ? opts.position : null;
+      return false;
+    }
+    setupParentData(child) {
+      object.RenderObject.as(child);
+      if (child == null) dart.nullFailed(I[0], 2218, 37, "child");
+      if (!box.BoxParentData.is(child.parentData)) {
+        child.parentData = new box.BoxParentData.new();
+      }
+    }
+    visitChildren(visitor) {
+      if (visitor == null) dart.nullFailed(I[0], 2225, 42, "visitor");
+      this.children[$forEach](visitor);
+    }
+    attach(owner) {
+      object.PipelineOwner.as(owner);
+      if (owner == null) dart.nullFailed(I[0], 2230, 39, "owner");
+      super.attach(owner);
+      if (this[_state].widget.controller != null) {
+        dart.nullCheck(this[_state].widget.controller).addListener(dart.bind(this, _handleRangeControllerChange));
+      }
+      for (let child of this.children) {
+        child.attach(owner);
+      }
+    }
+    detach() {
+      let t10;
+      super.detach();
+      t10 = this[_deferUpdateTimer];
+      t10 == null ? null : t10.cancel();
+      if (this[_state].widget.controller != null) {
+        dart.nullCheck(this[_state].widget.controller).removeListener(dart.bind(this, _handleRangeControllerChange));
+      }
+      for (let child of this.children) {
+        child.detach();
+      }
+    }
+    performLayout() {
+      let t10, t10$;
+      let childHeight = 0.0;
+      let childWidth = 0.0;
+      let minTrackHeight = math.min(core.double, this.sliderThemeData.activeTrackHeight, this.sliderThemeData.inactiveTrackHeight);
+      let trackCenterLeft = this.trackOffset;
+      let elementsHeightWithoutChild = this.elementsActualHeight;
+      let elementsHeightAfterRenderedChild = math.max(core.double, dart.notNull(trackCenterLeft.dy) + minTrackHeight / 2, dart.notNull(this.maxTrackHeight) / 2 + minTrackHeight / 2 + math.max(core.num, this.actualTickHeight, this.actualMinorTickHeight) + dart.notNull(this.actualLabelHeight));
+      if (dart.notNull(this.constraints.maxHeight) < dart.notNull(elementsHeightWithoutChild)) {
+        let actualChildHeight = dart.notNull(elementsHeightWithoutChild) - elementsHeightAfterRenderedChild;
+        let spaceLeftInActualLayoutHeight = elementsHeightAfterRenderedChild - dart.notNull(this.constraints.maxHeight);
+        elementsHeightAfterRenderedChild = elementsHeightAfterRenderedChild - spaceLeftInActualLayoutHeight - actualChildHeight;
+      }
+      if (this.child != null) {
+        let maxRadius = this.trackOffset.dx;
+        let childConstraints = this.constraints.deflate(new edge_insets.EdgeInsets.only({left: maxRadius, right: maxRadius, bottom: elementsHeightAfterRenderedChild}));
+        dart.nullCheck(this.child).layout(childConstraints, {parentUsesSize: true});
+        let childParentData = box.BoxParentData.as(dart.nullCheck(dart.nullCheck(this.child).parentData));
+        childParentData.offset = new ui.Offset.new(maxRadius, 0.0);
+        childHeight = dart.nullCheck(this.child).size.height;
+        childWidth = dart.nullCheck(this.child).size.width;
+      }
+      let contentConstraints = new box.BoxConstraints.tightFor({width: dart.notNull(this.sliderThemeData.thumbRadius) * 2, height: dart.notNull(this.sliderThemeData.thumbRadius) * 2});
+      t10 = this.startThumbIcon;
+      t10 == null ? null : t10.layout(contentConstraints, {parentUsesSize: true});
+      t10$ = this.endThumbIcon;
+      t10$ == null ? null : t10$.layout(contentConstraints, {parentUsesSize: true});
+      let actualWidth = dart.notNull(childWidth) > 0.0 ? dart.notNull(childWidth) + 2 * dart.notNull(this.trackOffset.dx) : dart.notNull(this.minTrackWidth) + 2 * dart.notNull(this.trackOffset.dx);
+      let actualHeight = dart.notNull(childHeight) + elementsHeightAfterRenderedChild;
+      this.size = new ui.Size.new(dart.test(this.constraints.hasBoundedWidth) && dart.notNull(this.constraints.maxWidth) < actualWidth ? this.constraints.maxWidth : actualWidth, dart.test(this.constraints.hasBoundedHeight) && dart.notNull(this.constraints.maxHeight) < actualHeight ? this.constraints.maxHeight : actualHeight);
+      this.generateLabelsAndMajorTicks();
+      this.generateMinorTicks();
+    }
+    drawRegions(context, trackRect, offset, startThumbCenter, endThumbCenter) {
+      if (context == null) dart.nullFailed(I[0], 2320, 36, "context");
+      if (trackRect == null) dart.nullFailed(I[0], 2320, 50, "trackRect");
+      if (offset == null) dart.nullFailed(I[0], 2320, 68, "offset");
+      if (startThumbCenter == null) dart.nullFailed(I[0], 2321, 14, "startThumbCenter");
+      if (endThumbCenter == null) dart.nullFailed(I[0], 2321, 39, "endThumbCenter");
+      this[_drawRegions](context, trackRect, offset, startThumbCenter, endThumbCenter);
+    }
+    paint(context, offset) {
+      if (context == null) dart.nullFailed(I[0], 2326, 30, "context");
+      if (offset == null) dart.nullFailed(I[0], 2326, 46, "offset");
+      let childHeight = 0.0;
+      if (this.child != null) {
+        let childParentData = box.BoxParentData.as(dart.nullCheck(dart.nullCheck(this.child).parentData));
+        context.paintChild(dart.nullCheck(this.child), childParentData.offset['+'](offset));
+        childHeight = dart.nullCheck(this.child).size.height;
+        if (dart.notNull(childHeight) >= dart.notNull(this.constraints.maxHeight)) {
+          childHeight = dart.notNull(childHeight) - (dart.notNull(this.elementsActualHeight) - math.max(core.double, this.actualOverlaySize.height, this.actualThumbSize.height) / 2);
+        }
+      }
+      let actualTrackOffset = new ui.Offset.new(offset.dx, dart.notNull(offset.dy) + math.max(core.num, dart.notNull(childHeight) - dart.notNull(this.adjustTrackY) / 2, dart.notNull(this.trackOffset.dy) - dart.notNull(this.maxTrackHeight) / 2));
+      this.drawRangeSliderElements(context, offset, actualTrackOffset);
+    }
+    [_createSemanticsConfiguration](value, increasedValue, decreasedValue, thumb, increaseAction, decreaseAction) {
+      if (thumb == null) dart.nullFailed(I[0], 2353, 13, "thumb");
+      if (increaseAction == null) dart.nullFailed(I[0], 2354, 18, "increaseAction");
+      if (decreaseAction == null) dart.nullFailed(I[0], 2355, 18, "decreaseAction");
+      let config = new semantics.SemanticsConfiguration.new();
+      config.isEnabled = this.isEnabled;
+      config.textDirection = this.textDirection;
+      if (dart.test(this.isEnabled)) {
+        config.onIncrease = increaseAction;
+        config.onDecrease = decreaseAction;
+      }
+      if (this.semanticFormatterCallback != null) {
+        config.value = dart.nullCheck(this.semanticFormatterCallback)(value, thumb);
+        config.increasedValue = dart.nullCheck(this.semanticFormatterCallback)(increasedValue, thumb);
+        config.decreasedValue = dart.nullCheck(this.semanticFormatterCallback)(decreasedValue, thumb);
+      } else {
+        let thumbValue = dart.toString(thumb)[$split](".")[$last];
+        config.value = "the " + dart.str(thumbValue) + " value is " + dart.str(value);
+        config.increasedValue = "the " + dart.str(thumbValue) + "  value is " + dart.str(increasedValue);
+        config.decreasedValue = "the " + dart.str(thumbValue) + "  value is " + dart.str(decreasedValue);
+      }
+      return config;
+    }
+    assembleSemanticsNode(node, config, children) {
+      if (node == null) dart.nullFailed(I[0], 2380, 19, "node");
+      if (config == null) dart.nullFailed(I[0], 2381, 28, "config");
+      if (children == null) dart.nullFailed(I[0], 2382, 29, "children");
+      if (!dart.test(children[$isEmpty])) dart.assertFailed(null, I[0], 2384, 12, "children.isEmpty");
+      let startSemanticsConfiguration = this[_createSemanticsConfiguration](this.values.start, this.increasedStartValue, this.decreasedStartValue, common.SfThumb.start, dart.bind(this, _increaseStartAction), dart.bind(this, _decreaseStartAction));
+      let endSemanticsConfiguration = this[_createSemanticsConfiguration](this.values.end, this.increasedEndValue, this.decreasedEndValue, common.SfThumb.end, dart.bind(this, _increaseEndAction), dart.bind(this, _decreaseEndAction));
+      let leftRect = new ui.Rect.fromPoints(node.rect.topLeft, node.rect.bottomCenter);
+      let rightRect = new ui.Rect.fromPoints(node.rect.topCenter, node.rect.bottomRight);
+      switch (this.textDirection) {
+        case C[59] || CT.C59:
+        {
+          dart.nullCheck(this.startSemanticsNode).rect = leftRect;
+          dart.nullCheck(this.endSemanticsNode).rect = rightRect;
+          break;
+        }
+        case C[60] || CT.C60:
+        {
+          dart.nullCheck(this.startSemanticsNode).rect = rightRect;
+          dart.nullCheck(this.endSemanticsNode).rect = leftRect;
+          break;
+        }
+        default:
+        {
+          dart.throw(new _internal.ReachabilityError.new("`null` encountered as case in a switch expression with a non-nullable enum type."));
+        }
+      }
+      dart.nullCheck(this.startSemanticsNode).updateWith({config: startSemanticsConfiguration});
+      dart.nullCheck(this.endSemanticsNode).updateWith({config: endSemanticsConfiguration});
+      let finalChildren = T.JSArrayOfSemanticsNode().of([dart.nullCheck(this.startSemanticsNode), dart.nullCheck(this.endSemanticsNode)]);
+      node.updateWith({config: config, childrenInInversePaintOrder: finalChildren});
+    }
+    clearSemantics() {
+      super.clearSemantics();
+      this.startSemanticsNode = null;
+      this.endSemanticsNode = null;
+    }
+    describeSemanticsConfiguration(config) {
+      if (config == null) dart.nullFailed(I[0], 2438, 62, "config");
+      super.describeSemanticsConfiguration(config);
+      config.isSemanticBoundary = this.isEnabled;
+    }
+    debugFillProperties(properties) {
+      if (properties == null) dart.nullFailed(I[0], 2444, 56, "properties");
+      super.debugFillProperties(properties);
+      properties.add(new diagnostics.StringProperty.new("deferredUpdateDelay", dart.toString(this[_deferUpdateDelay]) + " ms"));
+      this.debugRangeSliderFillProperties(properties);
+    }
+  };
+  (range_selector._RenderRangeSelector.new = function(opts) {
+    let min = opts && 'min' in opts ? opts.min : null;
+    let max = opts && 'max' in opts ? opts.max : null;
+    let values = opts && 'values' in opts ? opts.values : null;
+    let enabled = opts && 'enabled' in opts ? opts.enabled : null;
+    if (enabled == null) dart.nullFailed(I[0], 1867, 19, "enabled");
+    let interval = opts && 'interval' in opts ? opts.interval : null;
+    let stepSize = opts && 'stepSize' in opts ? opts.stepSize : null;
+    let stepDuration = opts && 'stepDuration' in opts ? opts.stepDuration : null;
+    let deferUpdateDelay = opts && 'deferUpdateDelay' in opts ? opts.deferUpdateDelay : null;
+    if (deferUpdateDelay == null) dart.nullFailed(I[0], 1871, 18, "deferUpdateDelay");
+    let minorTicksPerInterval = opts && 'minorTicksPerInterval' in opts ? opts.minorTicksPerInterval : null;
+    if (minorTicksPerInterval == null) dart.nullFailed(I[0], 1872, 18, "minorTicksPerInterval");
+    let showTicks = opts && 'showTicks' in opts ? opts.showTicks : null;
+    if (showTicks == null) dart.nullFailed(I[0], 1873, 19, "showTicks");
+    let showLabels = opts && 'showLabels' in opts ? opts.showLabels : null;
+    if (showLabels == null) dart.nullFailed(I[0], 1874, 19, "showLabels");
+    let showDividers = opts && 'showDividers' in opts ? opts.showDividers : null;
+    if (showDividers == null) dart.nullFailed(I[0], 1875, 19, "showDividers");
+    let enableTooltip = opts && 'enableTooltip' in opts ? opts.enableTooltip : null;
+    if (enableTooltip == null) dart.nullFailed(I[0], 1876, 19, "enableTooltip");
+    let enableIntervalSelection = opts && 'enableIntervalSelection' in opts ? opts.enableIntervalSelection : null;
+    if (enableIntervalSelection == null) dart.nullFailed(I[0], 1877, 19, "enableIntervalSelection");
+    let deferUpdate = opts && 'deferUpdate' in opts ? opts.deferUpdate : null;
+    if (deferUpdate == null) dart.nullFailed(I[0], 1878, 19, "deferUpdate");
+    let dragMode = opts && 'dragMode' in opts ? opts.dragMode : null;
+    if (dragMode == null) dart.nullFailed(I[0], 1879, 29, "dragMode");
+    let labelPlacement = opts && 'labelPlacement' in opts ? opts.labelPlacement : null;
+    if (labelPlacement == null) dart.nullFailed(I[0], 1880, 29, "labelPlacement");
+    let numberFormat = opts && 'numberFormat' in opts ? opts.numberFormat : null;
+    if (numberFormat == null) dart.nullFailed(I[0], 1881, 27, "numberFormat");
+    let dateFormat = opts && 'dateFormat' in opts ? opts.dateFormat : null;
+    let dateIntervalType = opts && 'dateIntervalType' in opts ? opts.dateIntervalType : null;
+    let labelFormatterCallback = opts && 'labelFormatterCallback' in opts ? opts.labelFormatterCallback : null;
+    if (labelFormatterCallback == null) dart.nullFailed(I[0], 1884, 37, "labelFormatterCallback");
+    let tooltipTextFormatterCallback = opts && 'tooltipTextFormatterCallback' in opts ? opts.tooltipTextFormatterCallback : null;
+    if (tooltipTextFormatterCallback == null) dart.nullFailed(I[0], 1885, 43, "tooltipTextFormatterCallback");
+    let semanticFormatterCallback = opts && 'semanticFormatterCallback' in opts ? opts.semanticFormatterCallback : null;
+    let trackShape = opts && 'trackShape' in opts ? opts.trackShape : null;
+    if (trackShape == null) dart.nullFailed(I[0], 1887, 27, "trackShape");
+    let dividerShape = opts && 'dividerShape' in opts ? opts.dividerShape : null;
+    if (dividerShape == null) dart.nullFailed(I[0], 1888, 29, "dividerShape");
+    let overlayShape = opts && 'overlayShape' in opts ? opts.overlayShape : null;
+    if (overlayShape == null) dart.nullFailed(I[0], 1889, 29, "overlayShape");
+    let thumbShape = opts && 'thumbShape' in opts ? opts.thumbShape : null;
+    if (thumbShape == null) dart.nullFailed(I[0], 1890, 27, "thumbShape");
+    let tickShape = opts && 'tickShape' in opts ? opts.tickShape : null;
+    if (tickShape == null) dart.nullFailed(I[0], 1891, 26, "tickShape");
+    let minorTickShape = opts && 'minorTickShape' in opts ? opts.minorTickShape : null;
+    if (minorTickShape == null) dart.nullFailed(I[0], 1892, 26, "minorTickShape");
+    let tooltipShape = opts && 'tooltipShape' in opts ? opts.tooltipShape : null;
+    if (tooltipShape == null) dart.nullFailed(I[0], 1893, 29, "tooltipShape");
+    let rangeSelectorThemeData = opts && 'rangeSelectorThemeData' in opts ? opts.rangeSelectorThemeData : null;
+    if (rangeSelectorThemeData == null) dart.nullFailed(I[0], 1894, 39, "rangeSelectorThemeData");
+    let textDirection = opts && 'textDirection' in opts ? opts.textDirection : null;
+    if (textDirection == null) dart.nullFailed(I[0], 1895, 28, "textDirection");
+    let mediaQueryData = opts && 'mediaQueryData' in opts ? opts.mediaQueryData : null;
+    if (mediaQueryData == null) dart.nullFailed(I[0], 1896, 29, "mediaQueryData");
+    let state = opts && 'state' in opts ? opts.state : null;
+    if (state == null) dart.nullFailed(I[0], 1897, 36, "state");
+    this[___RenderRangeSelector__inactiveRegionColor] = null;
+    this[___RenderRangeSelector__inactiveRegionColor_isSet] = false;
+    this[___RenderRangeSelector__activeRegionColor] = null;
+    this[___RenderRangeSelector__activeRegionColor_isSet] = false;
+    this[_deferUpdateTimer] = null;
+    this[___RenderRangeSelector__deferUpdate] = null;
+    this[___RenderRangeSelector__deferUpdate_isSet] = false;
+    this[_child] = null;
+    this[_state] = state;
+    this[_isEnabled] = enabled;
+    this[_deferUpdateDelay] = deferUpdateDelay;
+    this[___RenderRangeSelector__deferUpdate_isSet] = true;
+    this[___RenderRangeSelector__deferUpdate] = deferUpdate;
+    this[_semanticFormatterCallback] = semanticFormatterCallback;
+    range_selector._RenderRangeSelector.__proto__.new.call(this, {min: min, max: max, values: values, interval: interval, stepSize: stepSize, stepDuration: stepDuration, minorTicksPerInterval: minorTicksPerInterval, showTicks: showTicks, showLabels: showLabels, showDividers: showDividers, enableTooltip: enableTooltip, enableIntervalSelection: enableIntervalSelection, dragMode: dragMode, labelPlacement: labelPlacement, numberFormat: numberFormat, dateFormat: dateFormat, dateIntervalType: dateIntervalType, labelFormatterCallback: labelFormatterCallback, tooltipTextFormatterCallback: tooltipTextFormatterCallback, trackShape: trackShape, dividerShape: dividerShape, overlayShape: overlayShape, thumbShape: thumbShape, tickShape: tickShape, minorTickShape: minorTickShape, tooltipShape: tooltipShape, sliderThemeData: rangeSelectorThemeData, sliderType: constants.SliderType.horizontal, tooltipPosition: null, textDirection: textDirection, mediaQueryData: mediaQueryData});
+    this[_inactiveRegionColor] = rangeSelectorThemeData.inactiveRegionColor;
+    this[_activeRegionColor] = rangeSelectorThemeData.activeRegionColor;
+  }).prototype = range_selector._RenderRangeSelector.prototype;
+  dart.addTypeTests(range_selector._RenderRangeSelector);
+  dart.addTypeCaches(range_selector._RenderRangeSelector);
+  dart.setMethodSignature(range_selector._RenderRangeSelector, () => ({
+    __proto__: dart.getMethods(range_selector._RenderRangeSelector.__proto__),
+    [_updateNewValues]: dart.fnType(dart.void, [common.SfRangeValues]),
+    [_handleRangeControllerChange]: dart.fnType(dart.void, []),
+    updateIntervalTappedAndDeferredUpdateValues: dart.fnType(dart.void, [common.SfRangeValues]),
+    [_drawRegions]: dart.fnType(dart.void, [object.PaintingContext, ui.Rect, ui.Offset, ui.Offset, ui.Offset]),
+    [_increaseStartAction]: dart.fnType(dart.void, []),
+    [_decreaseStartAction]: dart.fnType(dart.void, []),
+    [_increaseEndAction]: dart.fnType(dart.void, []),
+    [_decreaseEndAction]: dart.fnType(dart.void, []),
+    hitTestChildren: dart.fnType(core.bool, [box.BoxHitTestResult], {position: dart.nullable(ui.Offset)}, {}),
+    [_createSemanticsConfiguration]: dart.fnType(semantics.SemanticsConfiguration, [dart.dynamic, dart.dynamic, dart.dynamic, common.SfThumb, dart.fnType(dart.void, []), dart.fnType(dart.void, [])])
+  }));
+  dart.setGetterSignature(range_selector._RenderRangeSelector, () => ({
+    __proto__: dart.getGetters(range_selector._RenderRangeSelector.__proto__),
+    [_inactiveRegionColor]: ui.Color,
+    [_activeRegionColor]: ui.Color,
+    isEnabled: core.bool,
+    deferUpdateDelay: core.int,
+    deferUpdate: core.bool,
+    [_deferUpdate]: core.bool,
+    semanticFormatterCallback: dart.nullable(dart.fnType(core.String, [dart.dynamic, common.SfThumb])),
+    mounted: core.bool,
+    children: core.Iterable$(box.RenderBox),
+    elementsActualHeight: core.double,
+    adjustTrackY: core.double
+  }));
+  dart.setSetterSignature(range_selector._RenderRangeSelector, () => ({
+    __proto__: dart.getSetters(range_selector._RenderRangeSelector.__proto__),
+    [_inactiveRegionColor]: ui.Color,
+    [_activeRegionColor]: ui.Color,
+    isEnabled: core.bool,
+    deferUpdateDelay: core.int,
+    [_deferUpdate]: core.bool,
+    deferUpdate: core.bool,
+    semanticFormatterCallback: dart.nullable(dart.fnType(core.String, [dart.dynamic, common.SfThumb]))
+  }));
+  dart.setLibraryUri(range_selector._RenderRangeSelector, I[1]);
+  dart.setFieldSignature(range_selector._RenderRangeSelector, () => ({
+    __proto__: dart.getFields(range_selector._RenderRangeSelector.__proto__),
+    [_state]: dart.finalFieldType(range_selector._SfRangeSelectorState),
+    [___RenderRangeSelector__inactiveRegionColor]: dart.fieldType(dart.nullable(ui.Color)),
+    [___RenderRangeSelector__inactiveRegionColor_isSet]: dart.fieldType(core.bool),
+    [___RenderRangeSelector__activeRegionColor]: dart.fieldType(dart.nullable(ui.Color)),
+    [___RenderRangeSelector__activeRegionColor_isSet]: dart.fieldType(core.bool),
+    [_deferUpdateTimer]: dart.fieldType(dart.nullable(async.Timer)),
+    [_isEnabled]: dart.fieldType(core.bool),
+    [_deferUpdateDelay]: dart.fieldType(core.int),
+    [___RenderRangeSelector__deferUpdate]: dart.fieldType(dart.nullable(core.bool)),
+    [___RenderRangeSelector__deferUpdate_isSet]: dart.fieldType(core.bool),
+    [_semanticFormatterCallback]: dart.fieldType(dart.nullable(dart.fnType(core.String, [dart.dynamic, common.SfThumb]))),
+    [_child]: dart.fieldType(dart.nullable(box.RenderBox))
+  }));
+  dart.trackLibraries("packages/syncfusion_flutter_sliders/src/range_selector.dart", {
+    "package:syncfusion_flutter_sliders/src/range_selector.dart": range_selector
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["range_selector.dart"],"names":[],"mappings":"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;IACG;;;;;;IACR;;;;;;IACC;;;;;;IACA;;;;;;IACc;;;;;;;AAIxB,gEAA4B;IAAK;;UAGQ;AAC3C,YAAO,mDACA,eACA,kBACG,sBACC,wBACC,yBACA,6BACI,qCACI,8CACK,uCACZ,4BACC,+BACE,kCACC,6CACU,2CACZ,4BACH,+BACM,mCACF,+BACF,mCACM,+CACM,2DACM,8DACH,4CACf,+BACE,iCACA,+BACF,4BACD,gCACK,mCACF,2CACU,4CACM,wBAAG,OAAO,mBACb,0BAAG,OAAO,UAC9B;IAEX;uBAIiB,SAA8B;;UAA9B;6CAA8B;;AAiCF,WAhC3C,YAAY;MAAZ;AACI,iBAAM;AACN,iBAAM;AACN,uBAAY;AACZ,sBAAW;AACX,sBAAW;AACX,0BAAe;AACf,8BAAmB;AACnB,mCAAwB;AACxB,uBAAY;AACZ,wBAAa;AACb,0BAAe;AACf,2BAAgB;AAChB,qCAA0B;AAC1B,yBAAc;AACd,sBAAW;AACX,4BAAiB;AACjB,0BAAe;AACf,wBAAa;AACb,8BAAmB;AACnB,oCAAyB;AACzB,0CAA+B;AAC/B,uCAA4B;AAC5B,wBAAa;AACb,0BAAe;AACf,0BAAe;AACf,wBAAa;AACb,uBAAY;AACZ,4BAAiB;AACjB,0BAAe;AACf,6BAAkB;AAClB,2BAA+B,wBAAG,OAAO;AACzC,4BAA4B,0BAAG,OAAO;;;IAC5C;;;QAjKO;QACS;QACA;QACA;QACA;;QACA;QACA;QACA;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;QACA;QACA;;QACA;;QACA;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;;QACA;QACA;QACA;;;IApCA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;AACX,mFAAW,GAAG;;EA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","file":"../../../../../../../../packages/syncfusion_flutter_sliders/src/range_selector.dart.lib.js"}');
+  // Exports:
+  return {
+    src__range_selector: range_selector
+  };
+}));
+
+//# sourceMappingURL=range_selector.dart.lib.js.map

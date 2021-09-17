@@ -1,0 +1,285 @@
+define(['dart_sdk', 'packages/logging/src/logger.dart', 'packages/mysql1/src/buffer.dart', 'packages/mysql1/src/mysql_protocol_error.dart', 'packages/mysql1/src/results/field.dart', 'packages/mysql1/src/prepared_statements/prepare_ok_packet.dart', 'packages/mysql1/src/handlers/handler.dart'], (function load__packages__mysql1__src__prepared_statements__prepare_handler_dart(dart_sdk, packages__logging__src__logger$46dart, packages__mysql1__src__buffer$46dart, packages__mysql1__src__mysql_protocol_error$46dart, packages__mysql1__src__results__field$46dart, packages__mysql1__src__prepared_statements__prepare_ok_packet$46dart, packages__mysql1__src__handlers__handler$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _internal = dart_sdk._internal;
+  const convert = dart_sdk.convert;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const logger = packages__logging__src__logger$46dart.src__logger;
+  const buffer$ = packages__mysql1__src__buffer$46dart.src__buffer;
+  const mysql_protocol_error = packages__mysql1__src__mysql_protocol_error$46dart.src__mysql_protocol_error;
+  const field = packages__mysql1__src__results__field$46dart.src__results__field;
+  const prepare_ok_packet = packages__mysql1__src__prepared_statements__prepare_ok_packet$46dart.src__prepared_statements__prepare_ok_packet;
+  const handler = packages__mysql1__src__handlers__handler$46dart.src__handlers__handler;
+  var prepare_handler = Object.create(dart.library);
+  var prepared_query = Object.create(dart.library);
+  var $length = dartx.length;
+  var $_set = dartx._set;
+  var $where = dartx.where;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    FieldN: () => (T.FieldN = dart.constFn(dart.nullable(field.Field)))(),
+    ListOfFieldN: () => (T.ListOfFieldN = dart.constFn(core.List$(T.FieldN())))(),
+    ListOfField: () => (T.ListOfField = dart.constFn(core.List$(field.Field)))(),
+    FieldNTobool: () => (T.FieldNTobool = dart.constFn(dart.fnType(core.bool, [T.FieldN()])))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/prepared_statements/prepare_handler.dart",
+    "package:mysql1/src/prepared_statements/prepare_handler.dart",
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/prepared_statements/prepared_query.dart",
+    "package:mysql1/src/prepared_statements/prepared_query.dart"
+  ];
+  var __PrepareHandler__okPacket = dart.privateName(prepare_handler, "_#PrepareHandler#_okPacket");
+  var __PrepareHandler__okPacket_isSet = dart.privateName(prepare_handler, "_#PrepareHandler#_okPacket#isSet");
+  var __PrepareHandler__parametersToRead = dart.privateName(prepare_handler, "_#PrepareHandler#_parametersToRead");
+  var __PrepareHandler__parametersToRead_isSet = dart.privateName(prepare_handler, "_#PrepareHandler#_parametersToRead#isSet");
+  var __PrepareHandler__columnsToRead = dart.privateName(prepare_handler, "_#PrepareHandler#_columnsToRead");
+  var __PrepareHandler__columnsToRead_isSet = dart.privateName(prepare_handler, "_#PrepareHandler#_columnsToRead#isSet");
+  var __PrepareHandler__parameters = dart.privateName(prepare_handler, "_#PrepareHandler#_parameters");
+  var __PrepareHandler__parameters_isSet = dart.privateName(prepare_handler, "_#PrepareHandler#_parameters#isSet");
+  var __PrepareHandler__columns = dart.privateName(prepare_handler, "_#PrepareHandler#_columns");
+  var __PrepareHandler__columns_isSet = dart.privateName(prepare_handler, "_#PrepareHandler#_columns#isSet");
+  var _sql$ = dart.privateName(prepare_handler, "_sql");
+  var _okPacket = dart.privateName(prepare_handler, "_okPacket");
+  var _parametersToRead = dart.privateName(prepare_handler, "_parametersToRead");
+  var _columnsToRead = dart.privateName(prepare_handler, "_columnsToRead");
+  var _parameters = dart.privateName(prepare_handler, "_parameters");
+  var _columns = dart.privateName(prepare_handler, "_columns");
+  prepare_handler.PrepareHandler = class PrepareHandler extends handler.Handler {
+    get [_okPacket]() {
+      let t0;
+      return dart.test(this[__PrepareHandler__okPacket_isSet]) ? (t0 = this[__PrepareHandler__okPacket], t0) : dart.throw(new _internal.LateError.fieldNI("_okPacket"));
+    }
+    set [_okPacket](t0) {
+      if (t0 == null) dart.nullFailed(I[0], 20, 24, "null");
+      this[__PrepareHandler__okPacket_isSet] = true;
+      this[__PrepareHandler__okPacket] = t0;
+    }
+    get [_parametersToRead]() {
+      let t1;
+      return dart.test(this[__PrepareHandler__parametersToRead_isSet]) ? (t1 = this[__PrepareHandler__parametersToRead], t1) : dart.throw(new _internal.LateError.fieldNI("_parametersToRead"));
+    }
+    set [_parametersToRead](t1) {
+      if (t1 == null) dart.nullFailed(I[0], 21, 12, "null");
+      this[__PrepareHandler__parametersToRead_isSet] = true;
+      this[__PrepareHandler__parametersToRead] = t1;
+    }
+    get [_columnsToRead]() {
+      let t2;
+      return dart.test(this[__PrepareHandler__columnsToRead_isSet]) ? (t2 = this[__PrepareHandler__columnsToRead], t2) : dart.throw(new _internal.LateError.fieldNI("_columnsToRead"));
+    }
+    set [_columnsToRead](t2) {
+      if (t2 == null) dart.nullFailed(I[0], 22, 12, "null");
+      this[__PrepareHandler__columnsToRead_isSet] = true;
+      this[__PrepareHandler__columnsToRead] = t2;
+    }
+    get [_parameters]() {
+      let t3;
+      return dart.test(this[__PrepareHandler__parameters_isSet]) ? (t3 = this[__PrepareHandler__parameters], t3) : dart.throw(new _internal.LateError.fieldNI("_parameters"));
+    }
+    set [_parameters](t3) {
+      if (t3 == null) dart.nullFailed(I[0], 23, 21, "null");
+      this[__PrepareHandler__parameters_isSet] = true;
+      this[__PrepareHandler__parameters] = t3;
+    }
+    get [_columns]() {
+      let t4;
+      return dart.test(this[__PrepareHandler__columns_isSet]) ? (t4 = this[__PrepareHandler__columns], t4) : dart.throw(new _internal.LateError.fieldNI("_columns"));
+    }
+    set [_columns](t4) {
+      if (t4 == null) dart.nullFailed(I[0], 24, 21, "null");
+      this[__PrepareHandler__columns_isSet] = true;
+      this[__PrepareHandler__columns] = t4;
+    }
+    get sql() {
+      return this[_sql$];
+    }
+    get okPacket() {
+      return this[_okPacket];
+    }
+    get parameters() {
+      return this[_parameters];
+    }
+    get columns() {
+      return this[_columns];
+    }
+    createRequest() {
+      let encoded = convert.utf8.encode(this[_sql$]);
+      let buffer = new buffer$.Buffer.new(dart.notNull(encoded[$length]) + 1);
+      buffer.writeByte(22);
+      buffer.writeList(encoded);
+      return buffer;
+    }
+    processResponse(response) {
+      if (response == null) dart.nullFailed(I[0], 43, 42, "response");
+      this.log.fine("Prepare processing response");
+      let packet = this.checkResponse(response, true);
+      if (packet == null) {
+        this.log.fine("Not an OK packet, params to read: " + dart.str(this[_parametersToRead]));
+        if (dart.notNull(this[_parametersToRead]) > -1) {
+          if (response._get(0) === 254) {
+            this.log.fine("EOF");
+            if (this[_parametersToRead] !== 0) {
+              dart.throw(mysql_protocol_error.createMySqlProtocolError("Unexpected EOF packet; was expecting another " + dart.str(this[_parametersToRead]) + " parameter(s)"));
+            }
+          } else {
+            let fieldPacket = field.Field.new(response);
+            this.log.fine("field packet: " + dart.str(fieldPacket));
+            this[_parameters][$_set](dart.notNull(this[_okPacket].parameterCount) - dart.notNull(this[_parametersToRead]), fieldPacket);
+          }
+          this[_parametersToRead] = dart.notNull(this[_parametersToRead]) - 1;
+        } else if (dart.notNull(this[_columnsToRead]) > -1) {
+          if (response._get(0) === 254) {
+            this.log.fine("EOF");
+            if (this[_columnsToRead] !== 0) {
+              dart.throw(mysql_protocol_error.createMySqlProtocolError("Unexpected EOF packet; was expecting another " + dart.str(this[_columnsToRead]) + " column(s)"));
+            }
+          } else {
+            let fieldPacket = field.Field.new(response);
+            this.log.fine("field packet (column): " + dart.str(fieldPacket));
+            this[_columns][$_set](dart.notNull(this[_okPacket].columnCount) - dart.notNull(this[_columnsToRead]), fieldPacket);
+          }
+          this[_columnsToRead] = dart.notNull(this[_columnsToRead]) - 1;
+        }
+      } else if (prepare_ok_packet.PrepareOkPacket.is(packet)) {
+        this.log.fine(dart.toString(packet));
+        this[_okPacket] = packet;
+        this[_parametersToRead] = packet.parameterCount;
+        this[_columnsToRead] = packet.columnCount;
+        this[_parameters] = T.ListOfFieldN().filled(this[_parametersToRead], null);
+        this[_columns] = T.ListOfFieldN().filled(this[_columnsToRead], null);
+        if (this[_parametersToRead] === 0) {
+          this[_parametersToRead] = -1;
+        }
+        if (this[_columnsToRead] === 0) {
+          this[_columnsToRead] = -1;
+        }
+      }
+      if (this[_parametersToRead] === -1 && this[_columnsToRead] === -1) {
+        this.log.fine("finished");
+        return new handler.HandlerResponse.new({finished: true, result: new prepared_query.PreparedQuery.new(this)});
+      }
+      return handler.HandlerResponse.notFinished;
+    }
+  };
+  (prepare_handler.PrepareHandler.new = function(_sql) {
+    if (_sql == null) dart.nullFailed(I[0], 31, 23, "_sql");
+    this[__PrepareHandler__okPacket] = null;
+    this[__PrepareHandler__okPacket_isSet] = false;
+    this[__PrepareHandler__parametersToRead] = null;
+    this[__PrepareHandler__parametersToRead_isSet] = false;
+    this[__PrepareHandler__columnsToRead] = null;
+    this[__PrepareHandler__columnsToRead_isSet] = false;
+    this[__PrepareHandler__parameters] = null;
+    this[__PrepareHandler__parameters_isSet] = false;
+    this[__PrepareHandler__columns] = null;
+    this[__PrepareHandler__columns_isSet] = false;
+    this[_sql$] = _sql;
+    prepare_handler.PrepareHandler.__proto__.new.call(this, logger.Logger.new("PrepareHandler"));
+    ;
+  }).prototype = prepare_handler.PrepareHandler.prototype;
+  dart.addTypeTests(prepare_handler.PrepareHandler);
+  dart.addTypeCaches(prepare_handler.PrepareHandler);
+  dart.setMethodSignature(prepare_handler.PrepareHandler, () => ({
+    __proto__: dart.getMethods(prepare_handler.PrepareHandler.__proto__),
+    createRequest: dart.fnType(buffer$.Buffer, [])
+  }));
+  dart.setGetterSignature(prepare_handler.PrepareHandler, () => ({
+    __proto__: dart.getGetters(prepare_handler.PrepareHandler.__proto__),
+    [_okPacket]: prepare_ok_packet.PrepareOkPacket,
+    [_parametersToRead]: core.int,
+    [_columnsToRead]: core.int,
+    [_parameters]: core.List$(dart.nullable(field.Field)),
+    [_columns]: core.List$(dart.nullable(field.Field)),
+    sql: core.String,
+    okPacket: prepare_ok_packet.PrepareOkPacket,
+    parameters: core.List$(dart.nullable(field.Field)),
+    columns: core.List$(dart.nullable(field.Field))
+  }));
+  dart.setSetterSignature(prepare_handler.PrepareHandler, () => ({
+    __proto__: dart.getSetters(prepare_handler.PrepareHandler.__proto__),
+    [_okPacket]: prepare_ok_packet.PrepareOkPacket,
+    [_parametersToRead]: core.int,
+    [_columnsToRead]: core.int,
+    [_parameters]: core.List$(dart.nullable(field.Field)),
+    [_columns]: core.List$(dart.nullable(field.Field))
+  }));
+  dart.setLibraryUri(prepare_handler.PrepareHandler, I[1]);
+  dart.setFieldSignature(prepare_handler.PrepareHandler, () => ({
+    __proto__: dart.getFields(prepare_handler.PrepareHandler.__proto__),
+    [_sql$]: dart.finalFieldType(core.String),
+    [__PrepareHandler__okPacket]: dart.fieldType(dart.nullable(prepare_ok_packet.PrepareOkPacket)),
+    [__PrepareHandler__okPacket_isSet]: dart.fieldType(core.bool),
+    [__PrepareHandler__parametersToRead]: dart.fieldType(dart.nullable(core.int)),
+    [__PrepareHandler__parametersToRead_isSet]: dart.fieldType(core.bool),
+    [__PrepareHandler__columnsToRead]: dart.fieldType(dart.nullable(core.int)),
+    [__PrepareHandler__columnsToRead_isSet]: dart.fieldType(core.bool),
+    [__PrepareHandler__parameters]: dart.fieldType(dart.nullable(core.List$(dart.nullable(field.Field)))),
+    [__PrepareHandler__parameters_isSet]: dart.fieldType(core.bool),
+    [__PrepareHandler__columns]: dart.fieldType(dart.nullable(core.List$(dart.nullable(field.Field)))),
+    [__PrepareHandler__columns_isSet]: dart.fieldType(core.bool)
+  }));
+  var sql = dart.privateName(prepared_query, "PreparedQuery.sql");
+  var parameterCount = dart.privateName(prepared_query, "PreparedQuery.parameterCount");
+  var columns = dart.privateName(prepared_query, "PreparedQuery.columns");
+  var statementHandlerId = dart.privateName(prepared_query, "PreparedQuery.statementHandlerId");
+  prepared_query.PreparedQuery = class PreparedQuery extends core.Object {
+    get sql() {
+      return this[sql];
+    }
+    set sql(value) {
+      super.sql = value;
+    }
+    get parameterCount() {
+      return this[parameterCount];
+    }
+    set parameterCount(value) {
+      super.parameterCount = value;
+    }
+    get columns() {
+      return this[columns];
+    }
+    set columns(value) {
+      super.columns = value;
+    }
+    get statementHandlerId() {
+      return this[statementHandlerId];
+    }
+    set statementHandlerId(value) {
+      super.statementHandlerId = value;
+    }
+  };
+  (prepared_query.PreparedQuery.new = function(handler) {
+    if (handler == null) dart.nullFailed(I[2], 18, 32, "handler");
+    this[sql] = handler.sql;
+    this[parameterCount] = handler.parameters[$length];
+    this[columns] = T.ListOfField().from(handler.columns[$where](dart.fn(element => element != null, T.FieldNTobool())));
+    this[statementHandlerId] = handler.okPacket.statementHandlerId;
+    ;
+  }).prototype = prepared_query.PreparedQuery.prototype;
+  dart.addTypeTests(prepared_query.PreparedQuery);
+  dart.addTypeCaches(prepared_query.PreparedQuery);
+  dart.setLibraryUri(prepared_query.PreparedQuery, I[3]);
+  dart.setFieldSignature(prepared_query.PreparedQuery, () => ({
+    __proto__: dart.getFields(prepared_query.PreparedQuery.__proto__),
+    sql: dart.finalFieldType(core.String),
+    parameterCount: dart.finalFieldType(core.int),
+    columns: dart.finalFieldType(core.List$(field.Field)),
+    statementHandlerId: dart.finalFieldType(core.int)
+  }));
+  dart.trackLibraries("packages/mysql1/src/prepared_statements/prepare_handler.dart", {
+    "package:mysql1/src/prepared_statements/prepare_handler.dart": prepare_handler,
+    "package:mysql1/src/prepared_statements/prepared_query.dart": prepared_query
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["prepare_handler.dart","prepared_query.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAmBuB;IAAS;;;AAAT;;IAAS;;;AACrB;IAAiB;;;AAAjB;;IAAiB;;;AACjB;IAAc;;;AAAd;;IAAc;;;AACL;IAAW;;;AAAX;;IAAW;;;AACX;IAAQ;;;AAAR;;IAAQ;;AAER;IAAI;;AACU;IAAS;;AACV;IAAW;;AACd;IAAQ;;AAM9B,oBAAU,AAAK,oBAAO;AACtB,mBAAS,uBAAsB,aAAf,AAAQ,OAAD,aAAU;AACH,MAAlC,AAAO,MAAD;AACmB,MAAzB,AAAO,MAAD,WAAW,OAAO;AACxB,YAAO,OAAM;IACf;;UAGuC;AACE,MAAvC,AAAI,cAAK;AACL,mBAAS,mBAAc,QAAQ,EAAE;AACrC,UAAI,AAAO,MAAD;AACwD,QAAhE,AAAI,cAAK,AAAsD,gDAAlB;AAC7C,YAAsB,aAAlB,2BAAoB,CAAC;AACvB,cAAI,AAAQ,AAAI,QAAJ,MAAC;AACI,YAAf,AAAI,cAAK;AACT,gBAAI,4BAAqB;AAE4D,cADnF,WAAM,8CACF,AAA8E,2DAA/B,2BAAiB;;;AAGlE,8BAAc,gBAAM,QAAQ;AACM,YAAtC,AAAI,cAAK,AAA4B,4BAAZ,WAAW;AAErB,YADf,AAAW,yBAA0B,aAAzB,AAAU,+CAAiB,0BACnC,WAAW;;AAEE,UAAnB,0BAAiB,aAAjB,2BAAiB;cACZ,KAAmB,aAAf,wBAAiB,CAAC;AAC3B,cAAI,AAAQ,AAAI,QAAJ,MAAC;AACI,YAAf,AAAI,cAAK;AACT,gBAAI,yBAAkB;AAEyD,cAD7E,WAAM,8CACF,AAAwE,2DAAzB,wBAAc;;;AAG/D,8BAAc,gBAAM,QAAQ;AACe,YAA/C,AAAI,cAAK,AAAqC,qCAAZ,WAAW;AACiB,YAA9D,AAAQ,sBAAuB,aAAtB,AAAU,4CAAc,uBAAkB,WAAW;;AAEhD,UAAhB,uBAAc,aAAd,wBAAc;;YAEX,KAAW,qCAAP,MAAM;AACY,QAA3B,AAAI,cAAY,cAAP,MAAM;AACG,QAAlB,kBAAY,MAAM;AACuB,QAAzC,0BAAoB,AAAO,MAAD;AACS,QAAnC,uBAAiB,AAAO,MAAD;AACmC,QAA1D,oBAAc,wBAAoB,yBAAmB;AACD,QAApD,iBAAW,wBAAoB,sBAAgB;AAC/C,YAAI,AAAkB,4BAAG;AACD,UAAtB,0BAAoB,CAAC;;AAEvB,YAAI,AAAe,yBAAG;AACD,UAAnB,uBAAiB,CAAC;;;AAItB,UAAI,AAAkB,4BAAG,CAAC,KAAK,AAAe,yBAAG,CAAC;AAC5B,QAApB,AAAI,cAAK;AACT,cAAO,4CAA0B,cAAc,qCAAc;;AAE/D,YAAuB;IACzB;;;QAjEoB;uCAXC;;+CACZ;;4CACA;;yCACS;;sCACA;;IAOE;AAAQ,4DAAM,kBAAO;;EAAkB;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;ICvB9C;;;;;;IAMH;;;;;;IACQ;;;;;;IACR;;;;;;;;QAEmB;IACnB,YAAE,AAAQ,OAAD;IACE,uBAAE,AAAQ,AAAW,OAAZ;IAChB,gBACC,qBAAK,AAAQ,AAAQ,OAAT,iBAAe,QAAC,WAAY,AAAQ,OAAD;IACrC,2BAAE,AAAQ,AAAS,OAAV;;EAA4B","file":"../../../../../../../../../packages/mysql1/src/prepared_statements/prepare_handler.dart.lib.js"}');
+  // Exports:
+  return {
+    src__prepared_statements__prepare_handler: prepare_handler,
+    src__prepared_statements__prepared_query: prepared_query
+  };
+}));
+
+//# sourceMappingURL=prepare_handler.dart.lib.js.map

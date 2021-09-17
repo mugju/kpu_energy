@@ -64,6 +64,7 @@ class _ButtonZoomingState extends SampleViewState {
     super.initState();
 
     _getSmartPlug();
+    
   }
 
   @override

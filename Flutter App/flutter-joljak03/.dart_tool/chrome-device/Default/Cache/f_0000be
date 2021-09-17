@@ -1,0 +1,504 @@
+define(['dart_sdk', 'packages/logging/src/logger.dart'], (function load__packages__mysql1__src__buffer_dart(dart_sdk, packages__logging__src__logger$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _native_typed_data = dart_sdk._native_typed_data;
+  const typed_data = dart_sdk.typed_data;
+  const _internal = dart_sdk._internal;
+  const _interceptors = dart_sdk._interceptors;
+  const convert = dart_sdk.convert;
+  const io = dart_sdk.io;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const logger = packages__logging__src__logger$46dart.src__logger;
+  var buffer = Object.create(dart.library);
+  var $buffer = dartx.buffer;
+  var $length = dartx.length;
+  var $setRange = dartx.setRange;
+  var $lengthInBytes = dartx.lengthInBytes;
+  var $toList = dartx.toList;
+  var $_get = dartx._get;
+  var $_set = dartx._set;
+  var $add = dartx.add;
+  var $sublist = dartx.sublist;
+  var $leftShift = dartx['<<'];
+  var $setInt8 = dartx.setInt8;
+  var $getInt16 = dartx.getInt16;
+  var $setInt16 = dartx.setInt16;
+  var $getUint16 = dartx.getUint16;
+  var $setUint16 = dartx.setUint16;
+  var $getInt32 = dartx.getInt32;
+  var $setInt32 = dartx.setInt32;
+  var $getUint32 = dartx.getUint32;
+  var $setUint32 = dartx.setUint32;
+  var $getInt64 = dartx.getInt64;
+  var $setInt64 = dartx.setInt64;
+  var $getUint64 = dartx.getUint64;
+  var $setUint64 = dartx.setUint64;
+  var $getFloat32 = dartx.getFloat32;
+  var $setFloat32 = dartx.setFloat32;
+  var $getFloat64 = dartx.getFloat64;
+  var $setFloat64 = dartx.setFloat64;
+  var $toRadixString = dartx.toRadixString;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    JSArrayOfint: () => (T.JSArrayOfint = dart.constFn(_interceptors.JSArray$(core.int)))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/buffer.dart",
+    "package:mysql1/src/buffer.dart"
+  ];
+  var log = dart.privateName(buffer, "Buffer.log");
+  var _writePos = dart.privateName(buffer, "_writePos");
+  var _readPos = dart.privateName(buffer, "_readPos");
+  var __Buffer__data = dart.privateName(buffer, "_#Buffer#_data");
+  var __Buffer__data_isSet = dart.privateName(buffer, "_#Buffer#_data#isSet");
+  var _list = dart.privateName(buffer, "_list");
+  var _data = dart.privateName(buffer, "_data");
+  buffer.Buffer = class Buffer extends core.Object {
+    get log() {
+      return this[log];
+    }
+    set log(value) {
+      super.log = value;
+    }
+    get [_data]() {
+      let t0;
+      return dart.test(this[__Buffer__data_isSet]) ? (t0 = this[__Buffer__data], t0) : dart.throw(new _internal.LateError.fieldNI("_data"));
+    }
+    set [_data](t0) {
+      if (t0 == null) dart.nullFailed(I[0], 23, 17, "null");
+      this[__Buffer__data_isSet] = true;
+      this[__Buffer__data] = t0;
+    }
+    get list() {
+      return this[_list];
+    }
+    canReadMore() {
+      return dart.notNull(this[_readPos]) < dart.notNull(this[_list][$lengthInBytes]);
+    }
+    readFromSocket(socket, count) {
+      let t1;
+      if (socket == null) dart.nullFailed(I[0], 47, 32, "socket");
+      if (count == null) dart.nullFailed(I[0], 47, 44, "count");
+      let bytes = (t1 = socket.read(count), t1 == null ? null : t1[$toList]());
+      if (bytes == null) return 0;
+      let bytesRead = bytes[$length];
+      this[_list][$setRange](this[_writePos], dart.notNull(this[_writePos]) + dart.notNull(bytesRead), bytes);
+      this[_writePos] = dart.notNull(this[_writePos]) + dart.notNull(bytesRead);
+      return bytesRead;
+    }
+    writeToSocket(socket, start, count) {
+      if (socket == null) dart.nullFailed(I[0], 59, 31, "socket");
+      if (start == null) dart.nullFailed(I[0], 59, 43, "start");
+      if (count == null) dart.nullFailed(I[0], 59, 54, "count");
+      return socket.write(this[_list], start, count);
+    }
+    _get(index) {
+      if (index == null) dart.nullFailed(I[0], 64, 23, "index");
+      return this[_list][$_get](index);
+    }
+    _set(index, value$) {
+      let value = value$;
+      if (index == null) dart.nullFailed(I[0], 67, 25, "index");
+      if (value == null) dart.nullFailed(I[0], 67, 36, "value");
+      this[_list][$_set](index, value);
+      return value$;
+    }
+    reset() {
+      this[_readPos] = 0;
+      this[_writePos] = 0;
+    }
+    get length() {
+      return this[_list][$length];
+    }
+    seek(position) {
+      if (position == null) dart.nullFailed(I[0], 82, 17, "position");
+      this[_readPos] = position;
+    }
+    skip(numberOfBytes) {
+      if (numberOfBytes == null) dart.nullFailed(I[0], 87, 17, "numberOfBytes");
+      this[_readPos] = dart.notNull(this[_readPos]) + dart.notNull(numberOfBytes);
+    }
+    seekWrite(position) {
+      if (position == null) dart.nullFailed(I[0], 92, 22, "position");
+      this[_writePos] = position;
+    }
+    skipWrite(numberOfBytes) {
+      if (numberOfBytes == null) dart.nullFailed(I[0], 97, 22, "numberOfBytes");
+      this[_writePos] = dart.notNull(this[_writePos]) + dart.notNull(numberOfBytes);
+    }
+    fill(numberOfBytes, value) {
+      if (numberOfBytes == null) dart.nullFailed(I[0], 102, 17, "numberOfBytes");
+      if (value == null) dart.nullFailed(I[0], 102, 36, "value");
+      while (dart.notNull(numberOfBytes) > 0) {
+        this.writeByte(value);
+        numberOfBytes = dart.notNull(numberOfBytes) - 1;
+      }
+    }
+    readNullTerminatedList() {
+      let s = T.JSArrayOfint().of([]);
+      while (this[_list][$_get](this[_readPos]) !== 0) {
+        s[$add](this[_list][$_get](this[_readPos]));
+        this[_readPos] = dart.notNull(this[_readPos]) + 1;
+      }
+      this[_readPos] = dart.notNull(this[_readPos]) + 1;
+      return s;
+    }
+    writeNullTerminatedList(list) {
+      if (list == null) dart.nullFailed(I[0], 124, 42, "list");
+      this.writeList(list);
+      this.writeByte(0);
+    }
+    readNullTerminatedString() {
+      return convert.utf8.decode(this.readNullTerminatedList());
+    }
+    readStringToEnd() {
+      return this.readString(dart.notNull(this[_list][$length]) - dart.notNull(this[_readPos]));
+    }
+    readString(length) {
+      if (length == null) dart.nullFailed(I[0], 140, 25, "length");
+      let s = convert.utf8.decode(this[_list][$sublist](this[_readPos], dart.notNull(this[_readPos]) + dart.notNull(length)), {allowMalformed: true});
+      this[_readPos] = dart.notNull(this[_readPos]) + dart.notNull(length);
+      return s;
+    }
+    readLengthCodedBinary() {
+      let first = this.readByte();
+      if (dart.notNull(first) < 251) {
+        return first;
+      }
+      switch (first) {
+        case 251:
+        {
+          return null;
+        }
+        case 252:
+        {
+          return this.readUint16();
+        }
+        case 253:
+        {
+          return this.readUint24();
+        }
+        case 254:
+        {
+          return this.readUint64();
+        }
+      }
+      dart.throw(new core.ArgumentError.new("value is out of range"));
+    }
+    static measureLengthCodedBinary(value) {
+      if (value == null) dart.nullFailed(I[0], 168, 43, "value");
+      if (dart.notNull(value) < 251) {
+        return 1;
+      }
+      if (dart.notNull(value) < 2 << 15) {
+        return 3;
+      }
+      if (dart.notNull(value) < 2 << 23) {
+        return 4;
+      }
+      if (dart.notNull(value) < (2)[$leftShift](63)) {
+        return 5;
+      }
+      dart.throw(new core.ArgumentError.new("value is out of range"));
+    }
+    writeLengthCodedBinary(value) {
+      if (value == null) dart.nullFailed(I[0], 185, 35, "value");
+      if (dart.notNull(value) < 251) {
+        this.writeByte(value);
+        return;
+      }
+      if (dart.notNull(value) < 2 << 15) {
+        this.writeByte(252);
+        this.writeUint16(value);
+        return;
+      }
+      if (dart.notNull(value) < 2 << 23) {
+        this.writeByte(253);
+        this.writeUint24(value);
+        return;
+      }
+      if (dart.notNull(value) < (2)[$leftShift](63)) {
+        this.writeByte(254);
+        this.writeUint64(value);
+      }
+    }
+    readLengthCodedString() {
+      let length = this.readLengthCodedBinary();
+      if (length == null) {
+        return null;
+      }
+      return this.readString(length);
+    }
+    readByte() {
+      let t1;
+      return this[_list][$_get]((t1 = this[_readPos], this[_readPos] = dart.notNull(t1) + 1, t1));
+    }
+    get hasMore() {
+      return dart.notNull(this[_readPos]) < dart.notNull(this[_list][$length]);
+    }
+    writeByte(byte) {
+      let t1;
+      if (byte == null) dart.nullFailed(I[0], 221, 22, "byte");
+      this[_data][$setInt8]((t1 = this[_writePos], this[_writePos] = dart.notNull(t1) + 1, t1), byte);
+    }
+    readInt16() {
+      let result = this[_data][$getInt16](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 2;
+      return result;
+    }
+    writeInt16(integer) {
+      if (integer == null) dart.nullFailed(I[0], 233, 23, "integer");
+      this[_data][$setInt16](this[_writePos], integer, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 2;
+    }
+    readUint16() {
+      let result = this[_data][$getUint16](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 2;
+      return result;
+    }
+    writeUint16(integer) {
+      if (integer == null) dart.nullFailed(I[0], 246, 24, "integer");
+      this[_data][$setUint16](this[_writePos], integer, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 2;
+    }
+    readUint24() {
+      let t1, t1$, t1$0;
+      return dart.notNull(this[_list][$_get]((t1 = this[_readPos], this[_readPos] = dart.notNull(t1) + 1, t1))) + (dart.notNull(this[_list][$_get]((t1$ = this[_readPos], this[_readPos] = dart.notNull(t1$) + 1, t1$))) << 8 >>> 0) + (dart.notNull(this[_list][$_get]((t1$0 = this[_readPos], this[_readPos] = dart.notNull(t1$0) + 1, t1$0))) << 16 >>> 0);
+    }
+    writeUint24(integer) {
+      let t1, t1$, t1$0;
+      if (integer == null) dart.nullFailed(I[0], 256, 24, "integer");
+      this[_list][$_set]((t1 = this[_writePos], this[_writePos] = dart.notNull(t1) + 1, t1), dart.notNull(integer) & 255);
+      this[_list][$_set]((t1$ = this[_writePos], this[_writePos] = dart.notNull(t1$) + 1, t1$), dart.notNull(integer) >> 8 & 255);
+      this[_list][$_set]((t1$0 = this[_writePos], this[_writePos] = dart.notNull(t1$0) + 1, t1$0), dart.notNull(integer) >> 16 & 255);
+    }
+    readInt32() {
+      let val = this[_data][$getInt32](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 4;
+      return val;
+    }
+    writeInt32(integer) {
+      if (integer == null) dart.nullFailed(I[0], 270, 23, "integer");
+      this[_data][$setInt32](this[_writePos], integer, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 4;
+    }
+    readUint32() {
+      let val = this[_data][$getUint32](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 4;
+      return val;
+    }
+    writeUint32(integer) {
+      if (integer == null) dart.nullFailed(I[0], 283, 24, "integer");
+      this[_data][$setUint32](this[_writePos], integer, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 4;
+    }
+    readInt64() {
+      let val = this[_data][$getInt64](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 8;
+      return val;
+    }
+    writeInt64(integer) {
+      if (integer == null) dart.nullFailed(I[0], 296, 23, "integer");
+      this[_data][$setInt64](this[_writePos], integer, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 8;
+    }
+    readUint64() {
+      let val = this[_data][$getUint64](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 8;
+      return val;
+    }
+    writeUint64(integer) {
+      if (integer == null) dart.nullFailed(I[0], 309, 24, "integer");
+      this[_data][$setUint64](this[_writePos], integer, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 8;
+    }
+    readList(numberOfBytes) {
+      if (numberOfBytes == null) dart.nullFailed(I[0], 315, 26, "numberOfBytes");
+      let list = this[_list][$sublist](this[_readPos], dart.notNull(this[_readPos]) + dart.notNull(numberOfBytes));
+      this[_readPos] = dart.notNull(this[_readPos]) + dart.notNull(numberOfBytes);
+      return list;
+    }
+    writeList(list) {
+      if (list == null) dart.nullFailed(I[0], 322, 28, "list");
+      this[_list][$setRange](this[_writePos], dart.notNull(this[_writePos]) + dart.notNull(list[$length]), list);
+      this[_writePos] = dart.notNull(this[_writePos]) + dart.notNull(list[$length]);
+    }
+    readFloat() {
+      let val = this[_data][$getFloat32](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 4;
+      return val;
+    }
+    writeFloat(value) {
+      if (value == null) dart.nullFailed(I[0], 333, 26, "value");
+      this[_data][$setFloat32](this[_writePos], value, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 4;
+    }
+    readDouble() {
+      let val = this[_data][$getFloat64](this[_readPos], typed_data.Endian.little);
+      this[_readPos] = dart.notNull(this[_readPos]) + 8;
+      return val;
+    }
+    writeDouble(value) {
+      if (value == null) dart.nullFailed(I[0], 344, 27, "value");
+      this[_data][$setFloat64](this[_writePos], value, typed_data.Endian.little);
+      this[_writePos] = dart.notNull(this[_writePos]) + 8;
+    }
+    static listChars(list) {
+      if (list == null) dart.nullFailed(I[0], 349, 37, "list");
+      let result = new core.StringBuffer.new();
+      for (let e of list) {
+        if (dart.notNull(e) >= 32 && dart.notNull(e) < 127) {
+          result.write(core.String.fromCharCodes(T.JSArrayOfint().of([e])));
+        } else {
+          result.write("?");
+        }
+      }
+      return result.toString();
+    }
+    static debugChars(list) {
+      if (list == null) dart.nullFailed(I[0], 361, 38, "list");
+      let result = new core.StringBuffer.new();
+      let left = new core.StringBuffer.new();
+      let right = new core.StringBuffer.new();
+      for (let e of list) {
+        if (dart.notNull(e) >= 32 && dart.notNull(e) < 127) {
+          right.write(core.String.fromCharCodes(T.JSArrayOfint().of([e])));
+        } else {
+          right.write("·");
+        }
+        let hex = e[$toRadixString](16);
+        if (hex.length === 1) {
+          hex = "0" + hex;
+        }
+        left.write(hex + " ");
+        if (right.length === 4) {
+          left.write(" ");
+        }
+        if (right.length === 8) {
+          result.write(left.toString());
+          result.write("  ");
+          result.write(right.toString());
+          result.write("\n");
+          left.clear();
+          right.clear();
+        }
+      }
+      if (dart.notNull(right.length) > 0) {
+        while (dart.notNull(right.length) < 8) {
+          left.write("   ");
+          right.write(" ");
+          if (right.length === 4) {
+            left.write(" ");
+          }
+        }
+        result.write(left.toString());
+        result.write("  ");
+        result.write(right.toString());
+        result.write("\n");
+      }
+      return result.toString();
+    }
+  };
+  (buffer.Buffer.new = function(size) {
+    if (size == null) dart.nullFailed(I[0], 28, 14, "size");
+    this[_writePos] = 0;
+    this[_readPos] = 0;
+    this[__Buffer__data] = null;
+    this[__Buffer__data_isSet] = false;
+    this[_list] = _native_typed_data.NativeUint8List.new(size);
+    this[log] = logger.Logger.new("Buffer");
+    this[_data] = typed_data.ByteData.view(this[_list][$buffer]);
+  }).prototype = buffer.Buffer.prototype;
+  (buffer.Buffer.fromList = function(list) {
+    if (list == null) dart.nullFailed(I[0], 35, 29, "list");
+    this[_writePos] = 0;
+    this[_readPos] = 0;
+    this[__Buffer__data] = null;
+    this[__Buffer__data_isSet] = false;
+    this[_list] = _native_typed_data.NativeUint8List.new(list[$length]);
+    this[log] = logger.Logger.new("Buffer");
+    this[_list][$setRange](0, list[$length], list);
+    this[_data] = typed_data.ByteData.view(this[_list][$buffer]);
+  }).prototype = buffer.Buffer.prototype;
+  dart.addTypeTests(buffer.Buffer);
+  dart.addTypeCaches(buffer.Buffer);
+  dart.setMethodSignature(buffer.Buffer, () => ({
+    __proto__: dart.getMethods(buffer.Buffer.__proto__),
+    canReadMore: dart.fnType(core.bool, []),
+    readFromSocket: dart.fnType(core.int, [io.RawSocket, core.int]),
+    writeToSocket: dart.fnType(core.int, [io.RawSocket, core.int, core.int]),
+    _get: dart.fnType(core.int, [core.int]),
+    _set: dart.fnType(dart.void, [core.int, core.int]),
+    reset: dart.fnType(dart.void, []),
+    seek: dart.fnType(dart.void, [core.int]),
+    skip: dart.fnType(dart.void, [core.int]),
+    seekWrite: dart.fnType(dart.void, [core.int]),
+    skipWrite: dart.fnType(dart.void, [core.int]),
+    fill: dart.fnType(dart.void, [core.int, core.int]),
+    readNullTerminatedList: dart.fnType(core.List$(core.int), []),
+    writeNullTerminatedList: dart.fnType(dart.void, [core.List$(core.int)]),
+    readNullTerminatedString: dart.fnType(core.String, []),
+    readStringToEnd: dart.fnType(core.String, []),
+    readString: dart.fnType(core.String, [core.int]),
+    readLengthCodedBinary: dart.fnType(dart.nullable(core.int), []),
+    writeLengthCodedBinary: dart.fnType(dart.void, [core.int]),
+    readLengthCodedString: dart.fnType(dart.nullable(core.String), []),
+    readByte: dart.fnType(core.int, []),
+    writeByte: dart.fnType(dart.void, [core.int]),
+    readInt16: dart.fnType(core.int, []),
+    writeInt16: dart.fnType(dart.void, [core.int]),
+    readUint16: dart.fnType(core.int, []),
+    writeUint16: dart.fnType(dart.void, [core.int]),
+    readUint24: dart.fnType(core.int, []),
+    writeUint24: dart.fnType(dart.void, [core.int]),
+    readInt32: dart.fnType(core.int, []),
+    writeInt32: dart.fnType(dart.void, [core.int]),
+    readUint32: dart.fnType(core.int, []),
+    writeUint32: dart.fnType(dart.void, [core.int]),
+    readInt64: dart.fnType(core.int, []),
+    writeInt64: dart.fnType(dart.void, [core.int]),
+    readUint64: dart.fnType(core.int, []),
+    writeUint64: dart.fnType(dart.void, [core.int]),
+    readList: dart.fnType(core.List$(core.int), [core.int]),
+    writeList: dart.fnType(dart.void, [core.List$(core.int)]),
+    readFloat: dart.fnType(core.double, []),
+    writeFloat: dart.fnType(dart.void, [core.double]),
+    readDouble: dart.fnType(core.double, []),
+    writeDouble: dart.fnType(dart.void, [core.double])
+  }));
+  dart.setGetterSignature(buffer.Buffer, () => ({
+    __proto__: dart.getGetters(buffer.Buffer.__proto__),
+    [_data]: typed_data.ByteData,
+    list: typed_data.Uint8List,
+    length: core.int,
+    hasMore: core.bool
+  }));
+  dart.setSetterSignature(buffer.Buffer, () => ({
+    __proto__: dart.getSetters(buffer.Buffer.__proto__),
+    [_data]: typed_data.ByteData
+  }));
+  dart.setLibraryUri(buffer.Buffer, I[1]);
+  dart.setFieldSignature(buffer.Buffer, () => ({
+    __proto__: dart.getFields(buffer.Buffer.__proto__),
+    log: dart.finalFieldType(logger.Logger),
+    [_writePos]: dart.fieldType(core.int),
+    [_readPos]: dart.fieldType(core.int),
+    [_list]: dart.finalFieldType(typed_data.Uint8List),
+    [__Buffer__data]: dart.fieldType(dart.nullable(typed_data.ByteData)),
+    [__Buffer__data_isSet]: dart.fieldType(core.bool)
+  }));
+  dart.trackLibraries("packages/mysql1/src/buffer.dart", {
+    "package:mysql1/src/buffer.dart": buffer
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["buffer.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAiBe;;;;;;;;AAKC;IAAK;;;AAAL;;IAAK;;AAEG;IAAK;;AAkBL,YAAS,cAAT,+BAAW,AAAM;IAAa;mBAIvB,QAAY;;UAAZ;UAAY;AACjC,wBAAQ,AAAO,MAAD,MAAM,KAAK,gBAAV,OAAa;AAClC,UAAI,AAAM,KAAD,UAAU,MAAO;AAEtB,sBAAY,AAAM,KAAD;AACkC,MAAvD,AAAM,uBAAS,iBAAqB,aAAV,gCAAY,SAAS,GAAE,KAAK;AAChC,MAAtB,kBAAU,aAAV,gCAAa,SAAS;AACtB,YAAO,UAAS;IAClB;kBAI4B,QAAY,OAAW;UAAvB;UAAY;UAAW;AACjD,YAAO,AAAO,OAAD,OAAO,aAAO,KAAK,EAAE,KAAK;IACzC;;UAGoB;AAAU,YAAA,AAAK,oBAAC,KAAK;IAAC;SAGpB;UAAW;UAAX;UAAW;AACX,MAApB,AAAK,mBAAC,KAAK,EAAI,KAAK;;IACtB;;AAKc,MAAZ,iBAAW;AACE,MAAb,kBAAY;IACd;;AAGkB,YAAA,AAAM;IAAM;;UAGhB;AACO,MAAnB,iBAAW,QAAQ;IACrB;;UAGc;AACa,MAAzB,iBAAS,aAAT,+BAAY,aAAa;IAC3B;;UAGmB;AACG,MAApB,kBAAY,QAAQ;IACtB;;UAGmB;AACS,MAA1B,kBAAU,aAAV,gCAAa,aAAa;IAC5B;SAGc,eAAmB;UAAnB;UAAmB;AAC/B,aAAqB,aAAd,aAAa,IAAG;AACL,QAAhB,eAAU,KAAK;AACA,QAAf,gBAAa,aAAb,aAAa;;IAEjB;;AAKM,cAAS;AACb,aAAO,AAAK,mBAAC,oBAAa;AACF,QAAtB,AAAE,CAAD,OAAK,AAAK,mBAAC;AACF,QAAV,iBAAQ,aAAR,kBAAQ;;AAEA,MAAV,iBAAQ,aAAR,kBAAQ;AAER,YAAO,EAAC;IACV;;UAIuC;AACtB,MAAf,eAAU,IAAI;AACF,MAAZ,eAAU;IACZ;;AAKE,YAAO,AAAK,qBAAO;IACrB;;AAI4B,6BAAwB,aAAb,AAAM,qCAAS;IAAS;;UAGzC;AAChB,cAAI,AAAK,oBAAO,AAAM,sBAAQ,gBAAmB,aAAT,+BAAW,MAAM,qBACzC;AACF,MAAlB,iBAAS,aAAT,+BAAY,MAAM;AAClB,YAAO,EAAC;IACV;;AAMM,kBAAQ;AACZ,UAAU,aAAN,KAAK,IAAG;AACV,cAAO,MAAK;;AAEd,cAAQ,KAAK;;;AAET,gBAAO;;;;AAEP,gBAAO;;;;AAEP,gBAAO;;;;AAEP,gBAAO;;;AAEiC,MAA5C,WAAM,2BAAc;IACtB;;UAEwC;AACtC,UAAU,aAAN,KAAK,IAAG;AACV,cAAO;;AAET,UAAU,aAAN,KAAK,IAAI,AAAE,KAAG;AAChB,cAAO;;AAET,UAAU,aAAN,KAAK,IAAI,AAAE,KAAG;AAChB,cAAO;;AAET,UAAU,aAAN,KAAK,IAAM,CAAF,eAAK;AAChB,cAAO;;AAEmC,MAA5C,WAAM,2BAAc;IACtB;;UAGgC;AAC9B,UAAU,aAAN,KAAK,IAAG;AACM,QAAhB,eAAU,KAAK;AACf;;AAEF,UAAU,aAAN,KAAK,IAAI,AAAE,KAAG;AACD,QAAf,eAAU;AACQ,QAAlB,iBAAY,KAAK;AACjB;;AAEF,UAAU,aAAN,KAAK,IAAI,AAAE,KAAG;AACD,QAAf,eAAU;AACQ,QAAlB,iBAAY,KAAK;AACjB;;AAEF,UAAU,aAAN,KAAK,IAAM,CAAF,eAAK;AACD,QAAf,eAAU;AACQ,QAAlB,iBAAY,KAAK;;IAErB;;AAIM,mBAAS;AACb,UAAI,AAAO,MAAD;AACR,cAAO;;AAET,YAAO,iBAAW,MAAM;IAC1B;;;AAGkB,YAAA,AAAK,qBAAS,qBAAR,oCAAQ;IAAG;;AAEf,YAAS,cAAT,+BAAW,AAAM;IAAM;cAGxB;;;AACe,MAAhC,AAAM,uBAAiB,sBAAT,qCAAS,QAAI,IAAI;IACjC;;AAIM,mBAAS,AAAM,uBAAS,gBAAiB;AAChC,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,OAAM;IACf;;UAGoB;AAC+B,MAAjD,AAAM,uBAAS,iBAAW,OAAO,EAAS;AAC5B,MAAd,kBAAU,aAAV,mBAAa;IACf;;AAIM,mBAAS,AAAM,wBAAU,gBAAiB;AACjC,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,OAAM;IACf;;UAGqB;AAC+B,MAAlD,AAAM,wBAAU,iBAAW,OAAO,EAAS;AAC7B,MAAd,kBAAU,aAAV,mBAAa;IACf;;;AAII,YAAkB,AAA2B,cAA7C,AAAK,oBAAS,qBAAR,oCAAQ,YAAyB,aAAlB,AAAK,oBAAS,sBAAR,qCAAQ,aAAO,YAAwB,aAAlB,AAAK,oBAAS,uBAAR,sCAAQ,cAAO;IAAG;gBAGvD;;;AACgB,MAAnC,AAAK,oBAAU,sBAAT,qCAAS,QAAc,aAAR,OAAO,IAAG;AACS,MAAxC,AAAK,oBAAU,uBAAT,sCAAS,SAAc,AAAK,aAAb,OAAO,KAAI,IAAI;AACK,MAAzC,AAAK,oBAAU,wBAAT,uCAAS,UAAc,AAAM,aAAd,OAAO,KAAI,KAAK;IACvC;;AAIM,gBAAM,AAAM,uBAAS,gBAAiB;AAC7B,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,IAAG;IACZ;;UAGoB;AAC+B,MAAjD,AAAM,uBAAS,iBAAW,OAAO,EAAS;AAC5B,MAAd,kBAAU,aAAV,mBAAa;IACf;;AAIM,gBAAM,AAAM,wBAAU,gBAAiB;AAC9B,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,IAAG;IACZ;;UAGqB;AAC+B,MAAlD,AAAM,wBAAU,iBAAW,OAAO,EAAS;AAC7B,MAAd,kBAAU,aAAV,mBAAa;IACf;;AAIM,gBAAM,AAAM,uBAAS,gBAAiB;AAC7B,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,IAAG;IACZ;;UAGoB;AAC+B,MAAjD,AAAM,uBAAS,iBAAW,OAAO,EAAS;AAC5B,MAAd,kBAAU,aAAV,mBAAa;IACf;;AAIM,gBAAM,AAAM,wBAAU,gBAAiB;AAC9B,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,IAAG;IACZ;;UAGqB;AAC+B,MAAlD,AAAM,wBAAU,iBAAW,OAAO,EAAS;AAC7B,MAAd,kBAAU,aAAV,mBAAa;IACf;;UAGuB;AACX,iBAAO,AAAM,sBAAQ,gBAAmB,aAAT,+BAAW,aAAa;AACxC,MAAzB,iBAAS,aAAT,+BAAY,aAAa;AACzB,YAAO,KAAI;IACb;;UAGyB;AACiC,MAAxD,AAAM,uBAAS,iBAAqB,aAAV,gCAAY,AAAK,IAAD,YAAS,IAAI;AAC/B,MAAxB,kBAAU,aAAV,gCAAa,AAAK,IAAD;IACnB;;AAGM,gBAAM,AAAM,yBAAW,gBAAiB;AAC/B,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,IAAG;IACZ;;UAEuB;AAC4B,MAAjD,AAAM,yBAAW,iBAAW,KAAK,EAAS;AAC5B,MAAd,kBAAU,aAAV,mBAAa;IACf;;AAGM,gBAAM,AAAM,yBAAW,gBAAiB;AAC/B,MAAb,iBAAS,aAAT,kBAAY;AACZ,YAAO,IAAG;IACZ;;UAEwB;AAC2B,MAAjD,AAAM,yBAAW,iBAAW,KAAK,EAAS;AAC5B,MAAd,kBAAU,aAAV,mBAAa;IACf;;UAEkC;AAC5B,mBAAS;AACb,eAAW,IAAK,KAAI;AAClB,YAAM,aAAF,CAAC,KAAI,MAAQ,aAAF,CAAC,IAAG;AACsB,UAAvC,AAAO,MAAD,OAAc,0BAAc,qBAAC,CAAC;;AAEnB,UAAjB,AAAO,MAAD,OAAO;;;AAGjB,YAAO,AAAO,OAAD;IACf;;UAEmC;AAC7B,mBAAS;AAET,iBAAO;AACP,kBAAQ;AAEZ,eAAW,IAAK,KAAI;AAClB,YAAM,aAAF,CAAC,KAAI,MAAQ,aAAF,CAAC,IAAG;AACqB,UAAtC,AAAM,KAAD,OAAc,0BAAc,qBAAC,CAAC;;AAEnB,UAAhB,AAAM,KAAD,OAAO;;AAEV,kBAAM,AAAE,CAAD,iBAAe;AAC1B,YAAI,AAAI,AAAO,GAAR,YAAW;AACH,UAAb,MAAM,AAAO,MAAJ,GAAG;;AAEK,QAAnB,AAAK,IAAD,OAAS,AAAK,GAAF;AAEhB,YAAI,AAAM,AAAO,KAAR,YAAW;AACH,UAAf,AAAK,IAAD,OAAO;;AAEb,YAAI,AAAM,AAAO,KAAR,YAAW;AACW,UAA7B,AAAO,MAAD,OAAO,AAAK,IAAD;AACC,UAAlB,AAAO,MAAD,OAAO;AACiB,UAA9B,AAAO,MAAD,OAAO,AAAM,KAAD;AACA,UAAlB,AAAO,MAAD,OAAO;AACD,UAAZ,AAAK,IAAD;AACS,UAAb,AAAM,KAAD;;;AAGT,UAAiB,aAAb,AAAM,KAAD,WAAU;AACjB,eAAoB,aAAb,AAAM,KAAD,WAAU;AACH,UAAjB,AAAK,IAAD,OAAO;AACK,UAAhB,AAAM,KAAD,OAAO;AACZ,cAAI,AAAM,AAAO,KAAR,YAAW;AACH,YAAf,AAAK,IAAD,OAAO;;;AAGc,QAA7B,AAAO,MAAD,OAAO,AAAK,IAAD;AACC,QAAlB,AAAO,MAAD,OAAO;AACiB,QAA9B,AAAO,MAAD,OAAO,AAAM,KAAD;AACA,QAAlB,AAAO,MAAD,OAAO;;AAEf,YAAO,AAAO,OAAD;IACf;;;QAzXW;IATP,kBAAY;IACZ,iBAAW;2BAGD;;IAMF,cAAE,uCAAU,IAAI;IAClB,YAAE,kBAAO;AACkB,IAAnC,cAAiB,yBAAK,AAAM;EAC9B;;QAG0B;IAhBtB,kBAAY;IACZ,iBAAW;2BAGD;;IAaF,cAAE,uCAAU,AAAK,IAAD;IAClB,YAAE,kBAAO;AACmB,IAApC,AAAM,uBAAS,GAAG,AAAK,IAAD,WAAS,IAAI;AACA,IAAnC,cAAiB,yBAAK,AAAM;EAC9B","file":"../../../../../../../../packages/mysql1/src/buffer.dart.lib.js"}');
+  // Exports:
+  return {
+    src__buffer: buffer
+  };
+}));
+
+//# sourceMappingURL=buffer.dart.lib.js.map

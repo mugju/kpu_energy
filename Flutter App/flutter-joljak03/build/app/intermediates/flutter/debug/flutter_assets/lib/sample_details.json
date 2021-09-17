@@ -9,7 +9,7 @@
       {
         "title": "Amp Chart By Machine",
         "description": "스마트 플러그 사용 기기별 일/시간 별 전력 사용량 확인",
-        "image": "images/cartesian_types.png",
+        "image": "images/line-chart-128.png",
         "controlId": 1,
         "subItems": [
           
@@ -28,7 +28,7 @@
                 "title": "시간 별 음료 냉장고 전력 사용량(최근 한 달)",
                 "key": "zooming_id1_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_2.dart"
               }          
 
 
@@ -43,13 +43,13 @@
                 "title": "일 별 업소용 냉장고 전력 사용량",
                 "key": "zooming_id2_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id2_1.dart"
               },
               {
                 "title": "시간 별 업소용 냉장고 전력 사용량(최근 한 달)",
                 "key": "zooming_id2_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id2_2.dart"
               }
             ]
           },
@@ -62,13 +62,13 @@
                 "title": "일 별 커피머신 전력 사용량",
                 "key": "zooming_id3_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id3_1.dart"
               },
               {
                 "title": "시간 별 커피머신 전력 사용량(최근 한 달)",
                 "key": "zooming_id3_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id3_2.dart"
               }
 
             ]
@@ -82,13 +82,13 @@
                 "title": "일 별 커피 그라인더 전력 사용량",
                 "key": "zooming_id4_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id4_1.dart"
               },
               {
                 "title": "시간 별 커피 그라인더 전력 사용량(최근 한 달)",
                 "key": "zooming_id4_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id4_2.dart"
               }
             ]
           },
@@ -101,13 +101,13 @@
                 "title": "일 별 디스펜더 전력 사용량",
                 "key": "zooming_id5_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id5_1.dart"
               },
               {
                 "title": "시간 별 디스펜더 전력 사용량(최근 한 달)",
                 "key": "zooming_id5_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id5_2.dart"
               }
             ]
           },
@@ -120,13 +120,13 @@
                 "title": "일 별 미니 오븐 전력 사용량",
                 "key": "zooming_id6_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id6_1.dart"
               },
               {
                 "title": "시간 별 미니 오븐 전력 사용량(최근 한 달)",
                 "key": "zooming_id6_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id6_2.dart"
               }
             ]
           },
@@ -139,13 +139,13 @@
                 "title": "일 별 아이스메이커 전력 사용량",
                 "key": "zooming_id7_1",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id7_1.dart"
               },
               {
                 "title": "시간 별 아이스메이커 전력 사용량(최근 한 달)",
                 "key": "zooming_id7_2",
                 "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
-                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id1_1.dart"
+                "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_id7_2.dart"
               }
             ]
           }
@@ -164,7 +164,7 @@
     "mobileCategoryId": 2,
     "controlList": [
       {
-        "title": "Circular 변형 이거 사용 예정",
+        "title": "Data Analysis",
         "description": "기기 별 에너지 사용량 비교",
         "image": "images/circle_series.png",
         "controlId": 1,
@@ -220,28 +220,55 @@
       }
     ]
   },
+  {
+    "categoryName": "Air Conditioner Amp",
+    "webCategoryId": 3,
+    "mobileCategoryId": 3,
+    "controlList": [
+      {
+        "title": "Air Conditioner Amp Info Chart",
+        "description": "매장 내 에어컨 전력 사용량 확인하기",
+        "image": "images/air-conditioner-64.png",
+        "controlId": 3,
+        "subItems": [
+          {
+            "title": "일 별 에어컨 전력 사용량",
+            "key": "zooming_aircon1",
+            "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
+            "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_aircon1.dart"
+          },
+          {
+            "title": "시간 별 에어컨 전력 사용량(최근 한 달)",
+            "key": "zooming_aircon2",
+            "description": "일별 전력 사용량과 시간별 전력 사용량을 세부적으로 확인 가능합니다.",
+            "codeLink": "https://github.com/mugju/kpu_energy/blob/master/Flutter%20App/flutter_examples/lib/zooming_aircon2.dart"
+          }
 
+        ]
+      }
+    ]
+  },
 
 
   {
-    "categoryName": "Sliders",
-    "mobileCategoryId": 6,
-    "webCategoryId": 6,
+    "categoryName": "Store Information",
+    "mobileCategoryId": 7,
+    "webCategoryId": 7,
     "controlList": [
 
       
       {
-        "title": "Range Selector",
-        "description": "Visualize data and select a date or numeric range",
-        "image": "images/range_selector.png",
+        "title": "User's Store Information",
+        "description": "매장 정보",
+        "image": "images/info-64.png",
         "displayType": "tab",
-        "controlId": 6,
+        "controlId": 7,
         "subItems": [
 
           {
             "type": "sample",
-            "title": "Zooming",
-            "key": "range_selector_with_zooming",
+            "title": "매장 정보",
+            "key": "store_information",
             "codeLink": "https://github.com/syncfusion/flutter-examples/tree/master/lib/samples/sliders/range_selector/range_selector_with_zooming.dart",
             "needsPropertyPanel": true
           }
@@ -252,142 +279,6 @@
 
     ]
 
-  },
-  {
-    "categoryName": "스마트 플러그 기기 전력 그래프",
-    "mobileCategoryId": 7,
-    "webCategoryId": 7,
-    "controlList": [
-      {
-        "title": "Range Selector",
-        "description": "Visualize data and select a date or numeric range",
-        "image": "images/range_selector.png",
-        "displayType": "tab",
-        "controlId": 5,
-        "subItems": [
-          {
-            "type": "sample",
-            "title": "Zooming",
-            "key": "range_selector_with_zooming",
-            "codeLink": "https://github.com/syncfusion/flutter-examples/tree/master/lib/samples/sliders/range_selector/range_selector_with_zooming.dart",
-            "needsPropertyPanel": true
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "categoryName": "Signature 패드 2",
-    "mobileCategoryId": 7,
-    "webCategoryId": 7,
-    "controlList": [
-      {
-        "title": "Range Selector",
-        "description": "Visualize data and select a date or numeric range",
-        "image": "images/range_selector.png",
-        "displayType": "tab",
-        "controlId": 5,
-        "subItems": [
-
-          {
-            "type": "sample",
-            "title": "Zooming",
-            "key": "range_selector_with_zooming",
-            "codeLink": "https://github.com/syncfusion/flutter-examples/tree/master/lib/samples/sliders/range_selector/range_selector_with_zooming.dart",
-            "needsPropertyPanel": true
-          }
-
-        ]
-      }
-    ]
-  },
-  {
-    "categoryName": "Energy Manger Chart",
-    "mobileCategoryId": 7,
-    "webCategoryId": 7,
-    "controlList": [
-      {
-        "title": "Time&Energy chart",
-        "description": "시간별 에너지 차트",
-        "image": "images/range_selector.png",
-        "displayType": "tab",
-        "controlId": 1,
-        "subItems": [
-          {
-            "type": "sample",
-            "title": "Zooming",
-            "key": "range_selector_with_zooming",
-            "codeLink": "https://github.com/syncfusion/flutter-examples/tree/master/lib/samples/sliders/range_selector/range_selector_with_zooming.dart",
-            "needsPropertyPanel": true
-          }
-        ]
-      }
-    ]
-  },
-
-  {
-    "categoryName": "User ID",
-    "mobileCategoryId": 9,
-    "webCategoryId": 9,
-    "controlList": [
-      {
-        "title": "User ID information",
-        "description": "사용자 계정 정보",
-        "image": "images/Datagrid.png",
-        "displayType": "tab",
-        "controlId": 1,
-        "subItems": [
-
-          {
-            "type": "child",
-            "title": "Data Source",
-            "subItems": [
-              {
-                "type": "sample",
-                "title": "List",
-                "key": "list_data_source_datagrid",
-                "codeLink": "https://github.com/syncfusion/flutter-examples/blob/master/lib/samples/datagrid/data_source/datagrid_list_data_source.dart"
-              },
-              {
-                "type": "sample",
-                "title": "JSON",
-                "key": "json_data_source_datagrid",
-                "codeLink": "https://github.com/syncfusion/flutter-examples/blob/master/lib/samples/datagrid/data_source/datagrid_json_data_source.dart"
-              }
-            ]
-          },
-
-         
-          {
-            "type": "child",
-            "title": "Row Height",
-            "subItems": [
-              {
-                "type": "sample",
-                "title": "Row Height",
-                "key": "row_height_datagrid",
-                "codeLink": "https://github.com/syncfusion/flutter-examples/blob/master/lib/samples/datagrid/row_height/datagrid_row_height.dart"
-              }
-            ]
-          },
-          {
-            "type": "child",
-            "title": "Appearance",
-            "subItems": [
-              {
-                "type": "sample",
-                "title": "Styling",
-                "key": "styling_datagrid",
-                "codeLink": "https://github.com/syncfusion/flutter-examples/blob/master/lib/samples/datagrid/apperance/styling/datagrid_styling.dart",
-                "needsPropertyPanel": true
-              }
-
-            ]
-          }
-  
-
-        ]
-      }
-    ]
   }
+
 ]

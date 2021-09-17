@@ -1,0 +1,408 @@
+define(['dart_sdk', 'packages/logging/src/logger.dart', 'packages/mysql1/src/buffer.dart', 'packages/logging/src/level.dart'], (function load__packages__mysql1__src__buffered_socket_dart(dart_sdk, packages__logging__src__logger$46dart, packages__mysql1__src__buffer$46dart, packages__logging__src__level$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _internal = dart_sdk._internal;
+  const io = dart_sdk.io;
+  const async = dart_sdk.async;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const logger = packages__logging__src__logger$46dart.src__logger;
+  const buffer = packages__mysql1__src__buffer$46dart.src__buffer;
+  const level = packages__logging__src__level$46dart.src__level;
+  var buffered_socket = Object.create(dart.library);
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    FutureOfRawSocket: () => (T.FutureOfRawSocket = dart.constFn(async.Future$(io.RawSocket)))(),
+    StringAndintAndDuration__ToFutureOfRawSocket: () => (T.StringAndintAndDuration__ToFutureOfRawSocket = dart.constFn(dart.fnType(T.FutureOfRawSocket(), [core.String, core.int, core.Duration], {isUnixSocket: core.bool}, {})))(),
+    CompleterOfBuffer: () => (T.CompleterOfBuffer = dart.constFn(async.Completer$(buffer.Buffer)))(),
+    X509CertificateTobool: () => (T.X509CertificateTobool = dart.constFn(dart.fnType(core.bool, [io.X509Certificate])))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.fn(buffered_socket.BufferedSocket.defaultSocketFactory, T.StringAndintAndDuration__ToFutureOfRawSocket());
+    }
+  }, false);
+  var C = [void 0];
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2/lib/src/buffered_socket.dart",
+    "package:mysql1/src/buffered_socket.dart"
+  ];
+  var log = dart.privateName(buffered_socket, "BufferedSocket.log");
+  var onError$ = dart.privateName(buffered_socket, "BufferedSocket.onError");
+  var onDone$ = dart.privateName(buffered_socket, "BufferedSocket.onDone");
+  var onClosed$ = dart.privateName(buffered_socket, "BufferedSocket.onClosed");
+  var onDataReady$ = dart.privateName(buffered_socket, "BufferedSocket.onDataReady");
+  var _writingBuffer = dart.privateName(buffered_socket, "_writingBuffer");
+  var __BufferedSocket__writeOffset = dart.privateName(buffered_socket, "_#BufferedSocket#_writeOffset");
+  var __BufferedSocket__writeOffset_isSet = dart.privateName(buffered_socket, "_#BufferedSocket#_writeOffset#isSet");
+  var __BufferedSocket__writeLength = dart.privateName(buffered_socket, "_#BufferedSocket#_writeLength");
+  var __BufferedSocket__writeLength_isSet = dart.privateName(buffered_socket, "_#BufferedSocket#_writeLength#isSet");
+  var __BufferedSocket__writeCompleter = dart.privateName(buffered_socket, "_#BufferedSocket#_writeCompleter");
+  var __BufferedSocket__writeCompleter_isSet = dart.privateName(buffered_socket, "_#BufferedSocket#_writeCompleter#isSet");
+  var _readingBuffer = dart.privateName(buffered_socket, "_readingBuffer");
+  var __BufferedSocket__readOffset = dart.privateName(buffered_socket, "_#BufferedSocket#_readOffset");
+  var __BufferedSocket__readOffset_isSet = dart.privateName(buffered_socket, "_#BufferedSocket#_readOffset#isSet");
+  var __BufferedSocket__readCompleter = dart.privateName(buffered_socket, "_#BufferedSocket#_readCompleter");
+  var __BufferedSocket__readCompleter_isSet = dart.privateName(buffered_socket, "_#BufferedSocket#_readCompleter#isSet");
+  var __BufferedSocket__subscription = dart.privateName(buffered_socket, "_#BufferedSocket#_subscription");
+  var __BufferedSocket__subscription_isSet = dart.privateName(buffered_socket, "_#BufferedSocket#_subscription#isSet");
+  var _closed = dart.privateName(buffered_socket, "_closed");
+  var _socket$ = dart.privateName(buffered_socket, "_socket");
+  var _subscription = dart.privateName(buffered_socket, "_subscription");
+  var _onData = dart.privateName(buffered_socket, "_onData");
+  var _onSocketError = dart.privateName(buffered_socket, "_onSocketError");
+  var _onSocketDone = dart.privateName(buffered_socket, "_onSocketDone");
+  var _writeOffset = dart.privateName(buffered_socket, "_writeOffset");
+  var _writeLength = dart.privateName(buffered_socket, "_writeLength");
+  var _writeCompleter = dart.privateName(buffered_socket, "_writeCompleter");
+  var _readOffset = dart.privateName(buffered_socket, "_readOffset");
+  var _readCompleter = dart.privateName(buffered_socket, "_readCompleter");
+  var _readBuffer = dart.privateName(buffered_socket, "_readBuffer");
+  var _writeBuffer = dart.privateName(buffered_socket, "_writeBuffer");
+  buffered_socket.BufferedSocket = class BufferedSocket extends core.Object {
+    get log() {
+      return this[log];
+    }
+    set log(value) {
+      super.log = value;
+    }
+    get onError() {
+      return this[onError$];
+    }
+    set onError(value) {
+      this[onError$] = value;
+    }
+    get onDone() {
+      return this[onDone$];
+    }
+    set onDone(value) {
+      this[onDone$] = value;
+    }
+    get onClosed() {
+      return this[onClosed$];
+    }
+    set onClosed(value) {
+      this[onClosed$] = value;
+    }
+    get onDataReady() {
+      return this[onDataReady$];
+    }
+    set onDataReady(value) {
+      this[onDataReady$] = value;
+    }
+    get [_writeOffset]() {
+      let t0;
+      return dart.test(this[__BufferedSocket__writeOffset_isSet]) ? (t0 = this[__BufferedSocket__writeOffset], t0) : dart.throw(new _internal.LateError.fieldNI("_writeOffset"));
+    }
+    set [_writeOffset](t0) {
+      if (t0 == null) dart.nullFailed(I[0], 29, 12, "null");
+      this[__BufferedSocket__writeOffset_isSet] = true;
+      this[__BufferedSocket__writeOffset] = t0;
+    }
+    get [_writeLength]() {
+      let t1;
+      return dart.test(this[__BufferedSocket__writeLength_isSet]) ? (t1 = this[__BufferedSocket__writeLength], t1) : dart.throw(new _internal.LateError.fieldNI("_writeLength"));
+    }
+    set [_writeLength](t1) {
+      if (t1 == null) dart.nullFailed(I[0], 30, 12, "null");
+      this[__BufferedSocket__writeLength_isSet] = true;
+      this[__BufferedSocket__writeLength] = t1;
+    }
+    get [_writeCompleter]() {
+      let t2;
+      return dart.test(this[__BufferedSocket__writeCompleter_isSet]) ? (t2 = this[__BufferedSocket__writeCompleter], t2) : dart.throw(new _internal.LateError.fieldNI("_writeCompleter"));
+    }
+    set [_writeCompleter](t2) {
+      if (t2 == null) dart.nullFailed(I[0], 31, 26, "null");
+      this[__BufferedSocket__writeCompleter_isSet] = true;
+      this[__BufferedSocket__writeCompleter] = t2;
+    }
+    get [_readOffset]() {
+      let t3;
+      return dart.test(this[__BufferedSocket__readOffset_isSet]) ? (t3 = this[__BufferedSocket__readOffset], t3) : dart.throw(new _internal.LateError.fieldNI("_readOffset"));
+    }
+    set [_readOffset](t3) {
+      if (t3 == null) dart.nullFailed(I[0], 35, 12, "null");
+      this[__BufferedSocket__readOffset_isSet] = true;
+      this[__BufferedSocket__readOffset] = t3;
+    }
+    get [_readCompleter]() {
+      let t4;
+      return dart.test(this[__BufferedSocket__readCompleter_isSet]) ? (t4 = this[__BufferedSocket__readCompleter], t4) : dart.throw(new _internal.LateError.fieldNI("_readCompleter"));
+    }
+    set [_readCompleter](t4) {
+      if (t4 == null) dart.nullFailed(I[0], 37, 26, "null");
+      this[__BufferedSocket__readCompleter_isSet] = true;
+      this[__BufferedSocket__readCompleter] = t4;
+    }
+    get [_subscription]() {
+      let t5;
+      return dart.test(this[__BufferedSocket__subscription_isSet]) ? (t5 = this[__BufferedSocket__subscription], t5) : dart.throw(new _internal.LateError.fieldNI("_subscription"));
+    }
+    set [_subscription](t5) {
+      if (t5 == null) dart.nullFailed(I[0], 39, 43, "null");
+      this[__BufferedSocket__subscription_isSet] = true;
+      this[__BufferedSocket__subscription] = t5;
+    }
+    get closed() {
+      return this[_closed];
+    }
+    [_onSocketError](error) {
+      if (error == null) dart.nullFailed(I[0], 51, 30, "error");
+      if (this.onError != null) {
+        dart.nullCheck(this.onError)(error);
+      }
+    }
+    [_onSocketDone]() {
+      if (this.onDone != null) {
+        dart.nullCheck(this.onDone)();
+        this[_closed] = true;
+      }
+    }
+    static defaultSocketFactory(host, port, timeout, opts) {
+      if (host == null) dart.nullFailed(I[0], 65, 14, "host");
+      if (port == null) dart.nullFailed(I[0], 65, 24, "port");
+      if (timeout == null) dart.nullFailed(I[0], 65, 39, "timeout");
+      let isUnixSocket = opts && 'isUnixSocket' in opts ? opts.isUnixSocket : false;
+      if (isUnixSocket == null) dart.nullFailed(I[0], 66, 13, "isUnixSocket");
+      if (dart.test(isUnixSocket)) {
+        return io.RawSocket.connect(io.InternetAddress.new(host, {type: io.InternetAddressType.unix}), port, {timeout: timeout});
+      } else {
+        return io.RawSocket.connect(host, port, {timeout: timeout});
+      }
+    }
+    static connect(host, port, timeout, opts) {
+      if (host == null) dart.nullFailed(I[0], 77, 12, "host");
+      if (port == null) dart.nullFailed(I[0], 78, 9, "port");
+      if (timeout == null) dart.nullFailed(I[0], 79, 14, "timeout");
+      let onDataReady = opts && 'onDataReady' in opts ? opts.onDataReady : null;
+      let onDone = opts && 'onDone' in opts ? opts.onDone : null;
+      let onError = opts && 'onError' in opts ? opts.onError : null;
+      let onClosed = opts && 'onClosed' in opts ? opts.onClosed : null;
+      let socketFactory = opts && 'socketFactory' in opts ? opts.socketFactory : C[0] || CT.C0;
+      if (socketFactory == null) dart.nullFailed(I[0], 84, 19, "socketFactory");
+      let isUnixSocket = opts && 'isUnixSocket' in opts ? opts.isUnixSocket : false;
+      if (isUnixSocket == null) dart.nullFailed(I[0], 85, 10, "isUnixSocket");
+      return async.async(buffered_socket.BufferedSocket, function* connect() {
+        let socket = null;
+        socket = io.RawSocket.as(yield socketFactory(host, port, timeout, {isUnixSocket: isUnixSocket}));
+        if (!dart.test(isUnixSocket)) {
+          socket.setOption(io.SocketOption.tcpNoDelay, true);
+        }
+        return new buffered_socket.BufferedSocket.__(socket, onDataReady, onDone, onError, onClosed);
+      });
+    }
+    [_onData](event) {
+      let t6;
+      if (event == null) dart.nullFailed(I[0], 96, 31, "event");
+      if (dart.test(this[_closed])) {
+        return;
+      }
+      if (dart.equals(event, io.RawSocketEvent.read)) {
+        this.log.fine("READ data");
+        if (this[_readingBuffer] == null) {
+          this.log.fine("READ data: no buffer");
+          t6 = this.onDataReady;
+          t6 == null ? null : t6();
+        } else {
+          this[_readBuffer]();
+        }
+      } else if (dart.equals(event, io.RawSocketEvent.readClosed)) {
+        this.log.fine("READ_CLOSED");
+        if (this.onClosed != null) {
+          dart.nullCheck(this.onClosed)();
+        }
+      } else if (dart.equals(event, io.RawSocketEvent.closed)) {
+        this.log.fine("CLOSED");
+      } else if (dart.equals(event, io.RawSocketEvent.write)) {
+        this.log.fine("WRITE data");
+        if (this[_writingBuffer] != null) {
+          this[_writeBuffer]();
+        }
+      }
+    }
+    writeBuffer(buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 126, 37, "buffer");
+      return this.writeBufferPart(buffer, 0, buffer.length);
+    }
+    writeBufferPart(buffer, start, length) {
+      if (buffer == null) dart.nullFailed(I[0], 130, 41, "buffer");
+      if (start == null) dart.nullFailed(I[0], 130, 53, "start");
+      if (length == null) dart.nullFailed(I[0], 130, 64, "length");
+      this.log.fine("writeBuffer length=" + dart.str(buffer.length));
+      if (dart.test(this[_closed])) {
+        dart.throw(new core.StateError.new("Cannot write to socket, it is closed"));
+      }
+      if (this[_writingBuffer] != null) {
+        dart.throw(new core.StateError.new("Cannot write to socket, already writing"));
+      }
+      this[_writingBuffer] = buffer;
+      this[_writeCompleter] = T.CompleterOfBuffer().new();
+      this[_writeOffset] = start;
+      this[_writeLength] = dart.notNull(length) + dart.notNull(start);
+      this[_writeBuffer]();
+      return this[_writeCompleter].future;
+    }
+    [_writeBuffer]() {
+      this.log.fine("_writeBuffer offset=" + dart.str(this[_writeOffset]));
+      let bytesWritten = dart.nullCheck(this[_writingBuffer]).writeToSocket(this[_socket$], this[_writeOffset], dart.notNull(this[_writeLength]) - dart.notNull(this[_writeOffset]));
+      this.log.fine("Wrote " + dart.str(bytesWritten) + " bytes");
+      if (dart.test(this.log.isLoggable(level.Level.FINE))) {
+        this.log.fine("\n" + dart.str(buffer.Buffer.debugChars(dart.nullCheck(this[_writingBuffer]).list)));
+      }
+      this[_writeOffset] = dart.notNull(this[_writeOffset]) + dart.notNull(bytesWritten);
+      if (this[_writeOffset] == this[_writeLength]) {
+        this[_writeCompleter].complete(this[_writingBuffer]);
+        this[_writingBuffer] = null;
+      } else {
+        this[_socket$].writeEventsEnabled = true;
+      }
+    }
+    readBuffer(buffer) {
+      if (buffer == null) dart.nullFailed(I[0], 171, 36, "buffer");
+      this.log.fine("readBuffer, length=" + dart.str(buffer.length));
+      if (dart.test(this[_closed])) {
+        dart.throw(new core.StateError.new("Cannot read from socket, it is closed"));
+      }
+      if (this[_readingBuffer] != null) {
+        dart.throw(new core.StateError.new("Cannot read from socket, already reading"));
+      }
+      this[_readingBuffer] = buffer;
+      this[_readOffset] = 0;
+      this[_readCompleter] = T.CompleterOfBuffer().new();
+      if (dart.notNull(this[_socket$].available()) > 0) {
+        this.log.fine("readBuffer, data already ready");
+        this[_readBuffer]();
+      }
+      return this[_readCompleter].future;
+    }
+    [_readBuffer]() {
+      let bytesRead = dart.nullCheck(this[_readingBuffer]).readFromSocket(this[_socket$], dart.notNull(dart.nullCheck(this[_readingBuffer]).length) - dart.notNull(this[_readOffset]));
+      this.log.fine("read " + dart.str(bytesRead) + " bytes");
+      if (dart.test(this.log.isLoggable(level.Level.FINE))) {
+        this.log.fine("\n" + dart.str(buffer.Buffer.debugChars(dart.nullCheck(this[_readingBuffer]).list)));
+      }
+      this[_readOffset] = dart.notNull(this[_readOffset]) + dart.notNull(bytesRead);
+      if (this[_readOffset] == dart.nullCheck(this[_readingBuffer]).length) {
+        this[_readCompleter].complete(this[_readingBuffer]);
+        this[_readingBuffer] = null;
+      }
+    }
+    close() {
+      this[_socket$].close();
+      this[_closed] = true;
+    }
+    startSSL() {
+      return async.async(dart.dynamic, (function* startSSL() {
+        this.log.fine("Securing socket");
+        let socket = (yield io.RawSecureSocket.secure(this[_socket$], {subscription: this[_subscription], onBadCertificate: dart.fn(cert => {
+            if (cert == null) dart.nullFailed(I[0], 213, 57, "cert");
+            return true;
+          }, T.X509CertificateTobool())}));
+        this.log.fine("Socket is secure");
+        this[_socket$] = socket;
+        this[_socket$].setOption(io.SocketOption.tcpNoDelay, true);
+        this[_subscription] = this[_socket$].listen(dart.bind(this, _onData), {onError: dart.bind(this, _onSocketError), onDone: dart.bind(this, _onSocketDone), cancelOnError: true});
+        this[_socket$].writeEventsEnabled = true;
+        this[_socket$].readEventsEnabled = true;
+      }).bind(this));
+    }
+  };
+  (buffered_socket.BufferedSocket.__ = function(_socket, onDataReady, onDone, onError, onClosed) {
+    if (_socket == null) dart.nullFailed(I[0], 45, 12, "_socket");
+    this[_writingBuffer] = null;
+    this[__BufferedSocket__writeOffset] = null;
+    this[__BufferedSocket__writeOffset_isSet] = false;
+    this[__BufferedSocket__writeLength] = null;
+    this[__BufferedSocket__writeLength_isSet] = false;
+    this[__BufferedSocket__writeCompleter] = null;
+    this[__BufferedSocket__writeCompleter_isSet] = false;
+    this[_readingBuffer] = null;
+    this[__BufferedSocket__readOffset] = null;
+    this[__BufferedSocket__readOffset_isSet] = false;
+    this[__BufferedSocket__readCompleter] = null;
+    this[__BufferedSocket__readCompleter_isSet] = false;
+    this[__BufferedSocket__subscription] = null;
+    this[__BufferedSocket__subscription_isSet] = false;
+    this[_closed] = false;
+    this[_socket$] = _socket;
+    this[onDataReady$] = onDataReady;
+    this[onDone$] = onDone;
+    this[onError$] = onError;
+    this[onClosed$] = onClosed;
+    this[log] = logger.Logger.new("BufferedSocket");
+    this[_subscription] = this[_socket$].listen(dart.bind(this, _onData), {onError: dart.bind(this, _onSocketError), onDone: dart.bind(this, _onSocketDone), cancelOnError: true});
+  }).prototype = buffered_socket.BufferedSocket.prototype;
+  dart.addTypeTests(buffered_socket.BufferedSocket);
+  dart.addTypeCaches(buffered_socket.BufferedSocket);
+  dart.setMethodSignature(buffered_socket.BufferedSocket, () => ({
+    __proto__: dart.getMethods(buffered_socket.BufferedSocket.__proto__),
+    [_onSocketError]: dart.fnType(dart.void, [core.Object]),
+    [_onSocketDone]: dart.fnType(dart.void, []),
+    [_onData]: dart.fnType(dart.void, [io.RawSocketEvent]),
+    writeBuffer: dart.fnType(async.Future$(buffer.Buffer), [buffer.Buffer]),
+    writeBufferPart: dart.fnType(async.Future$(buffer.Buffer), [buffer.Buffer, core.int, core.int]),
+    [_writeBuffer]: dart.fnType(dart.void, []),
+    readBuffer: dart.fnType(async.Future$(buffer.Buffer), [buffer.Buffer]),
+    [_readBuffer]: dart.fnType(dart.void, []),
+    close: dart.fnType(dart.void, []),
+    startSSL: dart.fnType(async.Future, [])
+  }));
+  dart.setGetterSignature(buffered_socket.BufferedSocket, () => ({
+    __proto__: dart.getGetters(buffered_socket.BufferedSocket.__proto__),
+    [_writeOffset]: core.int,
+    [_writeLength]: core.int,
+    [_writeCompleter]: async.Completer$(buffer.Buffer),
+    [_readOffset]: core.int,
+    [_readCompleter]: async.Completer$(buffer.Buffer),
+    [_subscription]: async.StreamSubscription$(io.RawSocketEvent),
+    closed: core.bool
+  }));
+  dart.setSetterSignature(buffered_socket.BufferedSocket, () => ({
+    __proto__: dart.getSetters(buffered_socket.BufferedSocket.__proto__),
+    [_writeOffset]: core.int,
+    [_writeLength]: core.int,
+    [_writeCompleter]: async.Completer$(buffer.Buffer),
+    [_readOffset]: core.int,
+    [_readCompleter]: async.Completer$(buffer.Buffer),
+    [_subscription]: async.StreamSubscription$(io.RawSocketEvent)
+  }));
+  dart.setLibraryUri(buffered_socket.BufferedSocket, I[1]);
+  dart.setFieldSignature(buffered_socket.BufferedSocket, () => ({
+    __proto__: dart.getFields(buffered_socket.BufferedSocket.__proto__),
+    log: dart.finalFieldType(logger.Logger),
+    onError: dart.fieldType(dart.nullable(dart.fnType(dart.dynamic, [core.Object]))),
+    onDone: dart.fieldType(dart.nullable(dart.fnType(dart.dynamic, []))),
+    onClosed: dart.fieldType(dart.nullable(dart.fnType(dart.dynamic, []))),
+    onDataReady: dart.fieldType(dart.nullable(dart.fnType(dart.dynamic, []))),
+    [_socket$]: dart.fieldType(io.RawSocket),
+    [_writingBuffer]: dart.fieldType(dart.nullable(buffer.Buffer)),
+    [__BufferedSocket__writeOffset]: dart.fieldType(dart.nullable(core.int)),
+    [__BufferedSocket__writeOffset_isSet]: dart.fieldType(core.bool),
+    [__BufferedSocket__writeLength]: dart.fieldType(dart.nullable(core.int)),
+    [__BufferedSocket__writeLength_isSet]: dart.fieldType(core.bool),
+    [__BufferedSocket__writeCompleter]: dart.fieldType(dart.nullable(async.Completer$(buffer.Buffer))),
+    [__BufferedSocket__writeCompleter_isSet]: dart.fieldType(core.bool),
+    [_readingBuffer]: dart.fieldType(dart.nullable(buffer.Buffer)),
+    [__BufferedSocket__readOffset]: dart.fieldType(dart.nullable(core.int)),
+    [__BufferedSocket__readOffset_isSet]: dart.fieldType(core.bool),
+    [__BufferedSocket__readCompleter]: dart.fieldType(dart.nullable(async.Completer$(buffer.Buffer))),
+    [__BufferedSocket__readCompleter_isSet]: dart.fieldType(core.bool),
+    [__BufferedSocket__subscription]: dart.fieldType(dart.nullable(async.StreamSubscription$(io.RawSocketEvent))),
+    [__BufferedSocket__subscription_isSet]: dart.fieldType(core.bool),
+    [_closed]: dart.fieldType(core.bool)
+  }));
+  dart.trackLibraries("packages/mysql1/src/buffered_socket.dart", {
+    "package:mysql1/src/buffered_socket.dart": buffered_socket
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["buffered_socket.dart"],"names":[],"mappings":"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","file":"../../../../../../../../packages/mysql1/src/buffered_socket.dart.lib.js"}');
+  // Exports:
+  return {
+    src__buffered_socket: buffered_socket
+  };
+}));
+
+//# sourceMappingURL=buffered_socket.dart.lib.js.map

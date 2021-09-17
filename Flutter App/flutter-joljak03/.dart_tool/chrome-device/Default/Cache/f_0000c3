@@ -1,0 +1,1269 @@
+define(['dart_sdk', 'packages/syncfusion_flutter_sliders/src/constants.dart', 'packages/flutter/src/rendering/layer.dart', 'packages/flutter/src/semantics/semantics.dart', 'packages/flutter/src/gestures/team.dart', 'packages/flutter/src/gestures/monodrag.dart', 'packages/flutter/src/gestures/tap.dart', 'packages/flutter/src/animation/listener_helpers.dart', 'packages/flutter/src/animation/curves.dart', 'packages/syncfusion_flutter_sliders/src/common.dart', 'packages/flutter/src/painting/placeholder_span.dart', 'packages/syncfusion_flutter_sliders/src/slider_shapes.dart', 'packages/flutter/src/services/mouse_cursor.dart', 'packages/flutter/src/gestures/hit_test.dart', 'packages/flutter/src/gestures/events.dart', 'packages/flutter/src/foundation/debug.dart', 'packages/flutter/src/services/mouse_tracking.dart', 'packages/flutter/src/animation/animation_controller.dart', 'packages/flutter/src/gestures/drag_details.dart'], (function load__packages__syncfusion_flutter_sliders__src__range_slider_base_dart(dart_sdk, packages__syncfusion_flutter_sliders__src__constants$46dart, packages__flutter__src__rendering__layer$46dart, packages__flutter__src__semantics__semantics$46dart, packages__flutter__src__gestures__team$46dart, packages__flutter__src__gestures__monodrag$46dart, packages__flutter__src__gestures__tap$46dart, packages__flutter__src__animation__listener_helpers$46dart, packages__flutter__src__animation__curves$46dart, packages__syncfusion_flutter_sliders__src__common$46dart, packages__flutter__src__painting__placeholder_span$46dart, packages__syncfusion_flutter_sliders__src__slider_shapes$46dart, packages__flutter__src__services__mouse_cursor$46dart, packages__flutter__src__gestures__hit_test$46dart, packages__flutter__src__gestures__events$46dart, packages__flutter__src__foundation__debug$46dart, packages__flutter__src__services__mouse_tracking$46dart, packages__flutter__src__animation__animation_controller$46dart, packages__flutter__src__gestures__drag_details$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _js_helper = dart_sdk._js_helper;
+  const _interceptors = dart_sdk._interceptors;
+  const _internal = dart_sdk._internal;
+  const ui = dart_sdk.ui;
+  const async = dart_sdk.async;
+  const math = dart_sdk.math;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const constants = packages__syncfusion_flutter_sliders__src__constants$46dart.src__constants;
+  const box = packages__flutter__src__rendering__layer$46dart.src__rendering__box;
+  const object = packages__flutter__src__rendering__layer$46dart.src__rendering__object;
+  const semantics = packages__flutter__src__semantics__semantics$46dart.src__semantics__semantics;
+  const team$ = packages__flutter__src__gestures__team$46dart.src__gestures__team;
+  const monodrag = packages__flutter__src__gestures__monodrag$46dart.src__gestures__monodrag;
+  const tap = packages__flutter__src__gestures__tap$46dart.src__gestures__tap;
+  const animations = packages__flutter__src__animation__listener_helpers$46dart.src__animation__animations;
+  const animation = packages__flutter__src__animation__listener_helpers$46dart.src__animation__animation;
+  const curves = packages__flutter__src__animation__curves$46dart.src__animation__curves;
+  const common = packages__syncfusion_flutter_sliders__src__common$46dart.src__common;
+  const text_span = packages__flutter__src__painting__placeholder_span$46dart.src__painting__text_span;
+  const slider_shapes = packages__syncfusion_flutter_sliders__src__slider_shapes$46dart.src__slider_shapes;
+  const slider_base = packages__syncfusion_flutter_sliders__src__slider_shapes$46dart.src__slider_base;
+  const mouse_cursor = packages__flutter__src__services__mouse_cursor$46dart.src__services__mouse_cursor;
+  const hit_test = packages__flutter__src__gestures__hit_test$46dart.src__gestures__hit_test;
+  const events = packages__flutter__src__gestures__events$46dart.src__gestures__events;
+  const diagnostics = packages__flutter__src__foundation__debug$46dart.src__foundation__diagnostics;
+  const mouse_tracking = packages__flutter__src__services__mouse_tracking$46dart.src__services__mouse_tracking;
+  const animation_controller = packages__flutter__src__animation__animation_controller$46dart.src__animation__animation_controller;
+  const drag_details = packages__flutter__src__gestures__drag_details$46dart.src__gestures__drag_details;
+  var range_slider_base = Object.create(dart.library);
+  var $clamp = dartx.clamp;
+  var $remove = dartx.remove;
+  var $_set = dartx._set;
+  var $abs = dartx.abs;
+  var $_get = dartx._get;
+  var $toInt = dartx.toInt;
+  var $toDouble = dartx.toDouble;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    LinkedMapOfChildElements$RenderBox: () => (T.LinkedMapOfChildElements$RenderBox = dart.constFn(_js_helper.LinkedMap$(constants.ChildElements, box.RenderBox)))(),
+    LinkedMapOfRenderBox$ChildElements: () => (T.LinkedMapOfRenderBox$ChildElements = dart.constFn(_js_helper.LinkedMap$(box.RenderBox, constants.ChildElements)))(),
+    JSArrayOfdouble: () => (T.JSArrayOfdouble = dart.constFn(_interceptors.JSArray$(core.double)))(),
+    VoidTovoid: () => (T.VoidTovoid = dart.constFn(dart.fnType(dart.void, [])))(),
+    VoidToSfRangeValues: () => (T.VoidToSfRangeValues = dart.constFn(dart.fnType(common.SfRangeValues, [])))(),
+    SfRangeValuesTodynamic: () => (T.SfRangeValuesTodynamic = dart.constFn(dart.fnType(dart.dynamic, [common.SfRangeValues])))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: common.SfThumb.prototype,
+        [_name]: "SfThumb.start",
+        index: 0
+      });
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: common.SfThumb.prototype,
+        [_name]: "SfThumb.end",
+        index: 1
+      });
+    },
+    get C2() {
+      return C[2] = dart.const({
+        __proto__: core.Duration.prototype,
+        [Duration__duration]: 500000
+      });
+    }
+  }, false);
+  var C = Array(3).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_sliders-19.2.49/lib/src/range_slider_base.dart",
+    "package:syncfusion_flutter_sliders/src/range_slider_base.dart"
+  ];
+  var slotToChild = dart.privateName(range_slider_base, "RenderBaseRangeSlider.slotToChild");
+  var childToSlot = dart.privateName(range_slider_base, "RenderBaseRangeSlider.childToSlot");
+  var isIntervalTapped = dart.privateName(range_slider_base, "RenderBaseRangeSlider.isIntervalTapped");
+  var mounted = dart.privateName(range_slider_base, "RenderBaseRangeSlider.mounted");
+  var tooltipDelayTimer = dart.privateName(range_slider_base, "RenderBaseRangeSlider.tooltipDelayTimer");
+  var startSemanticsNode = dart.privateName(range_slider_base, "RenderBaseRangeSlider.startSemanticsNode");
+  var endSemanticsNode = dart.privateName(range_slider_base, "RenderBaseRangeSlider.endSemanticsNode");
+  var __RenderBaseRangeSlider_overlayStartController = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#overlayStartController");
+  var __RenderBaseRangeSlider_overlayStartController_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#overlayStartController#isSet");
+  var __RenderBaseRangeSlider_overlayEndController = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#overlayEndController");
+  var __RenderBaseRangeSlider_overlayEndController_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#overlayEndController#isSet");
+  var __RenderBaseRangeSlider_stateController = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#stateController");
+  var __RenderBaseRangeSlider_stateController_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#stateController#isSet");
+  var __RenderBaseRangeSlider_startPositionController = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#startPositionController");
+  var __RenderBaseRangeSlider_startPositionController_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#startPositionController#isSet");
+  var __RenderBaseRangeSlider_endPositionController = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#endPositionController");
+  var __RenderBaseRangeSlider_endPositionController_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#endPositionController#isSet");
+  var __RenderBaseRangeSlider_tooltipAnimationStartController = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#tooltipAnimationStartController");
+  var __RenderBaseRangeSlider_tooltipAnimationStartController_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#tooltipAnimationStartController#isSet");
+  var __RenderBaseRangeSlider_tooltipAnimationEndController = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#tooltipAnimationEndController");
+  var __RenderBaseRangeSlider_tooltipAnimationEndController_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#tooltipAnimationEndController#isSet");
+  var __RenderBaseRangeSlider__overlayStartAnimation = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_overlayStartAnimation");
+  var __RenderBaseRangeSlider__overlayStartAnimation_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_overlayStartAnimation#isSet");
+  var __RenderBaseRangeSlider__overlayEndAnimation = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_overlayEndAnimation");
+  var __RenderBaseRangeSlider__overlayEndAnimation_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_overlayEndAnimation#isSet");
+  var __RenderBaseRangeSlider__stateAnimation = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_stateAnimation");
+  var __RenderBaseRangeSlider__stateAnimation_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_stateAnimation#isSet");
+  var __RenderBaseRangeSlider__tooltipStartAnimation = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_tooltipStartAnimation");
+  var __RenderBaseRangeSlider__tooltipStartAnimation_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_tooltipStartAnimation#isSet");
+  var __RenderBaseRangeSlider__tooltipEndAnimation = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_tooltipEndAnimation");
+  var __RenderBaseRangeSlider__tooltipEndAnimation_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_tooltipEndAnimation#isSet");
+  var __RenderBaseRangeSlider__validForMouseTracker = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_validForMouseTracker");
+  var __RenderBaseRangeSlider__validForMouseTracker_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_validForMouseTracker#isSet");
+  var __RenderBaseRangeSlider__valuesInMilliseconds = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_valuesInMilliseconds");
+  var __RenderBaseRangeSlider__valuesInMilliseconds_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_valuesInMilliseconds#isSet");
+  var __RenderBaseRangeSlider__beginValues = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_beginValues");
+  var __RenderBaseRangeSlider__beginValues_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_beginValues#isSet");
+  var _isDragging = dart.privateName(range_slider_base, "_isDragging");
+  var _isLocked = dart.privateName(range_slider_base, "_isLocked");
+  var _isDragStart = dart.privateName(range_slider_base, "_isDragStart");
+  var _interactionStartOffset = dart.privateName(range_slider_base, "_interactionStartOffset");
+  var __RenderBaseRangeSlider__values = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_values");
+  var __RenderBaseRangeSlider__values_isSet = dart.privateName(range_slider_base, "_#RenderBaseRangeSlider#_values#isSet");
+  var _startThumbIcon = dart.privateName(range_slider_base, "_startThumbIcon");
+  var _endThumbIcon = dart.privateName(range_slider_base, "_endThumbIcon");
+  var _activeThumb = dart.privateName(range_slider_base, "_activeThumb");
+  var _dragMode = dart.privateName(range_slider_base, "_dragMode");
+  var _enableIntervalSelection = dart.privateName(range_slider_base, "_enableIntervalSelection");
+  var _onDragStart = dart.privateName(range_slider_base, "_onDragStart");
+  var _onDragUpdate = dart.privateName(range_slider_base, "_onDragUpdate");
+  var _onDragEnd = dart.privateName(range_slider_base, "_onDragEnd");
+  var _onDragCancel = dart.privateName(range_slider_base, "_onDragCancel");
+  var _onVerticalDragStart = dart.privateName(range_slider_base, "_onVerticalDragStart");
+  var _onVerticalDragUpdate = dart.privateName(range_slider_base, "_onVerticalDragUpdate");
+  var _onVerticalDragEnd = dart.privateName(range_slider_base, "_onVerticalDragEnd");
+  var _onVerticalDragCancel = dart.privateName(range_slider_base, "_onVerticalDragCancel");
+  var _onTapDown = dart.privateName(range_slider_base, "_onTapDown");
+  var _onTapUp = dart.privateName(range_slider_base, "_onTapUp");
+  var _overlayStartAnimation = dart.privateName(range_slider_base, "_overlayStartAnimation");
+  var _overlayEndAnimation = dart.privateName(range_slider_base, "_overlayEndAnimation");
+  var _stateAnimation = dart.privateName(range_slider_base, "_stateAnimation");
+  var _tooltipStartAnimation = dart.privateName(range_slider_base, "_tooltipStartAnimation");
+  var _tooltipEndAnimation = dart.privateName(range_slider_base, "_tooltipEndAnimation");
+  var _valuesInMilliseconds = dart.privateName(range_slider_base, "_valuesInMilliseconds");
+  var _validForMouseTracker = dart.privateName(range_slider_base, "_validForMouseTracker");
+  var _beginValues = dart.privateName(range_slider_base, "_beginValues");
+  var _values = dart.privateName(range_slider_base, "_values");
+  var _forwardTooltipAndOverlayController = dart.privateName(range_slider_base, "_forwardTooltipAndOverlayController");
+  var _beginInteraction = dart.privateName(range_slider_base, "_beginInteraction");
+  var _endInteraction = dart.privateName(range_slider_base, "_endInteraction");
+  var _updateRangeValues = dart.privateName(range_slider_base, "_updateRangeValues");
+  var _tappedBetweenThumbs = dart.privateName(range_slider_base, "_tappedBetweenThumbs");
+  var _name = dart.privateName(common, "_name");
+  var _forwardTooltipAnimation = dart.privateName(range_slider_base, "_forwardTooltipAnimation");
+  var Duration__duration = dart.privateName(core, "Duration._duration");
+  var _reverseTooltipAnimation = dart.privateName(range_slider_base, "_reverseTooltipAnimation");
+  var _getLockRangeValues = dart.privateName(range_slider_base, "_getLockRangeValues");
+  var _getSelectedRange = dart.privateName(range_slider_base, "_getSelectedRange");
+  var _updatePositionControllerValue = dart.privateName(range_slider_base, "_updatePositionControllerValue");
+  var _handleTooltipAnimationStatusChange = dart.privateName(range_slider_base, "_handleTooltipAnimationStatusChange");
+  var _handleExit = dart.privateName(range_slider_base, "_handleExit");
+  var _handleHover = dart.privateName(range_slider_base, "_handleHover");
+  var _drawOverlayAndThumb = dart.privateName(range_slider_base, "_drawOverlayAndThumb");
+  var _drawTooltip = dart.privateName(range_slider_base, "_drawTooltip");
+  range_slider_base.RenderBaseRangeSlider = class RenderBaseRangeSlider extends slider_base.RenderBaseSlider {
+    get slotToChild() {
+      return this[slotToChild];
+    }
+    set slotToChild(value) {
+      super.slotToChild = value;
+    }
+    get childToSlot() {
+      return this[childToSlot];
+    }
+    set childToSlot(value) {
+      super.childToSlot = value;
+    }
+    get isIntervalTapped() {
+      return this[isIntervalTapped];
+    }
+    set isIntervalTapped(value) {
+      this[isIntervalTapped] = value;
+    }
+    get mounted() {
+      return this[mounted];
+    }
+    set mounted(value) {
+      this[mounted] = value;
+    }
+    get tooltipDelayTimer() {
+      return this[tooltipDelayTimer];
+    }
+    set tooltipDelayTimer(value) {
+      this[tooltipDelayTimer] = value;
+    }
+    get startSemanticsNode() {
+      return this[startSemanticsNode];
+    }
+    set startSemanticsNode(value) {
+      this[startSemanticsNode] = value;
+    }
+    get endSemanticsNode() {
+      return this[endSemanticsNode];
+    }
+    set endSemanticsNode(value) {
+      this[endSemanticsNode] = value;
+    }
+    get overlayStartController() {
+      let t0;
+      return dart.test(this[__RenderBaseRangeSlider_overlayStartController_isSet]) ? (t0 = this[__RenderBaseRangeSlider_overlayStartController], t0) : dart.throw(new _internal.LateError.fieldNI("overlayStartController"));
+    }
+    set overlayStartController(t0) {
+      if (t0 == null) dart.nullFailed(I[0], 137, 28, "null");
+      this[__RenderBaseRangeSlider_overlayStartController_isSet] = true;
+      this[__RenderBaseRangeSlider_overlayStartController] = t0;
+    }
+    get overlayEndController() {
+      let t1;
+      return dart.test(this[__RenderBaseRangeSlider_overlayEndController_isSet]) ? (t1 = this[__RenderBaseRangeSlider_overlayEndController], t1) : dart.throw(new _internal.LateError.fieldNI("overlayEndController"));
+    }
+    set overlayEndController(t1) {
+      if (t1 == null) dart.nullFailed(I[0], 138, 28, "null");
+      this[__RenderBaseRangeSlider_overlayEndController_isSet] = true;
+      this[__RenderBaseRangeSlider_overlayEndController] = t1;
+    }
+    get stateController() {
+      let t2;
+      return dart.test(this[__RenderBaseRangeSlider_stateController_isSet]) ? (t2 = this[__RenderBaseRangeSlider_stateController], t2) : dart.throw(new _internal.LateError.fieldNI("stateController"));
+    }
+    set stateController(t2) {
+      if (t2 == null) dart.nullFailed(I[0], 139, 28, "null");
+      this[__RenderBaseRangeSlider_stateController_isSet] = true;
+      this[__RenderBaseRangeSlider_stateController] = t2;
+    }
+    get startPositionController() {
+      let t3;
+      return dart.test(this[__RenderBaseRangeSlider_startPositionController_isSet]) ? (t3 = this[__RenderBaseRangeSlider_startPositionController], t3) : dart.throw(new _internal.LateError.fieldNI("startPositionController"));
+    }
+    set startPositionController(t3) {
+      if (t3 == null) dart.nullFailed(I[0], 140, 28, "null");
+      this[__RenderBaseRangeSlider_startPositionController_isSet] = true;
+      this[__RenderBaseRangeSlider_startPositionController] = t3;
+    }
+    get endPositionController() {
+      let t4;
+      return dart.test(this[__RenderBaseRangeSlider_endPositionController_isSet]) ? (t4 = this[__RenderBaseRangeSlider_endPositionController], t4) : dart.throw(new _internal.LateError.fieldNI("endPositionController"));
+    }
+    set endPositionController(t4) {
+      if (t4 == null) dart.nullFailed(I[0], 141, 28, "null");
+      this[__RenderBaseRangeSlider_endPositionController_isSet] = true;
+      this[__RenderBaseRangeSlider_endPositionController] = t4;
+    }
+    get tooltipAnimationStartController() {
+      let t5;
+      return dart.test(this[__RenderBaseRangeSlider_tooltipAnimationStartController_isSet]) ? (t5 = this[__RenderBaseRangeSlider_tooltipAnimationStartController], t5) : dart.throw(new _internal.LateError.fieldNI("tooltipAnimationStartController"));
+    }
+    set tooltipAnimationStartController(t5) {
+      if (t5 == null) dart.nullFailed(I[0], 142, 28, "null");
+      this[__RenderBaseRangeSlider_tooltipAnimationStartController_isSet] = true;
+      this[__RenderBaseRangeSlider_tooltipAnimationStartController] = t5;
+    }
+    get tooltipAnimationEndController() {
+      let t6;
+      return dart.test(this[__RenderBaseRangeSlider_tooltipAnimationEndController_isSet]) ? (t6 = this[__RenderBaseRangeSlider_tooltipAnimationEndController], t6) : dart.throw(new _internal.LateError.fieldNI("tooltipAnimationEndController"));
+    }
+    set tooltipAnimationEndController(t6) {
+      if (t6 == null) dart.nullFailed(I[0], 143, 28, "null");
+      this[__RenderBaseRangeSlider_tooltipAnimationEndController_isSet] = true;
+      this[__RenderBaseRangeSlider_tooltipAnimationEndController] = t6;
+    }
+    get [_overlayStartAnimation]() {
+      let t7;
+      return dart.test(this[__RenderBaseRangeSlider__overlayStartAnimation_isSet]) ? (t7 = this[__RenderBaseRangeSlider__overlayStartAnimation], t7) : dart.throw(new _internal.LateError.fieldNI("_overlayStartAnimation"));
+    }
+    set [_overlayStartAnimation](t7) {
+      if (t7 == null) dart.nullFailed(I[0], 144, 26, "null");
+      this[__RenderBaseRangeSlider__overlayStartAnimation_isSet] = true;
+      this[__RenderBaseRangeSlider__overlayStartAnimation] = t7;
+    }
+    get [_overlayEndAnimation]() {
+      let t8;
+      return dart.test(this[__RenderBaseRangeSlider__overlayEndAnimation_isSet]) ? (t8 = this[__RenderBaseRangeSlider__overlayEndAnimation], t8) : dart.throw(new _internal.LateError.fieldNI("_overlayEndAnimation"));
+    }
+    set [_overlayEndAnimation](t8) {
+      if (t8 == null) dart.nullFailed(I[0], 145, 26, "null");
+      this[__RenderBaseRangeSlider__overlayEndAnimation_isSet] = true;
+      this[__RenderBaseRangeSlider__overlayEndAnimation] = t8;
+    }
+    get [_stateAnimation]() {
+      let t9;
+      return dart.test(this[__RenderBaseRangeSlider__stateAnimation_isSet]) ? (t9 = this[__RenderBaseRangeSlider__stateAnimation], t9) : dart.throw(new _internal.LateError.fieldNI("_stateAnimation"));
+    }
+    set [_stateAnimation](t9) {
+      if (t9 == null) dart.nullFailed(I[0], 146, 26, "null");
+      this[__RenderBaseRangeSlider__stateAnimation_isSet] = true;
+      this[__RenderBaseRangeSlider__stateAnimation] = t9;
+    }
+    get [_tooltipStartAnimation]() {
+      let t10;
+      return dart.test(this[__RenderBaseRangeSlider__tooltipStartAnimation_isSet]) ? (t10 = this[__RenderBaseRangeSlider__tooltipStartAnimation], t10) : dart.throw(new _internal.LateError.fieldNI("_tooltipStartAnimation"));
+    }
+    set [_tooltipStartAnimation](t10) {
+      if (t10 == null) dart.nullFailed(I[0], 147, 26, "null");
+      this[__RenderBaseRangeSlider__tooltipStartAnimation_isSet] = true;
+      this[__RenderBaseRangeSlider__tooltipStartAnimation] = t10;
+    }
+    get [_tooltipEndAnimation]() {
+      let t11;
+      return dart.test(this[__RenderBaseRangeSlider__tooltipEndAnimation_isSet]) ? (t11 = this[__RenderBaseRangeSlider__tooltipEndAnimation], t11) : dart.throw(new _internal.LateError.fieldNI("_tooltipEndAnimation"));
+    }
+    set [_tooltipEndAnimation](t11) {
+      if (t11 == null) dart.nullFailed(I[0], 148, 26, "null");
+      this[__RenderBaseRangeSlider__tooltipEndAnimation_isSet] = true;
+      this[__RenderBaseRangeSlider__tooltipEndAnimation] = t11;
+    }
+    get [_validForMouseTracker]() {
+      let t12;
+      return dart.test(this[__RenderBaseRangeSlider__validForMouseTracker_isSet]) ? (t12 = this[__RenderBaseRangeSlider__validForMouseTracker], t12) : dart.throw(new _internal.LateError.fieldNI("_validForMouseTracker"));
+    }
+    set [_validForMouseTracker](t12) {
+      if (t12 == null) dart.nullFailed(I[0], 149, 13, "null");
+      this[__RenderBaseRangeSlider__validForMouseTracker_isSet] = true;
+      this[__RenderBaseRangeSlider__validForMouseTracker] = t12;
+    }
+    get [_valuesInMilliseconds]() {
+      let t13;
+      return dart.test(this[__RenderBaseRangeSlider__valuesInMilliseconds_isSet]) ? (t13 = this[__RenderBaseRangeSlider__valuesInMilliseconds], t13) : dart.throw(new _internal.LateError.fieldNI("_valuesInMilliseconds"));
+    }
+    set [_valuesInMilliseconds](t13) {
+      if (t13 == null) dart.nullFailed(I[0], 150, 22, "null");
+      this[__RenderBaseRangeSlider__valuesInMilliseconds_isSet] = true;
+      this[__RenderBaseRangeSlider__valuesInMilliseconds] = t13;
+    }
+    get [_beginValues]() {
+      let t14;
+      return dart.test(this[__RenderBaseRangeSlider__beginValues_isSet]) ? (t14 = this[__RenderBaseRangeSlider__beginValues], t14) : dart.throw(new _internal.LateError.fieldNI("_beginValues"));
+    }
+    set [_beginValues](t14) {
+      if (t14 == null) dart.nullFailed(I[0], 151, 22, "null");
+      this[__RenderBaseRangeSlider__beginValues_isSet] = true;
+      this[__RenderBaseRangeSlider__beginValues] = t14;
+    }
+    get values() {
+      return this[_values];
+    }
+    get [_values]() {
+      let t15;
+      return dart.test(this[__RenderBaseRangeSlider__values_isSet]) ? (t15 = this[__RenderBaseRangeSlider__values], t15) : dart.throw(new _internal.LateError.fieldNI("_values"));
+    }
+    set [_values](t15) {
+      if (t15 == null) dart.nullFailed(I[0], 168, 22, "null");
+      this[__RenderBaseRangeSlider__values_isSet] = true;
+      this[__RenderBaseRangeSlider__values] = t15;
+    }
+    set values(values) {
+      if (values == null) dart.nullFailed(I[0], 169, 28, "values");
+      if (dart.equals(this[_values], values)) {
+        return;
+      }
+      this[_values] = values;
+      if (dart.test(this.isDateTime)) {
+        this[_valuesInMilliseconds] = new common.SfRangeValues.new(dart.dsend(dart.dload(this[_values].start, 'millisecondsSinceEpoch'), 'toDouble', []), dart.dsend(dart.dload(this[_values].end, 'millisecondsSinceEpoch'), 'toDouble', []));
+      }
+      this.markNeedsPaint();
+    }
+    get enableIntervalSelection() {
+      return this[_enableIntervalSelection];
+    }
+    set enableIntervalSelection(value) {
+      if (value == null) dart.nullFailed(I[0], 184, 36, "value");
+      if (this[_enableIntervalSelection] == value) {
+        return;
+      }
+      this[_enableIntervalSelection] = value;
+      this.startPositionController.value = this.getFactorFromValue(this.actualValues.start);
+      this.endPositionController.value = this.getFactorFromValue(this.actualValues.end);
+    }
+    get dragMode() {
+      return this[_dragMode];
+    }
+    set dragMode(value) {
+      if (value == null) dart.nullFailed(I[0], 195, 31, "value");
+      if (this[_dragMode] == value) {
+        return;
+      }
+      this[_dragMode] = value;
+    }
+    get startThumbIcon() {
+      return this[_startThumbIcon];
+    }
+    set startThumbIcon(value) {
+      this[_startThumbIcon] = this.updateChild(this[_startThumbIcon], value, constants.ChildElements.startThumbIcon);
+    }
+    get endThumbIcon() {
+      return this[_endThumbIcon];
+    }
+    set endThumbIcon(value) {
+      this[_endThumbIcon] = this.updateChild(this[_endThumbIcon], value, constants.ChildElements.endThumbIcon);
+    }
+    get activeThumb() {
+      return this[_activeThumb];
+    }
+    set activeThumb(value) {
+      if (this[_activeThumb] == value && (this.overlayEndController.status == animation.AnimationStatus.completed || this.overlayStartController.status == animation.AnimationStatus.completed)) {
+        return;
+      }
+      this[_activeThumb] = value;
+      this[_forwardTooltipAndOverlayController]();
+    }
+    get minThumbGap() {
+      return this.sliderType == constants.SliderType.vertical ? (dart.notNull(this.actualMax) - dart.notNull(this.actualMin)) * (8 / dart.notNull(this.actualTrackRect.height))[$clamp](0.0, 1.0) : (dart.notNull(this.actualMax) - dart.notNull(this.actualMin)) * (8 / dart.notNull(this.actualTrackRect.width))[$clamp](0.0, 1.0);
+    }
+    get actualValues() {
+      return dart.test(this.isDateTime) ? this[_valuesInMilliseconds] : this[_values];
+    }
+    get increasedStartValue() {
+      return this.getNextSemanticValue(this.values.start, this.semanticActionUnit, {actualValue: core.double.as(this.actualValues.start)});
+    }
+    get decreasedStartValue() {
+      return this.getPrevSemanticValue(this.values.start, this.semanticActionUnit, {actualValue: core.double.as(this.actualValues.start)});
+    }
+    get increasedEndValue() {
+      return this.getNextSemanticValue(this.values.end, this.semanticActionUnit, {actualValue: core.double.as(this.actualValues.end)});
+    }
+    get decreasedEndValue() {
+      return this.getPrevSemanticValue(this.values.end, this.semanticActionUnit, {actualValue: core.double.as(this.actualValues.end)});
+    }
+    updateChild(oldChild, newChild, slot) {
+      if (slot == null) dart.nullFailed(I[0], 260, 63, "slot");
+      if (oldChild != null) {
+        this.dropChild(oldChild);
+        this.childToSlot[$remove](oldChild);
+        this.slotToChild[$remove](slot);
+      }
+      if (newChild != null) {
+        this.childToSlot[$_set](newChild, slot);
+        this.slotToChild[$_set](slot, newChild);
+        this.adoptChild(newChild);
+      }
+      return newChild;
+    }
+    [_onTapDown](details) {
+      if (details == null) dart.nullFailed(I[0], 274, 34, "details");
+      this.currentPointerType = constants.PointerType.down;
+      this[_interactionStartOffset] = this.sliderType == constants.SliderType.vertical ? this.globalToLocal(details.globalPosition).dy : this.globalToLocal(details.globalPosition).dx;
+      this.mainAxisOffset = this[_interactionStartOffset];
+      this[_beginInteraction]();
+    }
+    [_onTapUp](details) {
+      if (details == null) dart.nullFailed(I[0], 283, 30, "details");
+      this[_endInteraction]();
+    }
+    [_onDragStart](details) {
+      if (details == null) dart.nullFailed(I[0], 287, 38, "details");
+      this[_isDragStart] = true;
+      this[_interactionStartOffset] = this.globalToLocal(details.globalPosition).dx;
+      this.mainAxisOffset = this[_interactionStartOffset];
+      this[_beginInteraction]();
+    }
+    [_onDragUpdate](details) {
+      if (details == null) dart.nullFailed(I[0], 294, 40, "details");
+      this.isInteractionEnd = false;
+      this.currentPointerType = constants.PointerType.move;
+      this.mainAxisOffset = this.globalToLocal(details.globalPosition).dx;
+      this[_updateRangeValues]({delta: dart.notNull(this.mainAxisOffset) - dart.notNull(this[_interactionStartOffset])});
+      this.markNeedsPaint();
+    }
+    [_onDragEnd](details) {
+      if (details == null) dart.nullFailed(I[0], 302, 34, "details");
+      this[_endInteraction]();
+    }
+    [_onDragCancel]() {
+      this[_endInteraction]();
+    }
+    [_onVerticalDragStart](details) {
+      if (details == null) dart.nullFailed(I[0], 310, 46, "details");
+      this[_isDragStart] = true;
+      this[_interactionStartOffset] = this.globalToLocal(details.globalPosition).dy;
+      this.mainAxisOffset = this[_interactionStartOffset];
+      this[_beginInteraction]();
+    }
+    [_onVerticalDragUpdate](details) {
+      if (details == null) dart.nullFailed(I[0], 317, 48, "details");
+      this.isInteractionEnd = false;
+      this.currentPointerType = constants.PointerType.move;
+      this.mainAxisOffset = this.globalToLocal(details.globalPosition).dy;
+      this[_updateRangeValues]({delta: dart.notNull(this.mainAxisOffset) - dart.notNull(this[_interactionStartOffset])});
+      this.markNeedsPaint();
+    }
+    [_onVerticalDragEnd](details) {
+      if (details == null) dart.nullFailed(I[0], 325, 42, "details");
+      this[_endInteraction]();
+    }
+    [_onVerticalDragCancel]() {
+      this[_endInteraction]();
+    }
+    [_beginInteraction]() {
+      this[_beginValues] = this[_values];
+      this.isIntervalTapped = false;
+      this.isInteractionEnd = false;
+      let startPosition = this.getPositionFromValue(core.double.as(dart.dsend(this.actualValues.start, 'toDouble', [])));
+      let endPosition = this.getPositionFromValue(core.double.as(dart.dsend(this.actualValues.end, 'toDouble', [])));
+      let leftThumbWidth = (dart.notNull(startPosition) - dart.notNull(this.mainAxisOffset))[$abs]();
+      let rightThumbWidth = (dart.notNull(endPosition) - dart.notNull(this.mainAxisOffset))[$abs]();
+      if ((this[_dragMode] == common.SliderDragMode.both || this[_dragMode] == common.SliderDragMode.betweenThumbs) && dart.test(this[_tappedBetweenThumbs](startPosition, endPosition))) {
+        if (dart.test(this[_isDragStart])) {
+          this[_isLocked] = true;
+        } else {
+          return;
+        }
+      } else if (rightThumbWidth === leftThumbWidth) {
+        switch (dart.nullCheck(this.activeThumb)) {
+          case C[0] || CT.C0:
+          {
+            this.overlayStartController.forward();
+            break;
+          }
+          case C[1] || CT.C1:
+          {
+            this.overlayEndController.forward();
+            break;
+          }
+          default:
+          {
+            dart.throw(new _internal.ReachabilityError.new("`null` encountered as case in a switch expression with a non-nullable enum type."));
+          }
+        }
+      } else if (rightThumbWidth > leftThumbWidth) {
+        this.activeThumb = common.SfThumb.start;
+        this.overlayStartController.forward();
+      } else {
+        this.activeThumb = common.SfThumb.end;
+        this.overlayEndController.forward();
+      }
+      this[_forwardTooltipAnimation]();
+      this[_updateRangeValues]();
+      this.markNeedsPaint();
+    }
+    [_tappedBetweenThumbs](startPosition, endPosition) {
+      if (startPosition == null) dart.nullFailed(I[0], 377, 36, "startPosition");
+      if (endPosition == null) dart.nullFailed(I[0], 377, 58, "endPosition");
+      return this.sliderType == constants.SliderType.vertical || this.textDirection == ui.TextDirection.rtl ? dart.notNull(startPosition) > dart.notNull(this.mainAxisOffset) + 20 && dart.notNull(this.mainAxisOffset) - 20 > dart.notNull(endPosition) : dart.notNull(startPosition) < dart.notNull(this.mainAxisOffset) - 20 && dart.notNull(this.mainAxisOffset) + 20 < dart.notNull(endPosition);
+    }
+    [_forwardTooltipAnimation]() {
+      let t16;
+      if (dart.test(this.enableTooltip)) {
+        this.willDrawTooltip = true;
+        this.tooltipAnimationStartController.forward();
+        this.tooltipAnimationEndController.forward();
+        t16 = this.tooltipDelayTimer;
+        t16 == null ? null : t16.cancel();
+        this.tooltipDelayTimer = async.Timer.new(C[2] || CT.C2, dart.fn(() => {
+          this[_reverseTooltipAnimation]();
+        }, T.VoidTovoid()));
+      }
+    }
+    [_reverseTooltipAnimation]() {
+      this.tooltipDelayTimer = null;
+      if (dart.test(this.isInteractionEnd) && dart.test(this.willDrawTooltip) && this.tooltipAnimationStartController.status == animation.AnimationStatus.completed) {
+        this.tooltipAnimationStartController.reverse();
+      }
+      if (dart.test(this.isInteractionEnd) && dart.test(this.willDrawTooltip) && this.tooltipAnimationEndController.status == animation.AnimationStatus.completed) {
+        this.tooltipAnimationEndController.reverse();
+      }
+      if (this.tooltipAnimationStartController.status == animation.AnimationStatus.dismissed && this.tooltipAnimationEndController.status == animation.AnimationStatus.dismissed) {
+        this.willDrawTooltip = false;
+      }
+    }
+    [_updateRangeValues](opts) {
+      let delta = opts && 'delta' in opts ? opts.delta : null;
+      let newValues = this.values;
+      this[_isDragging] = (dart.notNull(this[_interactionStartOffset]) - dart.notNull(this.mainAxisOffset))[$abs]() > 1;
+      this.isIntervalTapped = dart.test(this[_enableIntervalSelection]) && !dart.test(this[_isDragging]);
+      if (!dart.test(this.isIntervalTapped)) {
+        if (dart.test(this[_isLocked])) {
+          if (delta != null) {
+            newValues = this[_getLockRangeValues](delta);
+          } else {
+            return;
+          }
+        } else if (this[_dragMode] == common.SliderDragMode.betweenThumbs) {
+          return;
+        } else {
+          let factor = this.getFactorFromCurrentPosition();
+          let value = dart.nullCheck(ui.lerpDouble(this.actualMin, this.actualMax, factor));
+          let start = this.getNumerizedValue(dart.test(this.isDateTime) ? this.values.start : dart.dsend(this.values.start, 'toDouble', []));
+          let end = this.getNumerizedValue(dart.test(this.isDateTime) ? this.values.end : dart.dsend(this.values.end, 'toDouble', []));
+          switch (dart.nullCheck(this.activeThumb)) {
+            case C[0] || CT.C0:
+            {
+              let startValue = math.min(core.double, value, dart.notNull(end) - dart.notNull(this.minThumbGap));
+              let actualStartValue = this.getActualValue({valueInDouble: startValue});
+              newValues = this.values.copyWith({start: actualStartValue});
+              break;
+            }
+            case C[1] || CT.C1:
+            {
+              let endValue = math.max(core.double, value, dart.notNull(start) + dart.notNull(this.minThumbGap));
+              let actualEndValue = this.getActualValue({valueInDouble: endValue});
+              newValues = this.values.copyWith({end: actualEndValue});
+              break;
+            }
+            default:
+            {
+              dart.throw(new _internal.ReachabilityError.new("`null` encountered as case in a switch expression with a non-nullable enum type."));
+            }
+          }
+        }
+      }
+      this.updateValues(newValues);
+    }
+    [_getLockRangeValues](delta) {
+      let t16, t16$;
+      let isVertical = this.sliderType == constants.SliderType.vertical;
+      let isRTL = this.textDirection == ui.TextDirection.rtl;
+      let startPosition = this.getPositionFromValue(this.getNumerizedValue(this[_beginValues].start));
+      let endPosition = this.getPositionFromValue(this.getNumerizedValue(this[_beginValues].end));
+      let lockedRangeWidth = isVertical || isRTL ? dart.notNull(startPosition) - dart.notNull(endPosition) : dart.notNull(endPosition) - dart.notNull(startPosition);
+      startPosition = dart.notNull(startPosition) + dart.notNull((t16 = delta, t16 == null ? 0.0 : t16));
+      endPosition = dart.notNull(endPosition) + dart.notNull((t16$ = delta, t16$ == null ? 0.0 : t16$));
+      let actualMinInPx = this.getPositionFromValue(this.actualMin);
+      let actualMaxInPx = this.getPositionFromValue(this.actualMax);
+      if (isVertical || isRTL) {
+        if (dart.notNull(startPosition) > dart.notNull(actualMinInPx)) {
+          startPosition = actualMinInPx;
+          endPosition = dart.notNull(startPosition) - lockedRangeWidth;
+        } else if (dart.notNull(endPosition) < dart.notNull(actualMaxInPx)) {
+          endPosition = actualMaxInPx;
+          startPosition = dart.notNull(endPosition) + lockedRangeWidth;
+        }
+        if (isVertical) {
+          startPosition = dart.notNull(this.actualTrackRect.bottom) - dart.notNull(startPosition);
+          endPosition = dart.notNull(this.actualTrackRect.bottom) - dart.notNull(endPosition);
+        }
+      } else {
+        if (dart.notNull(startPosition) < dart.notNull(actualMinInPx)) {
+          startPosition = actualMinInPx;
+          endPosition = dart.notNull(startPosition) + lockedRangeWidth;
+        } else if (dart.notNull(endPosition) > dart.notNull(actualMaxInPx)) {
+          endPosition = actualMaxInPx;
+          startPosition = dart.notNull(endPosition) - lockedRangeWidth;
+        }
+      }
+      return new common.SfRangeValues.new(this.getValueFromPosition(startPosition), this.getValueFromPosition(endPosition));
+    }
+    updateValues(newValues) {
+      if (newValues == null) dart.nullFailed(I[0], 501, 35, "newValues");
+      this.markNeedsSemanticsUpdate();
+    }
+    [_endInteraction]() {
+      if (!dart.test(this.isInteractionEnd)) {
+        let newValues = this.values;
+        if (dart.test(this[_enableIntervalSelection])) {
+          this.startPositionController.value = this.getFactorFromValue(this.actualValues.start);
+          this.endPositionController.value = this.getFactorFromValue(this.actualValues.end);
+          if (dart.test(this.isIntervalTapped)) {
+            let value = ui.lerpDouble(this.actualMin, this.actualMax, this.getFactorFromCurrentPosition());
+            newValues = this[_getSelectedRange](dart.nullCheck(value));
+            this[_updatePositionControllerValue](newValues);
+          }
+        }
+        this.updateIntervalTappedAndDeferredUpdateValues(newValues);
+        this[_isDragging] = false;
+        this.currentPointerType = constants.PointerType.up;
+        this.overlayStartController.reverse();
+        this.overlayEndController.reverse();
+        if (dart.test(this.enableTooltip) && this.tooltipDelayTimer == null) {
+          this.tooltipAnimationStartController.reverse();
+          this.tooltipAnimationEndController.reverse();
+        }
+        this[_isLocked] = false;
+        this[_isDragStart] = false;
+        this.isInteractionEnd = true;
+        this.markNeedsPaint();
+      }
+    }
+    [_getSelectedRange](value) {
+      if (value == null) dart.nullFailed(I[0], 537, 42, "value");
+      let rangeValues = null;
+      let rangeValues$35isSet = false;
+      function rangeValues$35get() {
+        return rangeValues$35isSet ? rangeValues : dart.throw(new _internal.LateError.localNI("rangeValues"));
+      }
+      dart.fn(rangeValues$35get, T.VoidToSfRangeValues());
+      function rangeValues$35set(t19) {
+        if (t19 == null) dart.nullFailed(I[0], 538, 24, "null");
+        rangeValues$35isSet = true;
+        return rangeValues = t19;
+      }
+      dart.fn(rangeValues$35set, T.SfRangeValuesTodynamic());
+      let start = null;
+      let end = null;
+      for (let i = 0; i < dart.nullCheck(this.divisions); i = i + 1) {
+        let currentLabel = dart.nullCheck(this.unformattedLabels)[$_get](i);
+        if (i < dart.nullCheck(this.divisions) - 1) {
+          let nextLabel = dart.nullCheck(this.unformattedLabels)[$_get](i + 1);
+          if (dart.notNull(value) >= dart.notNull(currentLabel) && dart.notNull(value) <= dart.notNull(nextLabel)) {
+            if (dart.test(this.isDateTime)) {
+              start = new core.DateTime.fromMillisecondsSinceEpoch(currentLabel[$toInt]());
+              end = new core.DateTime.fromMillisecondsSinceEpoch(nextLabel[$toInt]());
+            } else {
+              start = currentLabel;
+              end = nextLabel;
+            }
+            rangeValues$35set(new common.SfRangeValues.new(start, end));
+            break;
+          }
+        } else {
+          start = dart.test(this.isDateTime) ? new core.DateTime.fromMillisecondsSinceEpoch(currentLabel[$toInt]()) : currentLabel;
+          end = this.max;
+          rangeValues$35set(new common.SfRangeValues.new(start, end));
+        }
+      }
+      return rangeValues$35get();
+    }
+    [_updatePositionControllerValue](newValues) {
+      if (newValues == null) dart.nullFailed(I[0], 569, 53, "newValues");
+      let startDate = null;
+      let endDate = null;
+      if (dart.test(this.isDateTime)) {
+        startDate = core.DateTime.as(newValues.start);
+        endDate = core.DateTime.as(newValues.end);
+      }
+      let startValueFactor = this.getFactorFromValue(dart.test(this.isDateTime) ? dart.nullCheck(startDate).millisecondsSinceEpoch[$toDouble]() : newValues.start);
+      let endValueFactor = this.getFactorFromValue(dart.test(this.isDateTime) ? dart.nullCheck(endDate).millisecondsSinceEpoch[$toDouble]() : newValues.end);
+      let startDistanceFactor = (dart.notNull(startValueFactor) - dart.notNull(this.startPositionController.value))[$abs]();
+      let endDistanceFactor = (dart.notNull(endValueFactor) - dart.notNull(this.endPositionController.value))[$abs]();
+      this.startPositionController.duration = startDistanceFactor !== 0.0 ? range_slider_base.RenderBaseRangeSlider._positionAnimationDuration['*'](1.0 / startDistanceFactor) : core.Duration.zero;
+      this.endPositionController.duration = endDistanceFactor !== 0.0 ? range_slider_base.RenderBaseRangeSlider._positionAnimationDuration['*'](1.0 / endDistanceFactor) : core.Duration.zero;
+      this.startPositionController.animateTo(startValueFactor, {curve: curves.Curves.easeInOut});
+      this.endPositionController.animateTo(endValueFactor, {curve: curves.Curves.easeInOut});
+    }
+    [_handleTooltipAnimationStatusChange](status) {
+      if (status == null) dart.nullFailed(I[0], 601, 60, "status");
+      if (this.tooltipAnimationStartController.status == animation.AnimationStatus.dismissed && this.tooltipAnimationEndController.status == animation.AnimationStatus.dismissed) {
+        this.willDrawTooltip = false;
+      }
+    }
+    [_forwardTooltipAndOverlayController]() {
+      switch (dart.nullCheck(this[_activeThumb])) {
+        case C[0] || CT.C0:
+        {
+          this.overlayStartController.forward();
+          this.overlayEndController.reverse();
+          if (dart.test(this.enableTooltip)) {
+            this.willDrawTooltip = true;
+            this.tooltipAnimationStartController.forward();
+            this.tooltipAnimationEndController.reverse();
+          }
+          break;
+        }
+        case C[1] || CT.C1:
+        {
+          this.overlayEndController.forward();
+          this.overlayStartController.reverse();
+          if (dart.test(this.enableTooltip)) {
+            this.willDrawTooltip = true;
+            this.tooltipAnimationEndController.forward();
+            this.tooltipAnimationStartController.reverse();
+          }
+          break;
+        }
+        default:
+        {
+          dart.throw(new _internal.ReachabilityError.new("`null` encountered as case in a switch expression with a non-nullable enum type."));
+        }
+      }
+    }
+    [_handleExit](event) {
+      if (event == null) dart.nullFailed(I[0], 631, 37, "event");
+      if (dart.nullCheck(this.mounted) && this.currentPointerType != constants.PointerType.move) {
+        this.overlayStartController.reverse();
+        this.overlayEndController.reverse();
+        if (dart.test(this.enableTooltip)) {
+          this.tooltipAnimationStartController.reverse();
+          this.tooltipAnimationEndController.reverse();
+        }
+      }
+    }
+    [_handleHover](details) {
+      if (details == null) dart.nullFailed(I[0], 644, 39, "details");
+      let cursorPosition = 0.0;
+      let startThumbPosition = this.getPositionFromValue(core.double.as(dart.dsend(this.actualValues.start, 'toDouble', [])));
+      let endThumbPosition = this.getPositionFromValue(core.double.as(dart.dsend(this.actualValues.end, 'toDouble', [])));
+      cursorPosition = this.sliderType == constants.SliderType.vertical ? details.localPosition.dy : details.localPosition.dx;
+      let startThumbDistance = (dart.notNull(cursorPosition) - dart.notNull(startThumbPosition))[$abs]();
+      let endThumbDistance = (dart.notNull(cursorPosition) - dart.notNull(endThumbPosition))[$abs]();
+      if (startThumbDistance === endThumbDistance) {
+        if (this.activeThumb == null) {
+          if (dart.test(this.isDateTime) && dart.equals(this[_valuesInMilliseconds].start, this[_valuesInMilliseconds].end)) {
+            this.activeThumb = dart.equals(this[_valuesInMilliseconds].start, dart.dsend(dart.dload(this.min, 'millisecondsSinceEpoch'), 'toDouble', [])) ? common.SfThumb.end : common.SfThumb.start;
+          } else if (dart.equals(this[_values].start, this[_values].end)) {
+            this.activeThumb = dart.equals(this[_values].start, this.min) ? common.SfThumb.end : common.SfThumb.start;
+          }
+        } else {
+          this[_forwardTooltipAndOverlayController]();
+        }
+      } else {
+        if (endThumbDistance > startThumbDistance) {
+          this.activeThumb = common.SfThumb.start;
+        } else {
+          this.activeThumb = common.SfThumb.end;
+        }
+      }
+    }
+    [_drawOverlayAndThumb](context, endThumbCenter, startThumbCenter) {
+      if (context == null) dart.nullFailed(I[0], 684, 21, "context");
+      if (endThumbCenter == null) dart.nullFailed(I[0], 685, 12, "endThumbCenter");
+      if (startThumbCenter == null) dart.nullFailed(I[0], 686, 12, "startThumbCenter");
+      let isStartThumbActive = this.activeThumb == common.SfThumb.start;
+      let thumbCenter = isStartThumbActive ? endThumbCenter : startThumbCenter;
+      let thumbIcon = isStartThumbActive ? this[_endThumbIcon] : this[_startThumbIcon];
+      this.showOverlappingThumbStroke = false;
+      this.thumbShape.paint(context, thumbCenter, {parentBox: this, child: thumbIcon, themeData: this.sliderThemeData, currentValues: this[_values], enableAnimation: this[_stateAnimation], textDirection: this.textDirection, thumb: isStartThumbActive ? common.SfThumb.end : common.SfThumb.start, paint: null});
+      thumbCenter = isStartThumbActive ? startThumbCenter : endThumbCenter;
+      thumbIcon = isStartThumbActive ? this[_startThumbIcon] : this[_endThumbIcon];
+      this.overlayShape.paint(context, thumbCenter, {parentBox: this, themeData: this.sliderThemeData, currentValues: this[_values], animation: isStartThumbActive ? this[_overlayStartAnimation] : this[_overlayEndAnimation], thumb: this.activeThumb, paint: null});
+      this.showOverlappingThumbStroke = (dart.notNull(this.getFactorFromValue(this.actualValues.start)) - dart.notNull(this.getFactorFromValue(this.actualValues.end)))[$abs]() * dart.notNull(this.sliderType == constants.SliderType.vertical ? this.actualTrackRect.height : this.actualTrackRect.width) < dart.notNull(this.actualThumbSize.width);
+      this.thumbShape.paint(context, thumbCenter, {parentBox: this, child: thumbIcon, themeData: this.sliderThemeData, currentValues: this[_values], enableAnimation: this[_stateAnimation], textDirection: this.textDirection, thumb: this.activeThumb, paint: null});
+    }
+    [_drawTooltip](context, endThumbCenter, startThumbCenter, offset, actualTrackOffset, trackRect) {
+      let t21, t22, t21$, t22$, t21$0;
+      if (context == null) dart.nullFailed(I[0], 741, 23, "context");
+      if (endThumbCenter == null) dart.nullFailed(I[0], 742, 14, "endThumbCenter");
+      if (startThumbCenter == null) dart.nullFailed(I[0], 743, 14, "startThumbCenter");
+      if (offset == null) dart.nullFailed(I[0], 744, 14, "offset");
+      if (actualTrackOffset == null) dart.nullFailed(I[0], 745, 14, "actualTrackOffset");
+      if (trackRect == null) dart.nullFailed(I[0], 746, 12, "trackRect");
+      if (dart.test(this.willDrawTooltip)) {
+        let paint = (t21 = ui.Paint.new(), (() => {
+          t21.color = dart.nullCheck(this.sliderThemeData.tooltipBackgroundColor);
+          t21.style = ui.PaintingStyle.fill;
+          t21.strokeWidth = 0.0;
+          return t21;
+        })());
+        let isStartThumbActive = this.activeThumb == common.SfThumb.start;
+        let thumbCenter = isStartThumbActive ? endThumbCenter : startThumbCenter;
+        let actualText = this.sliderType == constants.SliderType.vertical ? this.getValueFromPosition(dart.notNull(trackRect.bottom) - dart.notNull(thumbCenter.dy)) : this.getValueFromPosition(dart.notNull(thumbCenter.dx) - dart.notNull(offset.dx));
+        let tooltipText = (t21$ = actualText, t22 = this.getFormattedText(actualText), this.tooltipTextFormatterCallback(t21$, t22));
+        let textSpan = new text_span.TextSpan.new({text: tooltipText, style: this.sliderThemeData.tooltipTextStyle});
+        this.textPainter.text = textSpan;
+        this.textPainter.layout();
+        let bottomTooltipRect = null;
+        if (slider_shapes.SfPaddleTooltipShape.is(this.tooltipShape)) {
+          bottomTooltipRect = this.getPaddleTooltipRect(this.textPainter, new ui.Offset.new(actualTrackOffset.dx, this.tooltipStartY), thumbCenter, trackRect, this.sliderThemeData);
+        } else if (slider_shapes.SfRectangularTooltipShape.is(this.tooltipShape)) {
+          bottomTooltipRect = this.getRectangularTooltipRect(this.textPainter, new ui.Offset.new(actualTrackOffset.dx, this.tooltipStartY), thumbCenter, trackRect, this.sliderThemeData);
+        }
+        this.showOverlappingTooltipStroke = false;
+        this.tooltipShape.paint(context, thumbCenter, new ui.Offset.new(actualTrackOffset.dx, this.tooltipStartY), this.textPainter, {parentBox: this, sliderThemeData: this.sliderThemeData, paint: paint, animation: isStartThumbActive ? this[_tooltipEndAnimation] : this[_tooltipStartAnimation], trackRect: trackRect});
+        thumbCenter = isStartThumbActive ? startThumbCenter : endThumbCenter;
+        actualText = this.sliderType == constants.SliderType.vertical ? this.getValueFromPosition(dart.notNull(trackRect.bottom) - dart.notNull(thumbCenter.dy)) : this.getValueFromPosition(dart.notNull(thumbCenter.dx) - dart.notNull(offset.dx));
+        tooltipText = (t21$0 = actualText, t22$ = this.getFormattedText(actualText), this.tooltipTextFormatterCallback(t21$0, t22$));
+        textSpan = new text_span.TextSpan.new({text: tooltipText, style: this.sliderThemeData.tooltipTextStyle});
+        this.textPainter.text = textSpan;
+        this.textPainter.layout();
+        let topTooltipRect = null;
+        if (slider_shapes.SfPaddleTooltipShape.is(this.tooltipShape)) {
+          topTooltipRect = this.getPaddleTooltipRect(this.textPainter, new ui.Offset.new(actualTrackOffset.dx, this.tooltipStartY), thumbCenter, trackRect, this.sliderThemeData);
+        } else if (slider_shapes.SfRectangularTooltipShape.is(this.tooltipShape)) {
+          topTooltipRect = this.getRectangularTooltipRect(this.textPainter, new ui.Offset.new(actualTrackOffset.dx, this.tooltipStartY), thumbCenter, trackRect, this.sliderThemeData);
+        }
+        if (bottomTooltipRect != null && topTooltipRect != null) {
+          let overlapRect = topTooltipRect.intersect(bottomTooltipRect);
+          this.showOverlappingTooltipStroke = this.sliderType == constants.SliderType.vertical ? dart.notNull(overlapRect.top) < dart.notNull(overlapRect.bottom) : dart.notNull(overlapRect.right) > dart.notNull(overlapRect.left);
+        }
+        this.tooltipShape.paint(context, thumbCenter, new ui.Offset.new(actualTrackOffset.dx, this.tooltipStartY), this.textPainter, {parentBox: this, sliderThemeData: this.sliderThemeData, paint: paint, animation: isStartThumbActive ? this[_tooltipStartAnimation] : this[_tooltipEndAnimation], trackRect: trackRect});
+      }
+    }
+    drawRegions(context, trackRect, offset, startThumbCenter, endThumbCenter) {
+      if (context == null) dart.nullFailed(I[0], 848, 36, "context");
+      if (trackRect == null) dart.nullFailed(I[0], 848, 50, "trackRect");
+      if (offset == null) dart.nullFailed(I[0], 848, 68, "offset");
+      if (startThumbCenter == null) dart.nullFailed(I[0], 849, 14, "startThumbCenter");
+      if (endThumbCenter == null) dart.nullFailed(I[0], 849, 39, "endThumbCenter");
+    }
+    attach(owner) {
+      object.PipelineOwner.as(owner);
+      if (owner == null) dart.nullFailed(I[0], 855, 29, "owner");
+      super.attach(owner);
+      this[_validForMouseTracker] = true;
+      this[_overlayStartAnimation].addListener(dart.bind(this, 'markNeedsPaint'));
+      this[_overlayEndAnimation].addListener(dart.bind(this, 'markNeedsPaint'));
+      this.startPositionController.addListener(dart.bind(this, 'markNeedsPaint'));
+      this.endPositionController.addListener(dart.bind(this, 'markNeedsPaint'));
+      this[_stateAnimation].addListener(dart.bind(this, 'markNeedsPaint'));
+      this[_tooltipStartAnimation].addListener(dart.bind(this, 'markNeedsPaint'));
+      this[_tooltipStartAnimation].addStatusListener(dart.bind(this, _handleTooltipAnimationStatusChange));
+      this[_tooltipEndAnimation].addListener(dart.bind(this, 'markNeedsPaint'));
+      this[_tooltipEndAnimation].addStatusListener(dart.bind(this, _handleTooltipAnimationStatusChange));
+    }
+    detach() {
+      this[_validForMouseTracker] = false;
+      this[_overlayStartAnimation].removeListener(dart.bind(this, 'markNeedsPaint'));
+      this[_overlayEndAnimation].removeListener(dart.bind(this, 'markNeedsPaint'));
+      this.startPositionController.removeListener(dart.bind(this, 'markNeedsPaint'));
+      this.endPositionController.removeListener(dart.bind(this, 'markNeedsPaint'));
+      this[_stateAnimation].removeListener(dart.bind(this, 'markNeedsPaint'));
+      this[_tooltipStartAnimation].removeListener(dart.bind(this, 'markNeedsPaint'));
+      this[_tooltipStartAnimation].removeStatusListener(dart.bind(this, _handleTooltipAnimationStatusChange));
+      this[_tooltipEndAnimation].removeListener(dart.bind(this, 'markNeedsPaint'));
+      this[_tooltipEndAnimation].removeStatusListener(dart.bind(this, _handleTooltipAnimationStatusChange));
+      super.detach();
+    }
+    get cursor() {
+      return mouse_cursor.MouseCursor.defer;
+    }
+    get onEnter() {
+      return null;
+    }
+    get onHover() {
+      return dart.bind(this, _handleHover);
+    }
+    get onExit() {
+      return dart.bind(this, _handleExit);
+    }
+    get validForMouseTracker() {
+      return this[_validForMouseTracker];
+    }
+    handleEvent(event, entry) {
+      let t21;
+      if (event == null) dart.nullFailed(I[0], 905, 33, "event");
+      hit_test.HitTestEntry.as(entry);
+      if (entry == null) dart.nullFailed(I[0], 905, 53, "entry");
+      if (events.PointerHoverEvent.is(event)) {
+        t21 = event;
+        this.onHover(t21);
+      }
+      super.handleEvent(event, entry);
+    }
+    drawRangeSliderElements(context, offset, actualTrackOffset) {
+      if (context == null) dart.nullFailed(I[0], 915, 23, "context");
+      if (offset == null) dart.nullFailed(I[0], 915, 39, "offset");
+      if (actualTrackOffset == null) dart.nullFailed(I[0], 915, 54, "actualTrackOffset");
+      let trackRect = this.trackShape.getPreferredRect(this, this.sliderThemeData, actualTrackOffset);
+      let thumbStartPosition = dart.notNull(this.getFactorFromValue(dart.test(this.isIntervalTapped) ? this.getValueFromFactor(this.sliderType == constants.SliderType.horizontal && this.textDirection == ui.TextDirection.rtl ? 1 - dart.notNull(this.startPositionController.value) : this.startPositionController.value) : this.actualValues.start)) * dart.notNull(this.sliderType == constants.SliderType.vertical ? trackRect.height : trackRect.width);
+      let thumbEndPosition = dart.notNull(this.getFactorFromValue(dart.test(this.isIntervalTapped) ? this.getValueFromFactor(this.sliderType == constants.SliderType.horizontal && this.textDirection == ui.TextDirection.rtl ? 1 - dart.notNull(this.endPositionController.value) : this.endPositionController.value) : this.actualValues.end)) * dart.notNull(this.sliderType == constants.SliderType.vertical ? trackRect.height : trackRect.width);
+      let startThumbCenter = this.sliderType == constants.SliderType.vertical ? new ui.Offset.new(trackRect.center.dx, dart.notNull(trackRect.bottom) - thumbStartPosition) : new ui.Offset.new(dart.notNull(trackRect.left) + thumbStartPosition, trackRect.center.dy);
+      let endThumbCenter = this.sliderType == constants.SliderType.vertical ? new ui.Offset.new(trackRect.center.dx, dart.notNull(trackRect.bottom) - thumbEndPosition) : new ui.Offset.new(dart.notNull(trackRect.left) + thumbEndPosition, trackRect.center.dy);
+      this.trackShape.paint(context, actualTrackOffset, null, startThumbCenter, endThumbCenter, {parentBox: this, themeData: this.sliderThemeData, currentValues: this.values, enableAnimation: this[_stateAnimation], textDirection: this.textDirection, activePaint: null, inactivePaint: null});
+      if (dart.test(this.showLabels) || dart.test(this.showTicks) || dart.test(this.showDividers)) {
+        this.drawLabelsTicksAndDividers(context, trackRect, offset, null, startThumbCenter, endThumbCenter, this[_stateAnimation], null, this[_values]);
+      }
+      this.drawRegions(context, trackRect, offset, startThumbCenter, endThumbCenter);
+      this[_drawOverlayAndThumb](context, endThumbCenter, startThumbCenter);
+      this[_drawTooltip](context, endThumbCenter, startThumbCenter, offset, actualTrackOffset, trackRect);
+    }
+    debugRangeSliderFillProperties(properties) {
+      if (properties == null) dart.nullFailed(I[0], 972, 67, "properties");
+      properties.add(new diagnostics.StringProperty.new("thumbSize", dart.toString(this.thumbShape.getPreferredSize(this.sliderThemeData))));
+      properties.add(new diagnostics.StringProperty.new("activeDividerSize", dart.toString(this.dividerShape.getPreferredSize(this.sliderThemeData, {isActive: true}))));
+      properties.add(new diagnostics.StringProperty.new("inactiveDividerSize", dart.toString(this.dividerShape.getPreferredSize(this.sliderThemeData, {isActive: false}))));
+      properties.add(new diagnostics.StringProperty.new("overlaySize", dart.toString(this.overlayShape.getPreferredSize(this.sliderThemeData))));
+      properties.add(new diagnostics.StringProperty.new("tickSize", dart.toString(this.tickShape.getPreferredSize(this.sliderThemeData))));
+      properties.add(new diagnostics.StringProperty.new("minorTickSize", dart.toString(this.minorTickShape.getPreferredSize(this.sliderThemeData))));
+    }
+  };
+  (range_slider_base.RenderBaseRangeSlider.new = function(opts) {
+    let t0, t0$, t0$0;
+    let min = opts && 'min' in opts ? opts.min : null;
+    let max = opts && 'max' in opts ? opts.max : null;
+    let values = opts && 'values' in opts ? opts.values : null;
+    let interval = opts && 'interval' in opts ? opts.interval : null;
+    let stepSize = opts && 'stepSize' in opts ? opts.stepSize : null;
+    let stepDuration = opts && 'stepDuration' in opts ? opts.stepDuration : null;
+    let minorTicksPerInterval = opts && 'minorTicksPerInterval' in opts ? opts.minorTicksPerInterval : null;
+    if (minorTicksPerInterval == null) dart.nullFailed(I[0], 28, 18, "minorTicksPerInterval");
+    let showTicks = opts && 'showTicks' in opts ? opts.showTicks : null;
+    if (showTicks == null) dart.nullFailed(I[0], 29, 19, "showTicks");
+    let showLabels = opts && 'showLabels' in opts ? opts.showLabels : null;
+    if (showLabels == null) dart.nullFailed(I[0], 30, 19, "showLabels");
+    let showDividers = opts && 'showDividers' in opts ? opts.showDividers : null;
+    if (showDividers == null) dart.nullFailed(I[0], 31, 19, "showDividers");
+    let enableTooltip = opts && 'enableTooltip' in opts ? opts.enableTooltip : null;
+    if (enableTooltip == null) dart.nullFailed(I[0], 32, 19, "enableTooltip");
+    let enableIntervalSelection = opts && 'enableIntervalSelection' in opts ? opts.enableIntervalSelection : null;
+    if (enableIntervalSelection == null) dart.nullFailed(I[0], 33, 19, "enableIntervalSelection");
+    let dragMode = opts && 'dragMode' in opts ? opts.dragMode : null;
+    if (dragMode == null) dart.nullFailed(I[0], 34, 29, "dragMode");
+    let labelPlacement = opts && 'labelPlacement' in opts ? opts.labelPlacement : null;
+    if (labelPlacement == null) dart.nullFailed(I[0], 35, 29, "labelPlacement");
+    let numberFormat = opts && 'numberFormat' in opts ? opts.numberFormat : null;
+    if (numberFormat == null) dart.nullFailed(I[0], 36, 27, "numberFormat");
+    let dateFormat = opts && 'dateFormat' in opts ? opts.dateFormat : null;
+    let dateIntervalType = opts && 'dateIntervalType' in opts ? opts.dateIntervalType : null;
+    let labelFormatterCallback = opts && 'labelFormatterCallback' in opts ? opts.labelFormatterCallback : null;
+    if (labelFormatterCallback == null) dart.nullFailed(I[0], 39, 37, "labelFormatterCallback");
+    let tooltipTextFormatterCallback = opts && 'tooltipTextFormatterCallback' in opts ? opts.tooltipTextFormatterCallback : null;
+    if (tooltipTextFormatterCallback == null) dart.nullFailed(I[0], 40, 43, "tooltipTextFormatterCallback");
+    let trackShape = opts && 'trackShape' in opts ? opts.trackShape : null;
+    if (trackShape == null) dart.nullFailed(I[0], 41, 27, "trackShape");
+    let dividerShape = opts && 'dividerShape' in opts ? opts.dividerShape : null;
+    if (dividerShape == null) dart.nullFailed(I[0], 42, 29, "dividerShape");
+    let overlayShape = opts && 'overlayShape' in opts ? opts.overlayShape : null;
+    if (overlayShape == null) dart.nullFailed(I[0], 43, 29, "overlayShape");
+    let thumbShape = opts && 'thumbShape' in opts ? opts.thumbShape : null;
+    if (thumbShape == null) dart.nullFailed(I[0], 44, 27, "thumbShape");
+    let tickShape = opts && 'tickShape' in opts ? opts.tickShape : null;
+    if (tickShape == null) dart.nullFailed(I[0], 45, 26, "tickShape");
+    let minorTickShape = opts && 'minorTickShape' in opts ? opts.minorTickShape : null;
+    if (minorTickShape == null) dart.nullFailed(I[0], 46, 26, "minorTickShape");
+    let tooltipShape = opts && 'tooltipShape' in opts ? opts.tooltipShape : null;
+    if (tooltipShape == null) dart.nullFailed(I[0], 47, 29, "tooltipShape");
+    let sliderThemeData = opts && 'sliderThemeData' in opts ? opts.sliderThemeData : null;
+    if (sliderThemeData == null) dart.nullFailed(I[0], 48, 37, "sliderThemeData");
+    let sliderType = opts && 'sliderType' in opts ? opts.sliderType : null;
+    if (sliderType == null) dart.nullFailed(I[0], 49, 25, "sliderType");
+    let tooltipPosition = opts && 'tooltipPosition' in opts ? opts.tooltipPosition : null;
+    let textDirection = opts && 'textDirection' in opts ? opts.textDirection : null;
+    if (textDirection == null) dart.nullFailed(I[0], 51, 28, "textDirection");
+    let mediaQueryData = opts && 'mediaQueryData' in opts ? opts.mediaQueryData : null;
+    if (mediaQueryData == null) dart.nullFailed(I[0], 52, 29, "mediaQueryData");
+    this[slotToChild] = new (T.LinkedMapOfChildElements$RenderBox()).new();
+    this[childToSlot] = new (T.LinkedMapOfRenderBox$ChildElements()).new();
+    this[__RenderBaseRangeSlider_overlayStartController] = null;
+    this[__RenderBaseRangeSlider_overlayStartController_isSet] = false;
+    this[__RenderBaseRangeSlider_overlayEndController] = null;
+    this[__RenderBaseRangeSlider_overlayEndController_isSet] = false;
+    this[__RenderBaseRangeSlider_stateController] = null;
+    this[__RenderBaseRangeSlider_stateController_isSet] = false;
+    this[__RenderBaseRangeSlider_startPositionController] = null;
+    this[__RenderBaseRangeSlider_startPositionController_isSet] = false;
+    this[__RenderBaseRangeSlider_endPositionController] = null;
+    this[__RenderBaseRangeSlider_endPositionController_isSet] = false;
+    this[__RenderBaseRangeSlider_tooltipAnimationStartController] = null;
+    this[__RenderBaseRangeSlider_tooltipAnimationStartController_isSet] = false;
+    this[__RenderBaseRangeSlider_tooltipAnimationEndController] = null;
+    this[__RenderBaseRangeSlider_tooltipAnimationEndController_isSet] = false;
+    this[__RenderBaseRangeSlider__overlayStartAnimation] = null;
+    this[__RenderBaseRangeSlider__overlayStartAnimation_isSet] = false;
+    this[__RenderBaseRangeSlider__overlayEndAnimation] = null;
+    this[__RenderBaseRangeSlider__overlayEndAnimation_isSet] = false;
+    this[__RenderBaseRangeSlider__stateAnimation] = null;
+    this[__RenderBaseRangeSlider__stateAnimation_isSet] = false;
+    this[__RenderBaseRangeSlider__tooltipStartAnimation] = null;
+    this[__RenderBaseRangeSlider__tooltipStartAnimation_isSet] = false;
+    this[__RenderBaseRangeSlider__tooltipEndAnimation] = null;
+    this[__RenderBaseRangeSlider__tooltipEndAnimation_isSet] = false;
+    this[__RenderBaseRangeSlider__validForMouseTracker] = null;
+    this[__RenderBaseRangeSlider__validForMouseTracker_isSet] = false;
+    this[__RenderBaseRangeSlider__valuesInMilliseconds] = null;
+    this[__RenderBaseRangeSlider__valuesInMilliseconds_isSet] = false;
+    this[__RenderBaseRangeSlider__beginValues] = null;
+    this[__RenderBaseRangeSlider__beginValues_isSet] = false;
+    this[_isDragging] = false;
+    this[isIntervalTapped] = false;
+    this[_isLocked] = false;
+    this[_isDragStart] = false;
+    this[mounted] = null;
+    this[tooltipDelayTimer] = null;
+    this[_interactionStartOffset] = 0.0;
+    this[__RenderBaseRangeSlider__values] = null;
+    this[__RenderBaseRangeSlider__values_isSet] = false;
+    this[_startThumbIcon] = null;
+    this[_endThumbIcon] = null;
+    this[_activeThumb] = null;
+    this[startSemanticsNode] = new semantics.SemanticsNode.new();
+    this[endSemanticsNode] = new semantics.SemanticsNode.new();
+    this[__RenderBaseRangeSlider__values_isSet] = true;
+    this[__RenderBaseRangeSlider__values] = dart.nullCheck(values);
+    this[_dragMode] = dragMode;
+    this[_enableIntervalSelection] = enableIntervalSelection;
+    range_slider_base.RenderBaseRangeSlider.__proto__.new.call(this, {min: min, max: max, interval: interval, stepSize: stepSize, stepDuration: stepDuration, minorTicksPerInterval: minorTicksPerInterval, showTicks: showTicks, showLabels: showLabels, showDividers: showDividers, enableTooltip: enableTooltip, labelPlacement: labelPlacement, numberFormat: numberFormat, dateFormat: dateFormat, dateIntervalType: dateIntervalType, labelFormatterCallback: labelFormatterCallback, tooltipTextFormatterCallback: tooltipTextFormatterCallback, trackShape: trackShape, dividerShape: dividerShape, overlayShape: overlayShape, thumbShape: thumbShape, tickShape: tickShape, minorTickShape: minorTickShape, tooltipShape: tooltipShape, sliderThemeData: sliderThemeData, sliderType: sliderType, tooltipPosition: tooltipPosition, textDirection: textDirection, mediaQueryData: mediaQueryData});
+    let team = new team$.GestureArenaTeam.new();
+    if (sliderType == constants.SliderType.horizontal) {
+      this.horizontalDragGestureRecognizer = (t0 = new monodrag.HorizontalDragGestureRecognizer.new(), (() => {
+        t0.team = team;
+        t0.onStart = dart.bind(this, _onDragStart);
+        t0.onUpdate = dart.bind(this, _onDragUpdate);
+        t0.onEnd = dart.bind(this, _onDragEnd);
+        t0.onCancel = dart.bind(this, _onDragCancel);
+        return t0;
+      })());
+    }
+    if (sliderType == constants.SliderType.vertical) {
+      this.verticalDragGestureRecognizer = (t0$ = new monodrag.VerticalDragGestureRecognizer.new(), (() => {
+        t0$.team = team;
+        t0$.onStart = dart.bind(this, _onVerticalDragStart);
+        t0$.onUpdate = dart.bind(this, _onVerticalDragUpdate);
+        t0$.onEnd = dart.bind(this, _onVerticalDragEnd);
+        t0$.onCancel = dart.bind(this, _onVerticalDragCancel);
+        return t0$;
+      })());
+    }
+    this.tapGestureRecognizer = (t0$0 = new tap.TapGestureRecognizer.new(), (() => {
+      t0$0.team = team;
+      t0$0.onTapDown = dart.bind(this, _onTapDown);
+      t0$0.onTapUp = dart.bind(this, _onTapUp);
+      return t0$0;
+    })());
+    this[_overlayStartAnimation] = new animations.CurvedAnimation.new({parent: this.overlayStartController, curve: curves.Curves.fastOutSlowIn});
+    this[_overlayEndAnimation] = new animations.CurvedAnimation.new({parent: this.overlayEndController, curve: curves.Curves.fastOutSlowIn});
+    this[_stateAnimation] = new animations.CurvedAnimation.new({parent: this.stateController, curve: curves.Curves.easeInOut});
+    this[_tooltipStartAnimation] = new animations.CurvedAnimation.new({parent: this.tooltipAnimationStartController, curve: curves.Curves.fastOutSlowIn});
+    this[_tooltipEndAnimation] = new animations.CurvedAnimation.new({parent: this.tooltipAnimationEndController, curve: curves.Curves.fastOutSlowIn});
+    if (dart.test(this.isDateTime)) {
+      this[_valuesInMilliseconds] = new common.SfRangeValues.new(dart.dsend(dart.dload(values.start, 'millisecondsSinceEpoch'), 'toDouble', []), dart.dsend(dart.dload(values.end, 'millisecondsSinceEpoch'), 'toDouble', []));
+    }
+    this.unformattedLabels = T.JSArrayOfdouble().of([]);
+    this.updateTextPainter();
+    if (dart.test(this[_enableIntervalSelection])) {
+      this.startPositionController.value = this.getFactorFromValue(this.actualValues.start);
+      this.endPositionController.value = this.getFactorFromValue(this.actualValues.end);
+    }
+  }).prototype = range_slider_base.RenderBaseRangeSlider.prototype;
+  dart.addTypeTests(range_slider_base.RenderBaseRangeSlider);
+  dart.addTypeCaches(range_slider_base.RenderBaseRangeSlider);
+  range_slider_base.RenderBaseRangeSlider[dart.implements] = () => [mouse_tracking.MouseTrackerAnnotation];
+  dart.setMethodSignature(range_slider_base.RenderBaseRangeSlider, () => ({
+    __proto__: dart.getMethods(range_slider_base.RenderBaseRangeSlider.__proto__),
+    updateChild: dart.fnType(dart.nullable(box.RenderBox), [dart.nullable(box.RenderBox), dart.nullable(box.RenderBox), constants.ChildElements]),
+    [_onTapDown]: dart.fnType(dart.void, [tap.TapDownDetails]),
+    [_onTapUp]: dart.fnType(dart.void, [tap.TapUpDetails]),
+    [_onDragStart]: dart.fnType(dart.void, [drag_details.DragStartDetails]),
+    [_onDragUpdate]: dart.fnType(dart.void, [drag_details.DragUpdateDetails]),
+    [_onDragEnd]: dart.fnType(dart.void, [drag_details.DragEndDetails]),
+    [_onDragCancel]: dart.fnType(dart.void, []),
+    [_onVerticalDragStart]: dart.fnType(dart.void, [drag_details.DragStartDetails]),
+    [_onVerticalDragUpdate]: dart.fnType(dart.void, [drag_details.DragUpdateDetails]),
+    [_onVerticalDragEnd]: dart.fnType(dart.void, [drag_details.DragEndDetails]),
+    [_onVerticalDragCancel]: dart.fnType(dart.void, []),
+    [_beginInteraction]: dart.fnType(dart.void, []),
+    [_tappedBetweenThumbs]: dart.fnType(core.bool, [core.double, core.double]),
+    [_forwardTooltipAnimation]: dart.fnType(dart.void, []),
+    [_reverseTooltipAnimation]: dart.fnType(dart.void, []),
+    [_updateRangeValues]: dart.fnType(dart.void, [], {delta: dart.nullable(core.double)}, {}),
+    [_getLockRangeValues]: dart.fnType(common.SfRangeValues, [dart.nullable(core.double)]),
+    updateValues: dart.fnType(dart.void, [common.SfRangeValues]),
+    [_endInteraction]: dart.fnType(dart.void, []),
+    [_getSelectedRange]: dart.fnType(common.SfRangeValues, [core.double]),
+    [_updatePositionControllerValue]: dart.fnType(dart.void, [common.SfRangeValues]),
+    [_handleTooltipAnimationStatusChange]: dart.fnType(dart.void, [animation.AnimationStatus]),
+    [_forwardTooltipAndOverlayController]: dart.fnType(dart.void, []),
+    [_handleExit]: dart.fnType(dart.void, [events.PointerExitEvent]),
+    [_handleHover]: dart.fnType(dart.void, [events.PointerHoverEvent]),
+    [_drawOverlayAndThumb]: dart.fnType(dart.void, [object.PaintingContext, ui.Offset, ui.Offset]),
+    [_drawTooltip]: dart.fnType(dart.void, [object.PaintingContext, ui.Offset, ui.Offset, ui.Offset, ui.Offset, ui.Rect]),
+    drawRegions: dart.fnType(dart.void, [object.PaintingContext, ui.Rect, ui.Offset, ui.Offset, ui.Offset]),
+    drawRangeSliderElements: dart.fnType(dart.void, [object.PaintingContext, ui.Offset, ui.Offset]),
+    debugRangeSliderFillProperties: dart.fnType(dart.void, [diagnostics.DiagnosticPropertiesBuilder])
+  }));
+  dart.setGetterSignature(range_slider_base.RenderBaseRangeSlider, () => ({
+    __proto__: dart.getGetters(range_slider_base.RenderBaseRangeSlider.__proto__),
+    overlayStartController: animation_controller.AnimationController,
+    overlayEndController: animation_controller.AnimationController,
+    stateController: animation_controller.AnimationController,
+    startPositionController: animation_controller.AnimationController,
+    endPositionController: animation_controller.AnimationController,
+    tooltipAnimationStartController: animation_controller.AnimationController,
+    tooltipAnimationEndController: animation_controller.AnimationController,
+    [_overlayStartAnimation]: animation.Animation$(core.double),
+    [_overlayEndAnimation]: animation.Animation$(core.double),
+    [_stateAnimation]: animation.Animation$(core.double),
+    [_tooltipStartAnimation]: animation.Animation$(core.double),
+    [_tooltipEndAnimation]: animation.Animation$(core.double),
+    [_validForMouseTracker]: core.bool,
+    [_valuesInMilliseconds]: common.SfRangeValues,
+    [_beginValues]: common.SfRangeValues,
+    values: common.SfRangeValues,
+    [_values]: common.SfRangeValues,
+    enableIntervalSelection: core.bool,
+    dragMode: common.SliderDragMode,
+    startThumbIcon: dart.nullable(box.RenderBox),
+    endThumbIcon: dart.nullable(box.RenderBox),
+    activeThumb: dart.nullable(common.SfThumb),
+    minThumbGap: core.double,
+    actualValues: common.SfRangeValues,
+    increasedStartValue: dart.dynamic,
+    decreasedStartValue: dart.dynamic,
+    increasedEndValue: dart.dynamic,
+    decreasedEndValue: dart.dynamic,
+    cursor: mouse_cursor.MouseCursor,
+    onEnter: dart.nullable(dart.fnType(dart.void, [events.PointerEnterEvent])),
+    onHover: dart.fnType(dart.void, [events.PointerHoverEvent]),
+    onExit: dart.fnType(dart.void, [events.PointerExitEvent]),
+    validForMouseTracker: core.bool
+  }));
+  dart.setSetterSignature(range_slider_base.RenderBaseRangeSlider, () => ({
+    __proto__: dart.getSetters(range_slider_base.RenderBaseRangeSlider.__proto__),
+    overlayStartController: animation_controller.AnimationController,
+    overlayEndController: animation_controller.AnimationController,
+    stateController: animation_controller.AnimationController,
+    startPositionController: animation_controller.AnimationController,
+    endPositionController: animation_controller.AnimationController,
+    tooltipAnimationStartController: animation_controller.AnimationController,
+    tooltipAnimationEndController: animation_controller.AnimationController,
+    [_overlayStartAnimation]: animation.Animation$(core.double),
+    [_overlayEndAnimation]: animation.Animation$(core.double),
+    [_stateAnimation]: animation.Animation$(core.double),
+    [_tooltipStartAnimation]: animation.Animation$(core.double),
+    [_tooltipEndAnimation]: animation.Animation$(core.double),
+    [_validForMouseTracker]: core.bool,
+    [_valuesInMilliseconds]: common.SfRangeValues,
+    [_beginValues]: common.SfRangeValues,
+    [_values]: common.SfRangeValues,
+    values: common.SfRangeValues,
+    enableIntervalSelection: core.bool,
+    dragMode: common.SliderDragMode,
+    startThumbIcon: dart.nullable(box.RenderBox),
+    endThumbIcon: dart.nullable(box.RenderBox),
+    activeThumb: dart.nullable(common.SfThumb)
+  }));
+  dart.setLibraryUri(range_slider_base.RenderBaseRangeSlider, I[1]);
+  dart.setFieldSignature(range_slider_base.RenderBaseRangeSlider, () => ({
+    __proto__: dart.getFields(range_slider_base.RenderBaseRangeSlider.__proto__),
+    slotToChild: dart.finalFieldType(core.Map$(constants.ChildElements, box.RenderBox)),
+    childToSlot: dart.finalFieldType(core.Map$(box.RenderBox, constants.ChildElements)),
+    [__RenderBaseRangeSlider_overlayStartController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [__RenderBaseRangeSlider_overlayStartController_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider_overlayEndController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [__RenderBaseRangeSlider_overlayEndController_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider_stateController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [__RenderBaseRangeSlider_stateController_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider_startPositionController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [__RenderBaseRangeSlider_startPositionController_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider_endPositionController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [__RenderBaseRangeSlider_endPositionController_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider_tooltipAnimationStartController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [__RenderBaseRangeSlider_tooltipAnimationStartController_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider_tooltipAnimationEndController]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [__RenderBaseRangeSlider_tooltipAnimationEndController_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__overlayStartAnimation]: dart.fieldType(dart.nullable(animation.Animation$(core.double))),
+    [__RenderBaseRangeSlider__overlayStartAnimation_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__overlayEndAnimation]: dart.fieldType(dart.nullable(animation.Animation$(core.double))),
+    [__RenderBaseRangeSlider__overlayEndAnimation_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__stateAnimation]: dart.fieldType(dart.nullable(animation.Animation$(core.double))),
+    [__RenderBaseRangeSlider__stateAnimation_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__tooltipStartAnimation]: dart.fieldType(dart.nullable(animation.Animation$(core.double))),
+    [__RenderBaseRangeSlider__tooltipStartAnimation_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__tooltipEndAnimation]: dart.fieldType(dart.nullable(animation.Animation$(core.double))),
+    [__RenderBaseRangeSlider__tooltipEndAnimation_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__validForMouseTracker]: dart.fieldType(dart.nullable(core.bool)),
+    [__RenderBaseRangeSlider__validForMouseTracker_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__valuesInMilliseconds]: dart.fieldType(dart.nullable(common.SfRangeValues)),
+    [__RenderBaseRangeSlider__valuesInMilliseconds_isSet]: dart.fieldType(core.bool),
+    [__RenderBaseRangeSlider__beginValues]: dart.fieldType(dart.nullable(common.SfRangeValues)),
+    [__RenderBaseRangeSlider__beginValues_isSet]: dart.fieldType(core.bool),
+    [_isDragging]: dart.fieldType(core.bool),
+    isIntervalTapped: dart.fieldType(core.bool),
+    [_isLocked]: dart.fieldType(core.bool),
+    [_isDragStart]: dart.fieldType(core.bool),
+    mounted: dart.fieldType(dart.nullable(core.bool)),
+    tooltipDelayTimer: dart.fieldType(dart.nullable(async.Timer)),
+    [_interactionStartOffset]: dart.fieldType(core.double),
+    [__RenderBaseRangeSlider__values]: dart.fieldType(dart.nullable(common.SfRangeValues)),
+    [__RenderBaseRangeSlider__values_isSet]: dart.fieldType(core.bool),
+    [_enableIntervalSelection]: dart.fieldType(core.bool),
+    [_dragMode]: dart.fieldType(common.SliderDragMode),
+    [_startThumbIcon]: dart.fieldType(dart.nullable(box.RenderBox)),
+    [_endThumbIcon]: dart.fieldType(dart.nullable(box.RenderBox)),
+    [_activeThumb]: dart.fieldType(dart.nullable(common.SfThumb)),
+    startSemanticsNode: dart.fieldType(dart.nullable(semantics.SemanticsNode)),
+    endSemanticsNode: dart.fieldType(dart.nullable(semantics.SemanticsNode))
+  }));
+  dart.defineLazy(range_slider_base.RenderBaseRangeSlider, {
+    /*range_slider_base.RenderBaseRangeSlider._positionAnimationDuration*/get _positionAnimationDuration() {
+      return C[2] || CT.C2;
+    }
+  }, false);
+  dart.trackLibraries("packages/syncfusion_flutter_sliders/src/range_slider_base.dart", {
+    "package:syncfusion_flutter_sliders/src/range_slider_base.dart": range_slider_base
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["range_slider_base.dart"],"names":[],"mappings":"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","file":"../../../../../../../../packages/syncfusion_flutter_sliders/src/range_slider_base.dart.lib.js"}');
+  // Exports:
+  return {
+    src__range_slider_base: range_slider_base
+  };
+}));
+
+//# sourceMappingURL=range_slider_base.dart.lib.js.map
