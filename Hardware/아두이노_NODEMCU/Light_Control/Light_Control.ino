@@ -3,9 +3,9 @@
 #include <Adafruit_NeoPixel.h>
 
 // WiFI & adafruit_IO
-#define WIFI_SSID ""
-#define WIFI_PASS ""
-#define MQTT_SERVER "" //elijah.iptime.org
+#define WIFI_SSID "ElijahL"
+#define WIFI_PASS "1q2w3e4r"
+#define MQTT_SERVER "elijah.iptime.org"
 
 
 
@@ -74,7 +74,7 @@ void reconnect() {
     // Attempt to connect
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");
-      client.subscribe("People");
+      client.subscribe("Smplug1");
       Serial.println("subscribe People");
     } else {
       Serial.print("failed, rc=");
